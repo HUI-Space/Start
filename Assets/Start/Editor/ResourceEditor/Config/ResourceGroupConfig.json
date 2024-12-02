@@ -1,0 +1,42 @@
+{
+    "Groups": [
+        {
+            "Enable": false,
+            "Name": "Base",
+            "Tags": "Main",
+            "Desc": "3333",
+            "GroupItems": [
+                {
+                    "Path": "Assets/Data/Config",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Data/Entities",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Data/Materials",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Data/Textures",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Data/UI",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                }
+            ]
+        }
+    ]
+}

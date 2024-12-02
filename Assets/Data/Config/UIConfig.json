@@ -1,0 +1,25 @@
+{
+  "DataList" : [
+    {
+      "Id" : 1,
+      "UIName" : "APanel",
+      "UIDataName" : "Start.Runtime.APanelData",
+      "UIType" : 0,
+      "Preload" : false
+    },
+    {
+      "Id" : 2,
+      "UIName" : "BPanel",
+      "UIDataName" : "Start.Runtime.BPanelData",
+      "UIType" : 0,
+      "Preload" : false
+    },
+    {
+      "Id" : 3,
+      "UIName" : "CPopup",
+      "UIDataName" : "Start.Runtime.CPopupData",
+      "UIType" : 1,
+      "Preload" : false
+    }
+  ]
+}

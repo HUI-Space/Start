@@ -1,0 +1,15 @@
+{
+    "name": "Start.Runtime",
+    "references": [
+        "GUID:c3d80e824fecc0f41839605120c47dfd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
