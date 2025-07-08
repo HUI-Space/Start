@@ -1,18 +1,40 @@
-# Build and Release Folders
+#IDE文件
+.vs/
+.idea/
+.vscode/
+_ReSharper.CSharp/
+
+#svn
+*/.svn/
+.svn/
+
+# 构建与发布文件夹
 bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+[Tt]emp/
 
-# Other files and folders
-.settings/
+#Excel的临时文件
+~$*.xlsx
+~$*.xlsx.meta
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+#Unity相关目录
+.gradle
+Bundles
+Library
+Logs
+UserSettings
+[Aa]ssetBundle/
+/*.csproj
+*.vsconfig
+ProjectSettings/RiderScriptEditorPersistedState.asset
+HybridCLRData
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+#Unity/Assets
+*.meta
+Assets/StreamingAssets/
+Assets/StreamingAssets.meta
+
+
+

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <RootNamespace>Start.Server</RootNamespace>
+        <LangVersion>10</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj" />
+      <ProjectReference Include="..\Common\Common.FrameSync\Common.FrameSync.csproj" />
+      <ProjectReference Include="..\Common\Common.Tool\Common.Tool.csproj" />
+      <ProjectReference Include="..\FrameSync\FrameSync.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Kcp">
+        <HintPath>C:\Users\Administrator\.nuget\packages\kcp\2.7.0\lib\net8.0\Kcp.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Kcp" Version="2.7.0" />
+    </ItemGroup>
+
+</Project>
