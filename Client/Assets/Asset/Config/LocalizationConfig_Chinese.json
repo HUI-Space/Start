@@ -1,0 +1,601 @@
+{
+  "DataList": [
+    {
+      "Id": 1,
+      "Text": "无限滚动列表"
+    },
+    {
+      "Id": 2,
+      "Text": "本地化修改"
+    },
+    
+    
+    {
+      "Id": 100,
+      "Text": "Scroller 例子"
+    },
+    {
+      "Id": 101,
+      "Text": "水平滚动条"
+    },
+    {
+      "Id": 102,
+      "Text": "竖直滚动条"
+    },
+    {
+      "Id": 103,
+      "Text": "网格滚动条"
+    },
+    {
+      "Id": 110,
+      "Text": "子物体非固定大小"
+    },
+    {
+      "Id": 111,
+      "Text": "子物体固定大小"
+    },
+    {
+      "Id": 112,
+      "Text": "滑动到索引"
+    },
+    {
+      "Id": 113,
+      "Text": "滑动到指定位置"
+    },
+    {
+      "Id": 114,
+      "Text": "子物体数量"
+    },
+    {
+      "Id": 115,
+      "Text": "滑动到索引按钮"
+    },
+    {
+      "Id": 116,
+      "Text": "滑动到指定位置按钮"
+    },
+    {
+      "Id": 117,
+      "Text": "刷新列表"
+    },
+    {
+      "Id": 120,
+      "Text": "子物体横向排列"
+    },
+    {
+      "Id": 121,
+      "Text": "子物体竖向排列"
+    },
+    
+    {
+      "Id": 200,
+      "Text": "中文"
+    },
+    {
+      "Id": 201,
+      "Text": "英文"
+    },
+    {
+      "Id": 202,
+      "Text": "本地化设置界面"
+    },
+
+    {
+      "Id": 300,
+      "Text": "音频"
+    },
+    {
+      "Id": 301,
+      "Text": "背景音乐"
+    },
+    {
+      "Id": 302,
+      "Text": "音效"
+    },
+    {
+      "Id": 303,
+      "Text": "背景音乐是否运行"
+    },
+    {
+      "Id": 304,
+      "Text": "播放背景音乐"
+    },
+    {
+      "Id": 305,
+      "Text": "关闭背景音乐"
+    },
+    {
+      "Id": 306,
+      "Text": "播放下一首背景音乐"
+    },
+    {
+      "Id": 307,
+      "Text": "随机播放背景音乐"
+    },
+    {
+      "Id": 308,
+      "Text": "播放音效"
+    },
+    {
+      "Id": 309,
+      "Text": "播放淡入音效"
+    },
+    {
+      "Id": 310,
+      "Text": "播放淡出音效"
+    },
+    {
+      "Id": 311,
+      "Text": "播放淡入淡出音效"
+    },
+
+  
+    {
+      "Id": 400,
+      "Text": "配置界面"
+    },
+    {
+      "Id": 401,
+      "Text": "配置名字"
+    },
+    {
+      "Id": 402,
+      "Text": "配置字段"
+    },
+    {
+      "Id": 403,
+      "Text": "配置Id"
+    },
+    {
+      "Id": 404,
+      "Text": "确定"
+    },
+    {
+      "Id": 405,
+      "Text": "结果（值）"
+    },
+    {
+      "Id": 406,
+      "Text": "Json文本"
+    },
+    {
+      "Id": 407,
+      "Text": "代码使用方法"
+    },
+    {
+      "Id": 408,
+      "Text": "ConfigManager.Instance.GetConfig<T>();\nConfigManager.Instance.GetConfig(Type type);"
+    },
+    {
+      "Id": 409,
+      "Text": "配置Id不存在"
+    },
+    {
+      "Id": 410,
+      "Text": "配置说明"
+    },
+    {
+      "Id": 411,
+      "Text": "1.这个界面可以读取所有项目配置。\n \n通过选择配置表,字段名称,Id,点击确定即可显示字段，以及显示Json配置内容。\n \n2.左下角显示了API使用方式。\n \n3.使用编辑器状态栏（Start/Framework/ConfigEditorWindow）既可以生成配置表数据结构,Json配置"
+    },
+
+    {
+      "Id": 500,
+      "Text": "协程"
+    },
+    {
+      "Id": 501,
+      "Text": "协程说明"
+    },
+    {
+      "Id": 502,
+      "Text": "这个界面主要展示对Unity协程的扩展。\n \n1.将Unity的携程进行封装，不在局限于仅在继承MonoBehaviour下使用携程。\n \n2.主要接口 \n2.1.CoroutineController.Run(IEnumerator coroutine, bool autoStart = true, Action<bool> onStopCallback = null)自定义运行携程。\n2.2.CoroutineController.RunAfterSeconds(float seconds, Action action) 对WaitForSeconds 进行封装。\n2.3.CoroutineController.RunAtEndOfFrame(Action action) 对WaitForEndOfFrame 进行封装。\n2.4.CoroutineController.RunAtNextFrame(Action action) 等待一帧执行。\n2.5.CoroutineController.RunAtFixedUpdate(Action action) 对WaitForFixedUpdate 进行封装。\n \n3.也可以将该接口与Task相结合使用"
+    },
+    {
+      "Id": 503,
+      "Text": "请点击按钮！！"
+    },
+    {
+      "Id": 504,
+      "Text": "WaitForSeconds"
+    },
+    {
+      "Id": 505,
+      "Text": "WaitForEndOfFrame"
+    },
+    {
+      "Id": 506,
+      "Text": "WaitForNextFrame"
+    },
+    {
+      "Id": 507,
+      "Text": "WaitForFixedUpdate"
+    },
+    {
+      "Id": 508,
+      "Text": "运行自定义携程"
+    },
+    {
+      "Id": 509,
+      "Text": "暂停自定义携程"
+    },
+    {
+      "Id": 510,
+      "Text": "恢复自定义携程"
+    },
+    {
+      "Id": 511,
+      "Text": "停止自定义携程"
+    },
+    {
+      "Id": 512,
+      "Text": "自动停止"
+    },
+    {
+      "Id": 513,
+      "Text": "手动停止"
+    },
+    {
+      "Id": 514,
+      "Text": "等待五秒协程"
+    },
+    {
+      "Id": 515,
+      "Text": "五秒到了开始执行协程"
+    },
+    {
+      "Id": 516,
+      "Text": "当前帧的渲染结束后继续执行协程"
+    },
+    {
+      "Id": 517,
+      "Text": "下一个固定帧（FixedUpdate）结束时继续执行协程"
+    },
+    {
+      "Id": 518,
+      "Text": "等待一帧执行协程"
+    },
+
+    
+    {
+      "Id": 600,
+      "Text": "事件"
+    },
+    {
+      "Id": 601,
+      "Text": "事件说明"
+    },
+    {
+      "Id": 602,
+      "Text": "这个界面主要展示对框架中事件的使用\n1.主要API\n\n1.1.EventManager.Instance.AddListener(int messageType, int messageId, Action<IGenericData> callback, int priority = 0);\n\n1.2.EventManager.Instance.RemoveListener(int messageType, int messageId, Action<IGenericData> callback);\n\n1.3.EventManager.Instance.SendMessage(int messageType, int messageId, IGenericData data);\n\n1.4.EventManager.Instance.DelaySendMessage(int messageType, int messageId, IGenericData data);"
+    },
+    {
+      "Id": 603,
+      "Text": "监听消息类型"
+    },
+    {
+      "Id": 604,
+      "Text": "监听消息Id"
+    },
+    {
+      "Id": 605,
+      "Text": "发送消息类型"
+    },
+    {
+      "Id": 606,
+      "Text": "发送消息Id"
+    },
+    {
+      "Id": 607,
+      "Text": "消息内容"
+    },
+    {
+      "Id": 608,
+      "Text": "监听消息"
+    },
+    {
+      "Id": 609,
+      "Text": "移除监听"
+    },
+    {
+      "Id": 610,
+      "Text": "发生消息"
+    },
+    {
+      "Id": 611,
+      "Text": "延迟发生消息"
+    },
+    {
+      "Id": 612,
+      "Text": "监听事件信息"
+    },
+    {
+      "Id": 613,
+      "Text": "接收事件信息"
+    },
+    
+    
+    
+    {
+      "Id": 700,
+      "Text": "网络数据集"
+    },
+    {
+      "Id": 701,
+      "Text": "网络数据集类型"
+    },
+    {
+      "Id": 702,
+      "Text": "网络数据集类型字段"
+    },
+    {
+      "Id": 703,
+      "Text": "网络数据集类型字段值"
+    },
+    {
+      "Id": 704,
+      "Text": "模拟器网络数据同步"
+    },
+    {
+      "Id": 705,
+      "Text": "网络数据集脚本"
+    },
+    {
+      "Id": 706,
+      "Text": "网络数据集说明"
+    },
+    {
+      "Id": 707,
+      "Text": "这个界面主要展示对网络数据集的模拟使用。\n \n1.网络数据集主要用来对网络数据进行同步。\n \n2.主要API \n \n2.1.DataSetManager.Instance.GetDataSetBase(Type type);\n \n2.2.DataSetManager.Instance.GetDataSet<T>();\n \n3.对应的DataSet中注册网络消息"
+    },
+
+
+    {
+      "Id": 800,
+      "Text": "数据实体"
+    },
+    {
+      "Id": 801,
+      "Text": "模拟数据实体_1"
+    },
+    {
+      "Id": 802,
+      "Text": "模拟数据实体_1_字段"
+    },
+    {
+      "Id": 803,
+      "Text": "模拟数据实体_1_字段值"
+    },
+    {
+      "Id": 804,
+      "Text": "模拟数据实体_2"
+    },
+    {
+      "Id": 805,
+      "Text": "模拟数据实体_2_字段"
+    },
+    {
+      "Id": 806,
+      "Text": "模拟数据实体_2_字段值"
+    },
+    {
+      "Id": 807,
+      "Text": "模拟数据实体同步"
+    },
+    {
+      "Id": 808,
+      "Text": "输入ID"
+    },
+    {
+      "Id": 809,
+      "Text": "数据实体"
+    },
+    {
+      "Id": 810,
+      "Text": "这个界面主要展示对数据实体的模拟使用。\n \n1.数据实体可以根据网络数据集同步数据，也可自定义数据。\n \n2.主要API：\n \n 2.1.DataEntityManager.Instance.GetDataEntity<TValue>() where TValue : DataEntity, new()。\n \n 2.2.DataEntityManager.Instance.GetDataEntity<TKey, TValue>(TKey key) where TValue : DataEntity<TKey>, new()。\n \n 2.3.DataEntityManager.Instance.ResetAllCollection()。"
+    },
+
+    {
+      "Id": 900,
+      "Text": "有限状态机"
+    },
+    {
+      "Id": 901,
+      "Text": "异步状态机"
+    },
+    {
+      "Id": 902,
+      "Text": "异步状态机状态"
+    },
+    {
+      "Id": 903,
+      "Text": "选择状态"
+    },
+    {
+      "Id": 904,
+      "Text": "开始异步状态机"
+    },
+    {
+      "Id": 905,
+      "Text": "切换异步状态机状态"
+    },
+    
+    {
+      "Id": 906,
+      "Text": "同步状态机"
+    },
+    {
+      "Id": 907,
+      "Text": "同步状态机状态"
+    },
+    {
+      "Id": 908,
+      "Text": "选择状态"
+    },
+    {
+      "Id": 909,
+      "Text": "开始同步状态机"
+    },
+    {
+      "Id": 910,
+      "Text": "切换同步状态机状态"
+    },
+    {
+      "Id": 911,
+      "Text": "状态机说明"
+    },
+    {
+      "Id": 912,
+      "Text": "这个界面主要展示对有限状态机和异步状态机的使用。\n \n1.有限状态机主要用来对有限状态进行切换。\n \n2.异步状态机主要用来对异步状态进行切换。\n \n3.主要API：\n \n 3.1.FsmManager.Instance.GetFsm<T>() where T : Fsm, new()。\n \n 3.2.FsmManager.Instance.GetAsyncFsm<T>() where T : AsyncFsm, new()。\n \n 3.3.FsmManager.Instance.ResetAllCollection()。"
+    },
+    
+    {
+      "Id": 1000,
+      "Text": "Http例子"
+    },
+    {
+      "Id": 1001,
+      "Text": "Get:"
+    },
+    {
+      "Id": 1002,
+      "Text": "Post:"
+    },
+    {
+      "Id": 1003,
+      "Text": "Post:消息内容"
+    },
+    {
+      "Id": 1004,
+      "Text": "开始Get"
+    },
+    {
+      "Id": 1005,
+      "Text": "开始Post"
+    },
+    {
+      "Id": 1006,
+      "Text": "请输入Get的网络地址"
+    },
+    {
+      "Id": 1007,
+      "Text": "请输入Post的网络地址"
+    },
+    {
+      "Id": 1008,
+      "Text": "请输入Post的数据"
+    },
+    {
+      "Id": 1009,
+      "Text": "Http说明"
+    },
+    {
+      "Id": 1010,
+      "Text": "这个界面主要展示对Http的模拟使用。\n \n1.Http主要用来对网络进行模拟。\n \n2.主要API：\n \n 2.1.HttpManager.Instance.Get(string url, int timeout = 0);\n \n 2.2.HttpManager.Instance.Post(string url, byte[] postData, int timeout = 10)。"
+    },
+    
+    {
+      "Id": 1100,
+      "Text": "日志"
+    },
+    {
+      "Id": 1101,
+      "Text": "输出日志"
+    },
+    {
+      "Id": 1102,
+      "Text": "输入日志"
+    },
+    {
+      "Id": 1103,
+      "Text": "日志说明"
+    },
+    {
+      "Id": 1104,
+      "Text": "这个界面主要展示对日志的模拟使用。\n \n1.日志主要用来对日志进行模拟。\n \n2.主要API：\n \n 2.1.Logger.Log(ELogType logType, string message, params object[] args);\n \n 2.2.Logger.Info(string message, params object[] args);\n \n 2.3.Logger.Warning(string message, params object[] args);\n \n 2.3.Logger.Error(string message, params object[] args);\n \n 2.3.Logger.Fatal(string message, params object[] args);\n 3.还可以继承ILogHelper实现更多中日志的使用方法，详情请查看Logger.cs脚本"
+    },
+
+    {
+      "Id": 1200,
+      "Text": "设置"
+    },
+    {
+      "Id": 1201,
+      "Text": "请输入"
+    },
+    {
+      "Id": 1202,
+      "Text": "设置值"
+    },
+    {
+      "Id": 1203,
+      "Text": "获取设置"
+    },
+    {
+      "Id": 1204,
+      "Text": "保存设置"
+    },
+    {
+      "Id": 1205,
+      "Text": "结果"
+    },
+    {
+      "Id": 1206,
+      "Text": "删除Key"
+    },
+    {
+      "Id": 1207,
+      "Text": "执行删除Key"
+    },
+    {
+      "Id": 1208,
+      "Text": "执行删除所有设置"
+    },
+    {
+      "Id": 1209,
+      "Text": "设置说明"
+    },
+    {
+      "Id": 1210,
+      "Text": "这个界面主要展示对设置文件的模拟使用。\n \n1.设置文件主要用来对设置文件的模拟使用。\n \n2.主要API：\n \n 2.1.SettingManager.Instance.GetBool(string settingName, bool defaultValue);\n \n 2.2.SettingManager.Instance.SetBool(string settingName, bool value);\n \n 2.3.SettingManager.Instance.GetInt(string settingName, int defaultValue);\n \n 2.4.SettingManager.Instance.SetInt(string settingName, int value);\n \n 2.4.SettingManager.Instance.SetInt(string settingName, int value);\n \n 2.4.SettingManager.Instance.SetInt(string settingName, int value);\n \n 2.5.SettingManager.Instance.GetFloat(string settingName, float defaultValue);\n \n 2.6.SettingManager.Instance.SetFloat(string settingName, float value);\n \n 2.7.SettingManager.Instance.GetString(string settingName, string defaultValue);\n \n 2.8.SettingManager.Instance.SetString(string settingName, string value);\n \n 2.9.SettingManager.Instance.DeleteKey(string settingName);\n \n 2.10.SettingManager.Instance.HasSetting(string settingName);\n \n 2.11.SettingManager.Instance.DeleteAll();"
+    },
+    {
+      "Id": 1211,
+      "Text": "是否拥有配置？"
+    },
+    {
+      "Id": 1212,
+      "Text": "执行查询"
+    },
+    {
+      "Id": 1213,
+      "Text": "获取类型："
+    },
+    {
+      "Id": 1214,
+      "Text": "保存类型："
+    },
+
+    
+    {
+      "Id": 1300,
+      "Text": "场景"
+    },
+    {
+      "Id": 1301,
+      "Text": "场景说明"
+    },
+    {
+      "Id": 1302,
+      "Text": "这个界面主要展示对设置文件的模拟使用。\n \n1.设置文件主要用来对设置文件的模拟使用。\n \n2.主要API：\n \n 2.1.SettingManager.Instance.GetBool(string settingName, bool defaultValue);\n \n 2.2.SettingManager.Instance.SetBool(string settingName, bool value);\n \n 2.3.SettingManager.Instance.GetInt(string settingName, int defaultValue);\n \n 2.4.SettingManager.Instance.SetInt(string settingName, int value);\n \n 2.4.SettingManager.Instance.SetInt(string settingName, int value);\n \n 2.4.SettingManager.Instance.SetInt(string settingName, int value);\n \n 2.5.SettingManager.Instance.GetFloat(string settingName, float defaultValue);\n \n 2.6.SettingManager.Instance.SetFloat(string settingName, float value);\n \n 2.7.SettingManager.Instance.GetString(string settingName, string defaultValue);\n \n 2.8.SettingManager.Instance.SetString(string settingName, string value);\n \n 2.9.SettingManager.Instance.DeleteKey(string settingName);\n \n 2.10.SettingManager.Instance.HasSetting(string settingName);\n \n 2.11.SettingManager.Instance.DeleteAll();"
+    },
+    {
+      "Id": 1303,
+      "Text": "跳转场景"
+    },
+    {
+      "Id": 1304,
+      "Text": "返回主场景"
+    }
+  ]
+}

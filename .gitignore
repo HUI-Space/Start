@@ -32,7 +32,6 @@ ProjectSettings/RiderScriptEditorPersistedState.asset
 HybridCLRData
 
 #Unity/Assets
-*.meta
 Assets/StreamingAssets/
 Assets/StreamingAssets.meta
 

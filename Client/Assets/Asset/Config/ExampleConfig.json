@@ -1,0 +1,71 @@
+{
+  "DataList": [
+    {
+      "Id": 1,
+      "UIName": "ScrollerPanel",
+      "LocalizationId": 1
+    },
+    {
+      "Id": 2,
+      "UIName": "LocalizationPanel",
+      "LocalizationId": 2
+    },
+    {
+      "Id": 3,
+      "UIName": "AudioPanel",
+      "LocalizationId": 300
+    },
+    {
+      "Id": 4,
+      "UIName": "ConfigPanel",
+      "LocalizationId": 400
+    },
+    {
+      "Id": 5,
+      "UIName": "CoroutinePanel",
+      "LocalizationId": 500
+    }
+    ,
+    {
+      "Id": 6,
+      "UIName": "EventPanel",
+      "LocalizationId": 600
+    },
+    {
+      "Id": 7,
+      "UIName": "DataSetPanel",
+      "LocalizationId": 700
+    },
+    {
+      "Id": 8,
+      "UIName": "DataEntityPanel",
+      "LocalizationId": 800
+    },
+    {
+      "Id": 9,
+      "UIName": "FsmPanel",
+      "LocalizationId": 900
+    },
+    {
+      "Id": 10,
+      "UIName": "HttpPanel",
+      "LocalizationId": 1000
+    },
+    {
+      "Id": 11,
+      "UIName": "LogPanel",
+      "LocalizationId": 1100
+    },
+    {
+      "Id": 12,
+      "UIName": "SettingPanel",
+      "LocalizationId": 1200
+    },
+    {
+      "Id": 13,
+      "UIName": "ScenePanel",
+      "LocalizationId": 1300
+    }
+    
+  ]
+}

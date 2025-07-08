@@ -1,0 +1,54 @@
+{
+    "Groups": [
+        {
+            "Enable": false,
+            "Name": "Base",
+            "Tags": "Main",
+            "Desc": "3333",
+            "GroupItems": [
+                {
+                    "Path": "Assets/Asset/UI",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Asset/Audio",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Asset/Config",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Asset/Common",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Asset/Scene",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Asset/Model",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                },
+                {
+                    "Path": "Assets/Asset/Material",
+                    "CollectorType": 0,
+                    "PackType": 0,
+                    "AddressType": 0
+                }
+            ]
+        }
+    ]
+}

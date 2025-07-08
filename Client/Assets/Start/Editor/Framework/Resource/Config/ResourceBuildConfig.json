@@ -1,0 +1,11 @@
+{
+    "LocalGameVersion": "1.1.5",
+    "OutputDirectory": "H:/_File/Unity/Start/Client/AssetBundle",
+    "ResourceModeType": 1,
+    "NameType": 1,
+    "BuildTarget": 13,
+    "BuildModeType": 1,
+    "CompressionType": 1,
+    "DisableWriteTypeTree": false,
+    "IgnoreTypeTreeChanges": true
+}

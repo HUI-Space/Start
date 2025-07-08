@@ -1,0 +1,39 @@
+{
+  "DataList": [
+    {
+      "Id": 1,
+      "AudioName": "UI/UI_3.Ogg",
+      "AudioType": 2
+    },
+    {
+      "Id": 2,
+      "AudioName": "BackGround/BackGround_1.mp3",
+      "AudioType": 1
+    },
+    {
+      "Id": 3,
+      "AudioName": "BackGround/BackGround_2.mp3",
+      "AudioType": 1
+    },
+    {
+      "Id": 4,
+      "AudioName": "BackGround/BackGround_3.mp3",
+      "AudioType": 1
+    },
+    {
+      "Id": 5,
+      "AudioName": "BackGround/BackGround_4.mp3",
+      "AudioType": 1
+    },
+    {
+      "Id": 6,
+      "AudioName": "UI/UI_1.Ogg",
+      "AudioType": 2
+    },
+    {
+      "Id": 7,
+      "AudioName": "UI/UI_2.Ogg",
+      "AudioType": 2
+    }
+  ]
+}
