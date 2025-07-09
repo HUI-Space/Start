@@ -33,7 +33,7 @@ namespace Start
         {
             ConfigName = configName;
             FieldName = fieldName;
-            FieldNameDescription = default;
+            FieldNameDescription = string.Empty;
             StartId = -1;
             EndId = long.MaxValue;
         }

@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5433794d6e8c914583afb755cc765df, type: 3}
   m_Name: MacroSettings
   m_EditorClassIdentifier: 
-  Settings: []
+  Settings:
+  - Enabled: 1
+    Name: 
+    Macro: 
+  - Enabled: 1
+    Name: 
+    Macro: 
