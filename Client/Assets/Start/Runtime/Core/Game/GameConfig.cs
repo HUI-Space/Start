@@ -23,7 +23,7 @@ namespace Start
         /// <summary>
         /// 读取AssetBundle
         /// </summary>
-        public static bool EnableAssetbundle = true;
+        public static bool EnableAssetbundle = false;
         
         /// <summary>
         /// 游戏资源模式
@@ -33,8 +33,8 @@ namespace Start
         /// <summary>
         /// CDN地址
         /// </summary>
-        public static readonly string CDNUrl = "http://192.168.16.194";
-        
+        public const string CDNUrl = "http://192.168.16.194";
+
         #endregion
 
 

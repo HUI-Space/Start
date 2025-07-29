@@ -48,7 +48,6 @@ namespace Start
             QuestionButton.onClick.RemoveListener(OnQuestionButtonClick);
         }
 
-        private AsyncOperationHandle<Scene> _asyncOperationHandle;
         
         private async void OnRunButtonClick()
         {
@@ -60,13 +59,9 @@ namespace Start
             await UIActions.ScenePanel_Open(1);
             await Task.Delay(1000);
             await UIActions.UpdateLoadingProgress(0.66f);
-            if (_asyncOperationHandle != null)
-            {
-                SceneManager.Instance.UnloadScene(_asyncOperationHandle);
-                _asyncOperationHandle = null;
-            }
-            _asyncOperationHandle = SceneManager.Instance.LoadSceneAsync<Scene>("Assets/Asset/Scene/ExampleScene.unity",true);
-            await _asyncOperationHandle.Task;
+            SceneManager.Instance.UnloadScene("Assets/Asset/Scene/MainScene.unity");
+            AsyncOperationHandle<Scene> asyncOperationHandle = SceneManager.Instance.LoadSceneAsync<Scene>("Assets/Asset/Scene/ExampleScene.unity",true);
+            await asyncOperationHandle.Task;
             await UIActions.UpdateLoadingProgress(1f);
             await Task.Delay(1000);
             await UIActions.HideLoading();
@@ -79,13 +74,9 @@ namespace Start
             await UIActions.CloseAllUI();
             await UIActions.OpenUI(nameof(MainPanel));
             await UIActions.OpenUI(nameof(ScenePanel));
-            if (_asyncOperationHandle != null)
-            {
-                SceneManager.Instance.UnloadScene(_asyncOperationHandle);
-                _asyncOperationHandle = null;
-            }
-            _asyncOperationHandle = SceneManager.Instance.LoadSceneAsync<Scene>("Assets/Asset/Scene/MainScene.unity",false);
-            await _asyncOperationHandle.Task;
+            SceneManager.Instance.UnloadScene("Assets/Asset/Scene/ExampleScene.unity");
+            AsyncOperationHandle<Scene> asyncOperationHandle = SceneManager.Instance.LoadSceneAsync<Scene>("Assets/Asset/Scene/MainScene.unity",false);
+            await asyncOperationHandle.Task;
             await UIActions.UpdateLoadingProgress(1f);
             await UIActions.HideLoading();
         }

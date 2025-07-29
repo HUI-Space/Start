@@ -52,7 +52,7 @@
 
         public void UnloadScene(string sceneName)
         {
-            
+            ResourceLoader?.UnloadScene(sceneName);
         }
         
         public void Unload(IAsyncOperationHandle handle)
@@ -62,7 +62,7 @@
 
         public void Unload(string assetName)
         {
-            
+            ResourceLoader?.Unload(assetName);
         }
         public bool HasAsset(string assetName)
         {
