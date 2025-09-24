@@ -95,17 +95,15 @@ namespace Start
                 {
                     item.Item2--;
                 }
-                if (item.Item2 <= 0)
+                else
                 {
-                    
                     UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(handle.AssetName);
+                    _asyncOperationHandles.Remove(handle.AssetName);
                     ReferencePool.Release(item.Item1);
                     // 可选：强制GC回收内存
                     GC.Collect();
-                    _asyncOperationHandles.Remove(handle.AssetName);
                 }
             }
-            
         }
 
         public void UnloadScene(string sceneName)
@@ -134,10 +132,10 @@ namespace Start
                 {
                     item.Item2--;
                 }
-                if (item.Item2 <= 0)
+                else
                 {
-                    ReferencePool.Release(item.Item1);
                     _asyncOperationHandles.Remove(assetName);
+                    ReferencePool.Release(item.Item1);
                 }
             }
         }

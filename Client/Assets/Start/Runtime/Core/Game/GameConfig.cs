@@ -33,8 +33,8 @@ namespace Start
         /// <summary>
         /// CDN地址
         /// </summary>
-        public static readonly string CDNUrl = "http://192.168.16.194";
-        
+        public const string CDNUrl = "http://192.168.16.194";
+
         #endregion
 
 
