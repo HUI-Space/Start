@@ -6,105 +6,45 @@ namespace Start
     {
         public override int Priority => 999999999;
 
+        private IBattleFrameEngine _battleFrameEngine;
 
         public void Update(float elapseSeconds, float realElapseSeconds)
         {
             RenderUpdate();
         }
-    }
-
-    #region Framework
-
-    public partial class BattleManager
-    {
-        public void StartBattle(EBattleType battleType, BattleData battleData)
+        
+        public void StartEngine(EBattleType battleType, BattleData battleData)
         {
             switch (battleType)
             {
                 case EBattleType.Local:
-                    StartLocalBattle(battleData);
+                    _battleFrameEngine = new LocalBattleFrameEngine();
                     break;
                 case EBattleType.Remote:
-                    StartRemoteBattle(battleData);
+                    _battleFrameEngine = new RemoteBattleFrameEngine();
                     break;
             }
-        }
-
-        public void StopBattle()
-        {
-            
+            _battleFrameEngine.StartEngine(battleType,battleData);
         }
 
         public void StopEngine()
         {
-            FrameEngine.StopEngine();
+            _battleFrameEngine?.StopEngine();
         }
         
         public void Pause()
         {
-            FrameEngine.Pause();
+            _battleFrameEngine?.Pause();
         }
 
         public void Resume()
         {
-            FrameEngine.Resume();
+            _battleFrameEngine?.Resume();
         }
         
         private void RenderUpdate()
         {
-            FrameEngine.RenderUpdate();
+            _battleFrameEngine?.RenderEngineUpdate();
         }
     }
-
-    #endregion
-
-    #region RemoteBattleController
-    public partial class BattleManager
-    {
-        public void StartRemoteBattle(BattleData battleData)
-        {
-            FixedPointNumber frameInterval = new FixedPointNumber(BattleConst.FrameInterval,1000);
-            RemoteBattleController.Instance.StartBattle(battleData);
-            FrameEngine.StartEngine(frameInterval,RemoteBattleLogicUpdate,RemoteBattleNetworkUpdate,RemoteBattleRenderUpdate);
-        }
-        
-        private void RemoteBattleLogicUpdate()
-        {
-            RemoteBattleController.Instance.LogicUpdate();
-        }
-        
-        private void RemoteBattleNetworkUpdate()
-        {
-            RemoteBattleController.Instance.NetworkUpdate();
-        }
-
-        private void RemoteBattleRenderUpdate()
-        {
-            RemoteBattleController.Instance.RenderUpdate();
-        }
-    }
-    #endregion
-    
-    #region LocalBattleController
-    public partial class BattleManager
-    {
-        public void StartLocalBattle(BattleData battleData)
-        {
-            FixedPointNumber frameInterval = new FixedPointNumber(BattleConst.FrameInterval,1000);
-            RemoteBattleController.Instance.StartBattle(battleData);
-            FrameEngine.StartEngine(frameInterval,LocalLogicUpdate,LocalBattleRenderUpdate);
-        }
-        
-        private void LocalLogicUpdate()
-        {
-            LocalBattleController.Instance.LogicUpdate();
-        }
-        
-        private void LocalBattleRenderUpdate()
-        {
-            LocalBattleController.Instance.RenderUpdate();
-        }
-    }
-    #endregion
-    
 }

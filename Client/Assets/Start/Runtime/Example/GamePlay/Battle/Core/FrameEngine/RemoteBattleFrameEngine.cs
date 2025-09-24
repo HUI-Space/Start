@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 
-
 namespace Start
 {
-    public class RemoteBattleController : SingletonBase<RemoteBattleController>,IBattleController
+    public class RemoteBattleFrameEngine : BattleFrameEngineBase
     {
-        public bool Paused { get; private set; }
-        
         /// <summary>
         /// 权威帧
         /// </summary>
@@ -52,15 +49,20 @@ namespace Start
         /// </summary>
         private readonly Queue<MatchEntity> _predictionMatchEntityQueue = new Queue<MatchEntity>();
         
-        public void StartBattle(BattleData battleData)
+        public RemoteBattleFrameEngine()
         {
-            _stopWatch = new Stopwatch();
-            FrameBuffer = new FrameBuffer();
             TimeCounter = new TimeCounter(0, 0, BattleConst.FrameInterval);
+            FrameBuffer = new FrameBuffer();
+            _stopWatch = new Stopwatch();
             _stopWatch.Start();
         }
         
-        public void LogicUpdate()
+        protected override void NetworkUpdate()
+        {
+            
+        }
+
+        protected override void LogicUpdate()
         {
             //当前时间
             long timeNow = _stopWatch.ElapsedMilliseconds;
@@ -162,27 +164,11 @@ namespace Start
             }
         }
 
-        public void NetworkUpdate()
+        protected override void RenderUpdate()
         {
             
         }
-
-        public void RenderUpdate()
-        {
-            
-        }
-
-        public void Pause()
-        {
-            Paused = true;
-        }
-
-        public void Resume()
-        {
-            Paused = false;
-        }
-
-
+        
         private void Prediction(Frame predictionFrame)
         {
             EntityController.UpdateMatchEntity(PredictionMatchEntity,predictionFrame);
