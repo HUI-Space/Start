@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
+using UnityEditor;
 using UnityEngine;
-using Logger = Start.Logger;
 
 namespace Start
 {
@@ -11,7 +9,7 @@ namespace Start
     {
         private static bool _isInit;
         private static Rect _safeArea;
-        protected RectTransform Rect;
+        private RectTransform _rect;
 
         /// <summary>
         /// 实际区域
@@ -23,14 +21,25 @@ namespace Start
         {
             if (_isInit == false)
             {
+#if UNITY_EDITOR
+                // 获取 Game 视图的当前分辨率组
+                Vector2 resolution = Handles.GetMainGameViewSize();
+                _safeArea = new Rect(0, 0, resolution.x, resolution.y);
+                if (!_safeArea.Equals(Screen.safeArea))
+                {
+                    //开了Simulator
+                    _safeArea = Screen.safeArea;
+                }
+#else
                 _safeArea = Screen.safeArea;
+#endif
                 _isInit = true;
             }
 
             Logger.Info($"SafeAreaDebug:{_safeArea.position} width {_safeArea.width} height {_safeArea.height} currentRes {Screen.currentResolution.width}x{Screen.currentResolution.height}");
-            Rect = transform as RectTransform;
+            _rect = transform as RectTransform;
 
-            if (Rect == null)
+            if (_rect == null)
             {
                 Logger.Error(gameObject + "没有RectTransform请检查");
                 return;
@@ -112,6 +121,7 @@ namespace Start
             }
         }
 
+        //TODO 添加自定义SafeArea 适配傻吊手机
         [HideInInspector]
         public List<CustomSafeArea> customSafeAreas;
 
@@ -165,14 +175,14 @@ namespace Start
             panelScale.y /= UIController.Instance.PanelScale.y;
             panelScale.z /= UIController.Instance.PanelScale.z;
             Vector2 v = Vector2.zero;
-            Rect.pivot = v;
-            Rect.anchorMin = v;
-            Rect.anchorMax = v;
+            _rect.pivot = v;
+            _rect.anchorMin = v;
+            _rect.anchorMax = v;
             v.Set(safeArea.x / panelScale.x, safeArea.y / panelScale.y);
-            Rect.anchoredPosition = v;
+            _rect.anchoredPosition = v;
             v.Set(safeArea.width / panelScale.x, safeArea.height / panelScale.y);
-            Rect.sizeDelta = v;
-            Rect.localScale = Vector3.one;
+            _rect.sizeDelta = v;
+            _rect.localScale = Vector3.one;
         }
     }
 }

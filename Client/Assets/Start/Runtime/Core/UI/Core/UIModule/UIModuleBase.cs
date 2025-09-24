@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ namespace Start
                     _instance = UIController.Instance.UIRoot.GetComponentInChildren<T>();
                     if (_instance == null)
                     {
-                        _instance = new GameObject(nameof(T)).AddComponent<T>();
+                        _instance = new GameObject(typeof(T).Name).AddComponent<T>();
                         _instance.transform.SetParent(UIController.Instance.UIRoot);
                     }
                     SingletonMonoBehaviourController.Instance.RegisterSingleton(_instance);

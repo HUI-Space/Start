@@ -62,8 +62,8 @@ namespace Start
                 EventSystem.transform.SetParent(this);
             }
 
-            Transform UIRootTransform = transform.Find(nameof(UIRoot));
-            if (UIRootTransform == null)
+            Transform uiRootTransform = transform.Find(nameof(UIRoot));
+            if (uiRootTransform == null)
             {
                 UIRoot = new GameObject(nameof(UIRoot),typeof(RectTransform));
                 UIRoot.layer = LayerMask.NameToLayer("UI");
@@ -72,7 +72,7 @@ namespace Start
             }
             else
             {
-                UIRoot = UIRootTransform.gameObject;
+                UIRoot = uiRootTransform.gameObject;
             }
 
             UICanvas = UIRoot.GetComponent<Canvas>();
@@ -89,7 +89,7 @@ namespace Start
             {
                 UICanvasScaler = UIRoot.AddComponent<CanvasScaler>();
                 UICanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-                UICanvasScaler.referenceResolution = new Vector2(1920, 1080);
+                UICanvasScaler.referenceResolution = new Vector2(Screen.width,Screen.height);
                 UICanvasScaler.matchWidthOrHeight = 0;
             }
             

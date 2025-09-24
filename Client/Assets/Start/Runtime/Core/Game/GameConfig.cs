@@ -23,7 +23,7 @@ namespace Start
         /// <summary>
         /// 读取AssetBundle
         /// </summary>
-        public static bool EnableAssetbundle = true;
+        public static bool EnableAssetbundle = false;
         
         /// <summary>
         /// 游戏资源模式
