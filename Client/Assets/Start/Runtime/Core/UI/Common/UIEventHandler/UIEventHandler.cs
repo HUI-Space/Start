@@ -11,7 +11,7 @@ namespace Start
     /// 只穿透下面的第一个物体
     /// 挂载的物体和需要穿透的物体上都需要有能接受射线的组件
     /// </summary>
-    public class ThroughEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IInitializePotentialDragHandler
+    public class UIEventHandler : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IInitializePotentialDragHandler
         , IPointerUpHandler, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler
     {
         [FoldoutGroup("控制点击事件")]
@@ -81,21 +81,21 @@ namespace Start
 
         #region 拖动
 
-        private List<GameObject> _curDragObjs = new List<GameObject>();
+        private List<GameObject> _curDragObjects = new List<GameObject>();
 
         public void OnInitializePotentialDrag(PointerEventData eventData)
         {
             if (IsInitializePotentialDrag)
-                PassEvent(eventData, ExecuteEvents.initializePotentialDrag, ref _curDragObjs);
+                PassEvent(eventData, ExecuteEvents.initializePotentialDrag, ref _curDragObjects);
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (IsBeginDrag == false) return;
-            if (_curDragObjs.Count > 0)
+            if (_curDragObjects.Count > 0)
             {
                 int throughCount = 0;
-                foreach (var t in _curDragObjs)
+                foreach (var t in _curDragObjects)
                 {
                     ExecuteEvents.Execute(t, eventData, ExecuteEvents.beginDragHandler);
 
@@ -111,10 +111,10 @@ namespace Start
         public void OnDrag(PointerEventData eventData)
         {
             if (IsDrag == false) return;
-            if (_curDragObjs.Count > 0)
+            if (_curDragObjects.Count > 0)
             {
                 int throughCount = 0;
-                foreach (var t in _curDragObjs)
+                foreach (var t in _curDragObjects)
                 {
                     ExecuteEvents.Execute(t, eventData, ExecuteEvents.dragHandler);
 
@@ -130,10 +130,10 @@ namespace Start
         public void OnEndDrag(PointerEventData eventData)
         {
             if (IsEndDrag == false) return;
-            if (_curDragObjs.Count > 0)
+            if (_curDragObjects.Count > 0)
             {
                 int throughCount = 0;
-                foreach (var t in _curDragObjs)
+                foreach (var t in _curDragObjects)
                 {
                     ExecuteEvents.Execute(t, eventData, ExecuteEvents.endDragHandler);
 

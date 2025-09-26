@@ -1,11 +1,7 @@
-﻿
-
-namespace Start
+﻿namespace Start
 {
     public class MatchRuntimePropertyComponent : IComponent<MatchRuntimePropertyComponent>
     {
-        
-        
         public static MatchRuntimePropertyComponent Create()
         {
             MatchRuntimePropertyComponent component = ReferencePool.Acquire<MatchRuntimePropertyComponent>();

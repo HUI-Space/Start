@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace Start
 {
     public partial class MatchEntity : IReference

@@ -10,7 +10,7 @@ namespace Start
         public Text MessageText;
         public Button StopButton;
         public CanvasGroup CanvasGroup;
-        public ThroughEventHandler EventHandler;
+        public UIEventHandler EventHandler;
 
         private CoroutineHandle _coroutineHandle;
         private readonly Queue<TipsData> _queue = new Queue<TipsData>();

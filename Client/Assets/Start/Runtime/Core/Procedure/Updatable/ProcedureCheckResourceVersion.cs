@@ -75,7 +75,7 @@ namespace Start
         /// <param name="LocalResourceVersionPath">本地资源版本号路径</param>
         /// <param name="data">远程资源版本信息</param>
         /// <returns></returns>
-        private async void CheckResourceVersion(string LocalResourceVersionPath,byte[] data)
+        private void CheckResourceVersion(string LocalResourceVersionPath,byte[] data)
         {
             string remoteResourceVersion = SerializerUtility.DeserializeObject<string>(data);
             string[] strings = remoteResourceVersion.Split('|');

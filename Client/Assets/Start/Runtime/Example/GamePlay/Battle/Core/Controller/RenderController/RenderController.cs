@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public class RenderController
+    public class RenderController : SingletonBase<InputController> 
     {
         
     }

@@ -1,13 +1,13 @@
 ﻿namespace Start
 {
-    public class InputComponent : IComponent<MatchRuntimePropertyComponent>
+    public class InputComponent : IComponent<InputComponent>
     {
         public System.Int32 Yaw;
         
-        public void CopyTo(MatchRuntimePropertyComponent component)
+        public void CopyTo(InputComponent component)
         {
             
-        }
+        } 
 
         public void Clear()
         {

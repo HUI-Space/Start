@@ -107,7 +107,7 @@ namespace Start
             }
         }
 
-        private async void CheckResourceUpdate()
+        private void CheckResourceUpdate()
         {
             Manifest localManifest = Fsm.GetData<Manifest>(ProcedureConst.LocalManifest);
             Manifest remoteMandatoryManifest = Fsm.GetData<Manifest>(ProcedureConst.RemoteMandatoryManifest);

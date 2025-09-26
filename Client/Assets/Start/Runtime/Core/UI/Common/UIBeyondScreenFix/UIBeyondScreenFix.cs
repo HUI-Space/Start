@@ -9,7 +9,7 @@ namespace Start
     /// 锚点必须在左上、右上、左下、右下
     /// 锚点在左上代表不会超出屏幕的上边和左边
     /// </summary>
-    public class UiBeyondScreenFix : MonoBehaviour
+    public class UIBeyondScreenFix : MonoBehaviour
     {
         public enum EAnchorsType
         {

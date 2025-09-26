@@ -136,8 +136,8 @@ namespace Start
                 else
                 {
                     //权威帧和预测帧不一致 回滚
-                    EntityController.UpdateMatchEntity(AuthorityMatchEntity,authorityFrame);
-                    EntityController.LogicUpdateState(AuthorityMatchEntity);
+                    MatchController.UpdateMatchEntity(AuthorityMatchEntity,authorityFrame);
+                    MatchController.LogicUpdateState(AuthorityMatchEntity);
                     
                     //预测帧队列出队回收
                     while (_predictionMatchEntityQueue.Count > 0)
@@ -169,10 +169,14 @@ namespace Start
             
         }
         
+        /// <summary>
+        /// 预测
+        /// </summary>
+        /// <param name="predictionFrame">预测帧</param>
         private void Prediction(Frame predictionFrame)
         {
-            EntityController.UpdateMatchEntity(PredictionMatchEntity,predictionFrame);
-            EntityController.LogicUpdateState(PredictionMatchEntity);
+            MatchController.UpdateMatchEntity(PredictionMatchEntity,predictionFrame);
+            MatchController.LogicUpdateState(PredictionMatchEntity);
             MatchEntity matchEntity = MatchEntity.Copy(PredictionMatchEntity);
             _predictionMatchEntityQueue.Enqueue(matchEntity);
         }

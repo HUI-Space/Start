@@ -2,12 +2,16 @@
 {
     public class TimeCounter
     {
+        /// <summary>
+        /// 帧间隔
+        /// </summary>
         public int Interval { get; private set; }
 
         /// <summary>
         /// 开始时间
         /// </summary>
         private long _startTime;
+        
         /// <summary>
         /// 开始帧
         /// </summary>

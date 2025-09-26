@@ -2,8 +2,44 @@
 
 namespace Start
 {
-    public static class EntityController
+    public class MatchController : SingletonBase<MatchController>
     {
+        /// <summary>
+        /// 比赛实体
+        /// </summary>
+        public MatchEntity MatchEntity { get; private set; }
+
+        /// <summary>
+        /// 预测实体
+        /// </summary>
+        public MatchEntity PredictMatchEntity { get; private set; }
+        /// <summary>
+        /// 渲染实体
+        /// </summary>
+        public MatchEntity RenderMatchEntity { get; private set; }
+        /// <summary>
+        /// 已确认实体
+        /// </summary>
+        public Queue<MatchEntity> ConfirmedMatchEntity = new Queue<MatchEntity>();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            MatchEntity = ReferencePool.Acquire<MatchEntity>();
+        }
+
+        public override void DeInitialize()
+        {
+            base.DeInitialize();
+            ReferencePool.Release(MatchEntity);
+            
+        }
+
+        public void LogicUpdate(Frame frame)
+        {
+            
+        }
+        
         /// <summary>
         /// 拷贝玩家输入到MatchEntity
         /// </summary>
