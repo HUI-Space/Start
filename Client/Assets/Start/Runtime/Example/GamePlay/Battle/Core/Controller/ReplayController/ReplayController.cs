@@ -6,7 +6,7 @@
     public class ReplayController : SingletonBase<ReplayController>
     {
 
-        public void SaveFrame(Frame frame)
+        public void SaveFrame(FrameData frame)
         {
             
         }

@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common\Common.Core\Common.Core.csproj" />
-      <ProjectReference Include="..\Common\Common.FrameSync\Common.FrameSync.csproj" />
+      <ProjectReference Include="..\Common\Common\Common.csproj" />
+      <ProjectReference Include="..\Common\Common.Protocol\Common.Protocol.csproj" />
       <ProjectReference Include="..\Common\Common.Tool\Common.Tool.csproj" />
       <ProjectReference Include="..\FrameSync\FrameSync.csproj" />
     </ItemGroup>

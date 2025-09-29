@@ -6,6 +6,6 @@
         /// 获取玩家当前输入
         /// </summary>
         /// <returns></returns>
-        PlayerInput GetInput();
+        FrameInput GetInput();
     }
 }

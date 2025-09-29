@@ -47,6 +47,13 @@ namespace Start.Editor
             GenerateUIConfig.Generate();
         }
         
+        [MenuItem("Start/框架/战斗编辑器", false, 1800)]
+        public static void OpenBattleEditorWindow()
+        {
+            BattleEditorWindow.OpenEditorWindow();
+        }
+        
+        
         #endregion
         
         #region 工具

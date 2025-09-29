@@ -13,7 +13,7 @@ namespace Start
             InputController.Instance.SetHelper(this);
         }
 
-        public PlayerInput GetInput()
+        public FrameInput GetInput()
         {
             byte realButtonState = 0;
             for (int i = 0; i < BattleButtons.Count; ++i)
@@ -23,10 +23,10 @@ namespace Start
                     realButtonState |= (byte)(1 << i);
                 }
             }
-            PlayerInput playerInput = new PlayerInput();
-            playerInput.Yaw = (byte)UIJoystick.GetRegion(UIJoystick.Direction, 4);
-            playerInput.Button = realButtonState;
-            return playerInput;
+            FrameInput frameInput = new FrameInput();
+            frameInput.Yaw = (byte)UIJoystick.GetRegion(UIJoystick.Direction, 4);
+            frameInput.Button = realButtonState;
+            return frameInput;
         }
     }
 }

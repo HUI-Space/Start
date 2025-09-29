@@ -27,7 +27,7 @@ namespace Start
         
         public void StartEngine(EBattleType battleType,BattleData battleData)
         {
-            FrameInterval = new FixedPointNumber(BattleConst.FrameInterval,1000);
+            FrameInterval = new FixedPointNumber(FrameConst.FrameInterval,1000);
             TimeScale = FixedPointNumber.One;
             if (battleType == EBattleType.Remote)
             {

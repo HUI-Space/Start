@@ -11,7 +11,7 @@ namespace Start
             _inputHelper = inputHelper;
         }
         
-        public PlayerInput GetInput()
+        public FrameInput GetInput()
         {
             return _inputHelper.GetInput();
         }

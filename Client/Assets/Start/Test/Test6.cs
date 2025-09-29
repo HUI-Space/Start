@@ -10,8 +10,7 @@ public class Test6 : MonoBehaviour
     
     void Start()
     {
-
-        
+        Vector2 v = new Vector2(1, 2);
     }
 
 

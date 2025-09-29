@@ -139,7 +139,6 @@ namespace Start.Editor
         
         public void OutputConfig(List<string> sheets)
         {
-            TypeFactory typeFactory = new TypeFactory();
             foreach (string sheet in sheets)
             {
                 if (Sheets.TryGetValue(sheet, out string excelPath))
@@ -186,7 +185,7 @@ namespace Start.Editor
                         }
                         allConfigItems.Add(configItems);
                     }
-                    typeFactory.OutputConfig(allConfigItems, Path.Combine(ExcelConfig.OutputConfigPath , sheet + ".json"));
+                    TypeHelper.OutputConfig(allConfigItems, Path.Combine(ExcelConfig.OutputConfigPath , sheet + ".json"));
                 }
             }
             

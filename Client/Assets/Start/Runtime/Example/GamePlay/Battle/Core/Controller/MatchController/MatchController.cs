@@ -35,7 +35,7 @@ namespace Start
             
         }
 
-        public void LogicUpdate(Frame frame)
+        public void LogicUpdate(FrameData frame)
         {
             
         }
@@ -45,14 +45,14 @@ namespace Start
         /// </summary>
         /// <param name="matchEntity">实体</param>
         /// <param name="frame">帧数据</param>
-        public static void UpdateMatchEntity(MatchEntity matchEntity,Frame frame)
+        public static void UpdateMatchEntity(MatchEntity matchEntity,FrameData frame)
         {
             matchEntity.AuthorityFrame = frame.AuthorityFrame;
             List<PlayerEntity> playerList = matchEntity.PlayerList;
             for (int i = 0; i < playerList.Count; i++)
             {
                 PlayerEntity playerEntity = playerList[i];
-                if (frame.GetPlayerInputByIndex(playerEntity.Id,out PlayerInput playerInput))
+                if (frame.GetInputByIndex(playerEntity.Id,out FrameInput playerInput))
                 {
                     playerEntity.InputComponent.Yaw = (playerInput.Yaw & 0x1F) - 1;
                 }

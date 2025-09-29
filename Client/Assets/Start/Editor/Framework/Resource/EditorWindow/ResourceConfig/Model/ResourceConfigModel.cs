@@ -132,7 +132,7 @@ namespace Start.Editor
         {
             ResourceGroupConfig groupConfig = new ResourceGroupConfig();
             groupConfig.Groups.AddRange(_groupConfigs.Values);
-            FileUtility.WriteAllBytes(ResourcePath.ResourceGroupConfigPath, JsonUtility.ToJson(groupConfig,true));
+            FileUtility.WriteAllText(ResourcePath.ResourceGroupConfigPath, JsonUtility.ToJson(groupConfig,true));
             AssetDatabase.Refresh();
         }
 

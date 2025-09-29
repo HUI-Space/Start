@@ -1,0 +1,46 @@
+{
+    "DataList": [
+        {
+            "ClassName": "MatchRuntimePropertyComponent",
+            "ClassComment": "比赛运行是属性组件",
+            "ClassAttributes": [],
+            "DynamicProperties": [
+                {
+                    "PropertyName": "Id",
+                    "PropertyType": "int",
+                    "PropertyDefaultValue": "-1",
+                    "PropertyComment": "ID",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "Ids",
+                    "PropertyType": "int[]",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "ID列表",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "FixedPointNumber",
+                    "PropertyType": "FixedPointNumber",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "FixedPointNumber",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "List",
+                    "PropertyType": "List<int>",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "列表",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "Dictionary",
+                    "PropertyType": "Dictionary<int,string>",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "字典",
+                    "PropertyAttributes": []
+                }
+            ]
+        }
+    ]
+}

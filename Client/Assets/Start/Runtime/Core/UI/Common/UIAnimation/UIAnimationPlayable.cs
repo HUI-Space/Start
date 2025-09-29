@@ -22,7 +22,7 @@ namespace Start
             IsPlaying = true;
         }
         
-        public override void PrepareFrame(Playable playable, FrameData frameData)
+        public override void PrepareFrame(Playable playable, UnityEngine.Playables.FrameData frameData)
         {
             if (Index == -1 || _loop)
             {

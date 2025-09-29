@@ -9,7 +9,7 @@ namespace Start
         /// </summary>
         public int AuthorityFrame = -1;
         
-        public TimeCounter TimeCounter { get; private set; }
+        public FrameTimeCounter TimeCounter { get; private set; }
         
         /// <summary>
         /// 执行的时间
@@ -18,7 +18,7 @@ namespace Start
         
         public LocalBattleFrameEngine()
         {
-            TimeCounter = new TimeCounter(0, 0, BattleConst.FrameInterval);
+            TimeCounter = new FrameTimeCounter(0, 0, FrameConst.FrameInterval);
             _stopWatch = new Stopwatch();
             _stopWatch.Start();
         }
@@ -32,9 +32,9 @@ namespace Start
             {
                 AuthorityFrame += 1;
                 //1.获取玩家的操作
-                PlayerInput playerInput = InputController.Instance.GetInput();
+                FrameInput playerInput = InputController.Instance.GetInput();
                 //2.生成一个完整的逻辑帧数据
-                Frame frame = new Frame(AuthorityFrame,new PlayerInput[1]{playerInput});
+                FrameData frame = new FrameData(AuthorityFrame,new FrameInput[1]{playerInput});
                 //3.将逻辑帧数据保存到重播系统中
                 ReplayController.Instance.SaveFrame(frame);
                 //4.调用比赛控制器的逻辑更新

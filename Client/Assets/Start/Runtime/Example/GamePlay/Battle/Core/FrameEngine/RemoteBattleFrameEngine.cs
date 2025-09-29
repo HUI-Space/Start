@@ -17,7 +17,7 @@ namespace Start
         
         public FrameBuffer FrameBuffer { get; private set;}
         
-        public TimeCounter TimeCounter { get; private set; }
+        public FrameTimeCounter TimeCounter { get; private set; }
         
         /// <summary>
         /// 执行的时间
@@ -27,12 +27,12 @@ namespace Start
         /// <summary>
         /// 权威帧数据
         /// </summary>
-        private readonly Queue<Frame> _authorityFrameQueue = new Queue<Frame>();
+        private readonly Queue<FrameData> _authorityFrameQueue = new Queue<FrameData>();
         
         /// <summary>
         /// 预测帧数据
         /// </summary>
-        private readonly Queue<Frame> _predictionFrameQueue = new Queue<Frame>();
+        private readonly Queue<FrameData> _predictionFrameQueue = new Queue<FrameData>();
         
         /// <summary>
         /// 权威实体
@@ -51,7 +51,7 @@ namespace Start
         
         public RemoteBattleFrameEngine()
         {
-            TimeCounter = new TimeCounter(0, 0, BattleConst.FrameInterval);
+            TimeCounter = new FrameTimeCounter(0, 0, FrameConst.FrameInterval);
             FrameBuffer = new FrameBuffer();
             _stopWatch = new Stopwatch();
             _stopWatch.Start();
@@ -78,7 +78,7 @@ namespace Start
                 }
                 
                 // 最多只预测5帧
-                if (PredictionFrame - AuthorityFrame > BattleConst.MaxPredictionFrame)
+                if (PredictionFrame - AuthorityFrame > FrameConst.MaxPredictionFrame)
                 {
                     break;
                 }
@@ -87,7 +87,7 @@ namespace Start
                 ++PredictionFrame;
                 
                 //预测帧数据
-                Frame predictionFrame = FrameBuffer.GetPredictionFrame(PredictionFrame);
+                FrameData predictionFrame = FrameBuffer.GetPredictionFrameData(PredictionFrame);
                 
                 //添加预测帧数据
                 _predictionFrameQueue.Enqueue(predictionFrame);
@@ -100,9 +100,9 @@ namespace Start
             }
             
             //这样的做的目的，获取权威帧
-            for (int i = 0; i < BattleConst.MaxPredictionFrame; i++)
+            for (int i = 0; i < FrameConst.MaxPredictionFrame; i++)
             {
-                if (FrameBuffer.TryGetAuthorityFrame(AuthorityFrame + i, out Frame frame))
+                if (FrameBuffer.TryGetAuthorityFrameData(AuthorityFrame + i, out FrameData frame))
                 {
                     _authorityFrameQueue.Enqueue(frame);
                 }
@@ -118,10 +118,10 @@ namespace Start
                 AuthorityFrame++;
                 
                 //权威帧数据
-                Frame authorityFrame = _authorityFrameQueue.Dequeue();
+                FrameData authorityFrame = _authorityFrameQueue.Dequeue();
                 
                 //预测帧数据
-                Frame predictionFrame = _predictionFrameQueue.Dequeue();
+                FrameData predictionFrame = _predictionFrameQueue.Dequeue();
                 
                 // 权威帧和预测帧是否一致
                 if (predictionFrame.Equals(authorityFrame))
@@ -156,7 +156,7 @@ namespace Start
                     int predictionFrameCount = AuthorityFrame + 1 + _authorityFrameQueue.Count;
                     for (int i = AuthorityFrame + 1; i <= predictionFrameCount; ++i)
                     {
-                        Frame prediction = FrameBuffer.GetPredictionFrame(i);
+                        FrameData prediction = FrameBuffer.GetPredictionFrameData(i);
                         _predictionFrameQueue.Enqueue(prediction);
                         Prediction(prediction);
                     }
@@ -173,7 +173,7 @@ namespace Start
         /// 预测
         /// </summary>
         /// <param name="predictionFrame">预测帧</param>
-        private void Prediction(Frame predictionFrame)
+        private void Prediction(FrameData predictionFrame)
         {
             MatchController.UpdateMatchEntity(PredictionMatchEntity,predictionFrame);
             MatchController.LogicUpdateState(PredictionMatchEntity);

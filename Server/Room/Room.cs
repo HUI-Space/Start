@@ -1,8 +1,4 @@
-﻿
-using Start.FrameSync;
-
-
-namespace Start.Server
+﻿namespace Start.Server
 {
     public class Room : IReference
     {
