@@ -32,7 +32,8 @@ SOFTWARE.
 
 using System;
 
-namespace TrueSync {
+namespace TrueSync
+{
     /// <summary>
     /// 表示二维空间中的向量，使用定点数(FP)进行高精度计算，适用于物理引擎、游戏开发等场景
     /// 实现了向量的各种数学运算及常用向量操作
@@ -46,6 +47,7 @@ namespace TrueSync {
         /// 私有静态零向量实例 (0, 0)
         /// </summary>
         private static TSVector2 zeroVector = new TSVector2(0, 0);
+
         /// <summary>
         /// 私有静态单位向量实例 (1, 1)
         /// </summary>
@@ -55,6 +57,7 @@ namespace TrueSync {
         /// 私有静态右方向向量实例 (1, 0)
         /// </summary>
         private static TSVector2 rightVector = new TSVector2(1, 0);
+
         /// <summary>
         /// 私有静态左方向向量实例 (-1, 0)
         /// </summary>
@@ -64,6 +67,7 @@ namespace TrueSync {
         /// 私有静态上方向向量实例 (0, 1)
         /// </summary>
         private static TSVector2 upVector = new TSVector2(0, 1);
+
         /// <summary>
         /// 私有静态下方向向量实例 (0, -1)
         /// </summary>
@@ -77,6 +81,7 @@ namespace TrueSync {
         /// 向量的X分量（水平分量）
         /// </summary>
         public FP x;
+
         /// <summary>
         /// 向量的Y分量（垂直分量）
         /// </summary>
@@ -113,7 +118,8 @@ namespace TrueSync {
         /// <summary>
         /// 获取左方向向量 (-1, 0)
         /// </summary>
-        public static TSVector2 left {
+        public static TSVector2 left
+        {
             get { return leftVector; }
         }
 
@@ -128,7 +134,8 @@ namespace TrueSync {
         /// <summary>
         /// 获取下方向向量 (0, -1)
         /// </summary>
-        public static TSVector2 down {
+        public static TSVector2 down
+        {
             get { return downVector; }
         }
 
@@ -136,8 +143,10 @@ namespace TrueSync {
         /// 获取向量的模长（长度）
         /// 计算方式：sqrt(x² + y²)
         /// </summary>
-        public FP magnitude {
-            get {
+        public FP magnitude
+        {
+            get
+            {
                 FP result;
                 DistanceSquared(ref this, ref zeroVector, out result);
                 return FP.Sqrt(result);
@@ -147,8 +156,10 @@ namespace TrueSync {
         /// <summary>
         /// 获取当前向量的单位向量（方向相同，模长为1）
         /// </summary>
-        public TSVector2 normalized {
-            get {
+        public TSVector2 normalized
+        {
+            get
+            {
                 TSVector2 result;
                 TSVector2.Normalize(ref this, out result);
                 return result;
@@ -185,7 +196,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="x">新的X轴分量值</param>
         /// <param name="y">新的Y轴分量值</param>
-        public void Set(FP x, FP y) {
+        public void Set(FP x, FP y)
+        {
             this.x = x;
             this.y = y;
         }
@@ -256,7 +268,8 @@ namespace TrueSync {
         /// <param name="amount1">第一个插值系数</param>
         /// <param name="amount2">第二个插值系数</param>
         /// <returns>插值结果向量</returns>
-        public static TSVector2 Barycentric(TSVector2 value1, TSVector2 value2, TSVector2 value3, FP amount1, FP amount2)
+        public static TSVector2 Barycentric(TSVector2 value1, TSVector2 value2, TSVector2 value3, FP amount1,
+            FP amount2)
         {
             return new TSVector2(
                 TSMath.Barycentric(value1.x, value2.x, value3.x, amount1, amount2),
@@ -273,7 +286,7 @@ namespace TrueSync {
         /// <param name="amount2">第二个插值系数</param>
         /// <param name="result">输出的插值结果向量</param>
         public static void Barycentric(ref TSVector2 value1, ref TSVector2 value2, ref TSVector2 value3, FP amount1,
-                                       FP amount2, out TSVector2 result)
+            FP amount2, out TSVector2 result)
         {
             result = new TSVector2(
                 TSMath.Barycentric(value1.x, value2.x, value3.x, amount1, amount2),
@@ -290,7 +303,8 @@ namespace TrueSync {
         /// <param name="value4">第四个控制点</param>
         /// <param name="amount">插值参数（0-1之间，0表示value2，1表示value3）</param>
         /// <returns>插值结果向量</returns>
-        public static TSVector2 CatmullRom(TSVector2 value1, TSVector2 value2, TSVector2 value3, TSVector2 value4, FP amount)
+        public static TSVector2 CatmullRom(TSVector2 value1, TSVector2 value2, TSVector2 value3, TSVector2 value4,
+            FP amount)
         {
             return new TSVector2(
                 TSMath.CatmullRom(value1.x, value2.x, value3.x, value4.x, amount),
@@ -306,8 +320,9 @@ namespace TrueSync {
         /// <param name="value4">第四个控制点</param>
         /// <param name="amount">插值参数（0-1之间，0表示value2，1表示value3）</param>
         /// <param name="result">输出的插值结果向量</param>
-        public static void CatmullRom(ref TSVector2 value1, ref TSVector2 value2, ref TSVector2 value3, ref TSVector2 value4,
-                                      FP amount, out TSVector2 result)
+        public static void CatmullRom(ref TSVector2 value1, ref TSVector2 value2, ref TSVector2 value3,
+            ref TSVector2 value4,
+            FP amount, out TSVector2 result)
         {
             result = new TSVector2(
                 TSMath.CatmullRom(value1.x, value2.x, value3.x, value4.x, amount),
@@ -508,7 +523,8 @@ namespace TrueSync {
         /// <param name="tangent2">结束点的切线向量</param>
         /// <param name="amount">插值参数（0-1之间）</param>
         /// <returns>插值结果向量</returns>
-        public static TSVector2 Hermite(TSVector2 value1, TSVector2 tangent1, TSVector2 value2, TSVector2 tangent2, FP amount)
+        public static TSVector2 Hermite(TSVector2 value1, TSVector2 tangent1, TSVector2 value2, TSVector2 tangent2,
+            FP amount)
         {
             TSVector2 result = new TSVector2();
             Hermite(ref value1, ref tangent1, ref value2, ref tangent2, amount, out result);
@@ -524,8 +540,9 @@ namespace TrueSync {
         /// <param name="tangent2">结束点的切线向量</param>
         /// <param name="amount">插值参数（0-1之间）</param>
         /// <param name="result">输出的插值结果向量</param>
-        public static void Hermite(ref TSVector2 value1, ref TSVector2 tangent1, ref TSVector2 value2, ref TSVector2 tangent2,
-                                   FP amount, out TSVector2 result)
+        public static void Hermite(ref TSVector2 value1, ref TSVector2 tangent1, ref TSVector2 value2,
+            ref TSVector2 tangent2,
+            FP amount, out TSVector2 result)
         {
             result.x = TSMath.Hermite(value1.x, tangent1.x, value2.x, tangent2.x, amount);
             result.y = TSMath.Hermite(value1.y, tangent1.y, value2.y, tangent2.y, amount);
@@ -538,7 +555,8 @@ namespace TrueSync {
         /// <param name="vector">要限制长度的向量</param>
         /// <param name="maxLength">最大允许长度</param>
         /// <returns>限制长度后的向量</returns>
-        public static TSVector2 ClampMagnitude(TSVector2 vector, FP maxLength) {
+        public static TSVector2 ClampMagnitude(TSVector2 vector, FP maxLength)
+        {
             return Normalize(vector) * maxLength;
         }
 
@@ -562,7 +580,8 @@ namespace TrueSync {
         /// <param name="value2">结束向量（amount=1时的结果）</param>
         /// <param name="amount">插值参数（0-1之间，超出范围会被钳位）</param>
         /// <returns>插值结果向量</returns>
-        public static TSVector2 Lerp(TSVector2 value1, TSVector2 value2, FP amount) {
+        public static TSVector2 Lerp(TSVector2 value1, TSVector2 value2, FP amount)
+        {
             amount = TSMath.Clamp(amount, 0, 1);
 
             return new TSVector2(
@@ -653,7 +672,8 @@ namespace TrueSync {
         /// 将当前向量与另一个向量进行分量乘法（缩放）
         /// </summary>
         /// <param name="other">用于缩放的向量</param>
-        public void Scale(TSVector2 other) {
+        public void Scale(TSVector2 other)
+        {
             this.x = x * other.x;
             this.y = y * other.y;
         }
@@ -664,7 +684,8 @@ namespace TrueSync {
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">用于缩放的第二个向量</param>
         /// <returns>分量相乘的结果向量</returns>
-        public static TSVector2 Scale(TSVector2 value1, TSVector2 value2) {
+        public static TSVector2 Scale(TSVector2 value1, TSVector2 value2)
+        {
             TSVector2 result;
             result.x = value1.x * value2.x;
             result.y = value1.y * value2.y;
@@ -840,7 +861,8 @@ namespace TrueSync {
         /// <param name="a">第一个向量</param>
         /// <param name="b">第二个向量</param>
         /// <returns>两个向量之间的夹角（度）</returns>
-        public static FP Angle(TSVector2 a, TSVector2 b) {
+        public static FP Angle(TSVector2 a, TSVector2 b)
+        {
             return FP.Acos(a.normalized * b.normalized) * FP.Rad2Deg;
         }
 
@@ -848,7 +870,8 @@ namespace TrueSync {
         /// 将当前二维向量转换为三维向量（Z分量为0）
         /// </summary>
         /// <returns>转换后的三维向量</returns>
-        public TSVector ToTSVector() {
+        public TSVector ToTSVector()
+        {
             return new TSVector(this.x, this.y, 0);
         }
 
@@ -856,7 +879,8 @@ namespace TrueSync {
         /// 将向量转换为字符串表示形式
         /// </summary>
         /// <returns>格式为"(x, y)"的字符串</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             return string.Format("({0:f1}, {1:f1})", x.AsFloat(), y.AsFloat());
         }
 

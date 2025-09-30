@@ -1,16 +1,16 @@
 ﻿/* Copyright (C) <2009-2011> <Thorben Linneweber, Jitter Physics>
-* 
-*  本软件按"原样"提供，不提供任何明示或暗示的担保。
-*  在任何情况下，作者均不对因使用本软件而产生的任何损害承担责任。
-*
-*  允许任何人将本软件用于任何目的，包括商业应用，并可自由修改和重新分发，
-*  但需遵守以下限制：
-*
-*  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。
-*     如果您在产品中使用本软件，在产品文档中致谢会受到赞赏但非必需。
-*  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
-*  3. 本声明不得从任何源分发中删除或修改。 
-*/
+ *
+ *  本软件按"原样"提供，不提供任何明示或暗示的担保。
+ *  在任何情况下，作者均不对因使用本软件而产生的任何损害承担责任。
+ *
+ *  允许任何人将本软件用于任何目的，包括商业应用，并可自由修改和重新分发，
+ *  但需遵守以下限制：
+ *
+ *  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。
+ *     如果您在产品中使用本软件，在产品文档中致谢会受到赞赏但非必需。
+ *  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
+ *  3. 本声明不得从任何源分发中删除或修改。
+ */
 
 using System;
 
@@ -29,40 +29,46 @@ namespace TrueSync
 
         /// <summary>向量的X分量</summary>
         public FP x;
+
         /// <summary>向量的Y分量</summary>
         public FP y;
+
         /// <summary>向量的Z分量</summary>
         public FP z;
+
         /// <summary>向量的W分量</summary>
         public FP w;
 
         #region 静态只读变量
+
         /// <summary>
         /// 所有分量都为0的向量 (0,0,0,0)
         /// 常用于初始化或表示零向量
         /// </summary>
         public static readonly TSVector4 zero;
-        
+
         /// <summary>
         /// 所有分量都为1的向量 (1,1,1,1)
         /// 常用于缩放操作的初始值
         /// </summary>
         public static readonly TSVector4 one;
-        
+
         /// <summary>
         /// 所有分量都为FP类型最小值的向量
         /// 可用于初始化最小值比较
         /// </summary>
         public static readonly TSVector4 MinValue;
-        
+
         /// <summary>
         /// 所有分量都为FP类型最大值的向量
         /// 可用于初始化最大值比较
         /// </summary>
         public static readonly TSVector4 MaxValue;
+
         #endregion
 
         #region 私有静态构造函数
+
         /// <summary>
         /// 静态构造函数，初始化所有静态只读向量
         /// 在第一次访问TSVector4类型时执行
@@ -75,6 +81,7 @@ namespace TrueSync
             MaxValue = new TSVector4(FP.MaxValue);
             InternalZero = zero;
         }
+
         #endregion
 
         /// <summary>
@@ -95,10 +102,7 @@ namespace TrueSync
         /// <returns>向量的平方长度</returns>
         public FP sqrMagnitude
         {
-            get
-            {
-                return (x * x) + (y * y) + (z * z) + (w * w);
-            }
+            get { return (x * x) + (y * y) + (z * z) + (w * w); }
         }
 
         /// <summary>
@@ -231,12 +235,15 @@ namespace TrueSync
         /// 格式为：(x, y, z, w)，每个分量保留1位小数
         /// </summary>
         /// <returns>向量的字符串表示</returns>
+
         #region public override string ToString()
+
         public override string ToString()
         {
-            return string.Format("({0:f1}, {1:f1}, {2:f1}, {3:f1})", 
-                                 x.AsFloat(), y.AsFloat(), z.AsFloat(), w.AsFloat());
+            return string.Format("({0:f1}, {1:f1}, {2:f1}, {3:f1})",
+                x.AsFloat(), y.AsFloat(), z.AsFloat(), w.AsFloat());
         }
+
         #endregion
 
         /// <summary>
@@ -245,7 +252,9 @@ namespace TrueSync
         /// </summary>
         /// <param name="obj">要比较的对象</param>
         /// <returns>如果相等则返回true，否则返回false</returns>
+
         #region public override bool Equals(object obj)
+
         public override bool Equals(object obj)
         {
             if (!(obj is TSVector4)) return false;
@@ -253,6 +262,7 @@ namespace TrueSync
 
             return (x == other.x) && (y == other.y) && (z == other.z) && (w == other.w);
         }
+
         #endregion
 
         /// <summary>
@@ -280,12 +290,15 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>如果相等则返回true，否则返回false</returns>
+
         #region public static bool operator ==(TSVector4 value1, TSVector4 value2)
+
         public static bool operator ==(TSVector4 value1, TSVector4 value2)
         {
-            return (value1.x == value2.x) && (value1.y == value2.y) && 
+            return (value1.x == value2.x) && (value1.y == value2.y) &&
                    (value1.z == value2.z) && (value1.w == value2.w);
         }
+
         #endregion
 
         /// <summary>
@@ -295,12 +308,15 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>如果不相等则返回true，否则返回false</returns>
+
         #region public static bool operator !=(TSVector4 value1, TSVector4 value2)
+
         public static bool operator !=(TSVector4 value1, TSVector4 value2)
         {
             // 原代码逻辑优化：只要有一个分量不等则返回true
             return !(value1 == value2);
         }
+
         #endregion
 
         /// <summary>
@@ -310,7 +326,9 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>包含各分量最小值的新向量</returns>
+
         #region public static TSVector4 Min(TSVector4 value1, TSVector4 value2)
+
         public static TSVector4 Min(TSVector4 value1, TSVector4 value2)
         {
             TSVector4 result;
@@ -332,6 +350,7 @@ namespace TrueSync
             result.z = (value1.z < value2.z) ? value1.z : value2.z;
             result.w = (value1.w < value2.w) ? value1.w : value2.w;
         }
+
         #endregion
 
         /// <summary>
@@ -341,7 +360,9 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>包含各分量最大值的新向量</returns>
+
         #region public static TSVector4 Max(TSVector4 value1, TSVector4 value2)
+
         public static TSVector4 Max(TSVector4 value1, TSVector4 value2)
         {
             TSVector4 result;
@@ -358,10 +379,10 @@ namespace TrueSync
         /// <returns>两个向量之间的距离</returns>
         public static FP Distance(TSVector4 v1, TSVector4 v2)
         {
-            return FP.Sqrt((v1.x - v2.x) * (v1.x - v2.x) + 
-                          (v1.y - v2.y) * (v1.y - v2.y) + 
-                          (v1.z - v2.z) * (v1.z - v2.z) + 
-                          (v1.w - v2.w) * (v1.w - v2.w));
+            return FP.Sqrt((v1.x - v2.x) * (v1.x - v2.x) +
+                           (v1.y - v2.y) * (v1.y - v2.y) +
+                           (v1.z - v2.z) * (v1.z - v2.z) +
+                           (v1.w - v2.w) * (v1.w - v2.w));
         }
 
         /// <summary>
@@ -378,12 +399,15 @@ namespace TrueSync
             result.z = (value1.z > value2.z) ? value1.z : value2.z;
             result.w = (value1.w > value2.w) ? value1.w : value2.w;
         }
+
         #endregion
 
         /// <summary>
         /// 将当前向量的所有分量设置为零
         /// </summary>
+
         #region public void MakeZero()
+
         public void MakeZero()
         {
             x = FP.Zero;
@@ -391,13 +415,16 @@ namespace TrueSync
             z = FP.Zero;
             w = FP.Zero;
         }
+
         #endregion
 
         /// <summary>
         /// 检查当前向量是否为零向量（所有分量都为零）
         /// </summary>
         /// <returns>如果是零向量则返回true，否则返回false</returns>
+
         #region public bool IsZero()
+
         public bool IsZero()
         {
             return (this.sqrMagnitude == FP.Zero);
@@ -412,6 +439,7 @@ namespace TrueSync
         {
             return (this.sqrMagnitude < ZeroEpsilonSq);
         }
+
         #endregion
 
         /// <summary>
@@ -420,7 +448,9 @@ namespace TrueSync
         /// <param name="position">要变换的向量</param>
         /// <param name="matrix">变换矩阵</param>
         /// <returns>变换后的新向量</returns>
+
         #region public static TSVector4 Transform(TSVector4 position, TSMatrix4x4 matrix)
+
         public static TSVector4 Transform(TSVector4 position, TSMatrix4x4 matrix)
         {
             TSVector4 result;
@@ -470,6 +500,7 @@ namespace TrueSync
             result.z = vector.x * matrix.M31 + vector.y * matrix.M32 + vector.z * matrix.M33 + vector.w * matrix.M34;
             result.w = vector.x * matrix.M41 + vector.y * matrix.M42 + vector.z * matrix.M43 + vector.w * matrix.M44;
         }
+
         #endregion
 
         /// <summary>
@@ -479,7 +510,9 @@ namespace TrueSync
         /// <param name="vector1">第一个向量</param>
         /// <param name="vector2">第二个向量</param>
         /// <returns>两个向量的点积</returns>
+
         #region public static FP Dot(TSVector4 vector1, TSVector4 vector2)
+
         public static FP Dot(TSVector4 vector1, TSVector4 vector2)
         {
             return TSVector4.Dot(ref vector1, ref vector2);
@@ -493,9 +526,10 @@ namespace TrueSync
         /// <returns>两个向量的点积</returns>
         public static FP Dot(ref TSVector4 vector1, ref TSVector4 vector2)
         {
-            return (vector1.x * vector2.x) + (vector1.y * vector2.y) + 
+            return (vector1.x * vector2.x) + (vector1.y * vector2.y) +
                    (vector1.z * vector2.z) + (vector1.w * vector2.w);
         }
+
         #endregion
 
         /// <summary>
@@ -505,7 +539,9 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>相加后的新向量</returns>
+
         #region public static TSVector4 Add(TSVector4 value1, TSVector4 value2)
+
         public static TSVector4 Add(TSVector4 value1, TSVector4 value2)
         {
             TSVector4 result;
@@ -526,6 +562,7 @@ namespace TrueSync
             result.z = value1.z + value2.z;
             result.w = value1.w + value2.w;
         }
+
         #endregion
 
         /// <summary>
@@ -563,7 +600,9 @@ namespace TrueSync
         /// <param name="value1">被减向量</param>
         /// <param name="value2">减向量</param>
         /// <returns>相减后的新向量</returns>
+
         #region public static TSVector4 Subtract(TSVector4 value1, TSVector4 value2)
+
         public static TSVector4 Subtract(TSVector4 value1, TSVector4 value2)
         {
             TSVector4 result;
@@ -584,6 +623,7 @@ namespace TrueSync
             result.z = value1.z - value2.z;
             result.w = value1.w - value2.w;
         }
+
         #endregion
 
         /// <summary>
@@ -591,18 +631,23 @@ namespace TrueSync
         /// 用于哈希表等数据结构中快速查找
         /// </summary>
         /// <returns>向量的哈希码</returns>
+
         #region public override int GetHashCode()
+
         public override int GetHashCode()
         {
             return x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode() ^ w.GetHashCode();
         }
+
         #endregion
 
         /// <summary>
         /// 反转当前向量的方向（取反）
         /// 所有分量变为其相反数
         /// </summary>
+
         #region public void Negate()
+
         public void Negate()
         {
             this.x = -this.x;
@@ -635,6 +680,7 @@ namespace TrueSync
             result.z = -value.z;
             result.w = -value.w;
         }
+
         #endregion
 
         /// <summary>
@@ -643,7 +689,9 @@ namespace TrueSync
         /// </summary>
         /// <param name="value">要归一化的向量</param>
         /// <returns>归一化后的新向量</returns>
+
         #region public static TSVector4 Normalize(TSVector4 value)
+
         public static TSVector4 Normalize(TSVector4 value)
         {
             TSVector4 result;
@@ -672,17 +720,19 @@ namespace TrueSync
         /// <param name="result">输出参数，存储归一化后的向量</param>
         public static void Normalize(ref TSVector4 value, out TSVector4 result)
         {
-            FP sqrMag = (value.x * value.x) + (value.y * value.y) + 
-                       (value.z * value.z) + (value.w * value.w);
+            FP sqrMag = (value.x * value.x) + (value.y * value.y) +
+                        (value.z * value.z) + (value.w * value.w);
             FP invSqrt = FP.One / FP.Sqrt(sqrMag);
             result.x = value.x * invSqrt;
             result.y = value.y * invSqrt;
             result.z = value.z * invSqrt;
             result.w = value.w * invSqrt;
         }
+
         #endregion
 
         #region public static void Swap(ref TSVector4 vector1, ref TSVector4 vector2)
+
         /// <summary>
         /// 交换两个向量的所有分量
         /// 交换后vector1包含vector2的原始值，vector2包含vector1的原始值
@@ -709,6 +759,7 @@ namespace TrueSync
             vector1.w = vector2.w;
             vector2.w = temp;
         }
+
         #endregion
 
         /// <summary>
@@ -718,7 +769,9 @@ namespace TrueSync
         /// <param name="value1">要相乘的向量</param>
         /// <param name="scaleFactor">乘数（标量）</param>
         /// <returns>相乘后的新向量</returns>
+
         #region public static TSVector4 Multiply(TSVector4 value1, FP scaleFactor)
+
         public static TSVector4 Multiply(TSVector4 value1, FP scaleFactor)
         {
             TSVector4 result;
@@ -739,6 +792,7 @@ namespace TrueSync
             result.z = value1.z * scaleFactor;
             result.w = value1.w * scaleFactor;
         }
+
         #endregion
 
         /// <summary>
@@ -748,11 +802,14 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>两个向量的点积</returns>
+
         #region public static FP operator *(TSVector4 value1, TSVector4 value2)
+
         public static FP operator *(TSVector4 value1, TSVector4 value2)
         {
             return TSVector4.Dot(ref value1, ref value2);
         }
+
         #endregion
 
         /// <summary>
@@ -762,13 +819,16 @@ namespace TrueSync
         /// <param name="value1">要相乘的向量</param>
         /// <param name="value2">乘数（标量）</param>
         /// <returns>相乘后的新向量</returns>
+
         #region public static TSVector4 operator *(TSVector4 value1, FP value2)
+
         public static TSVector4 operator *(TSVector4 value1, FP value2)
         {
             TSVector4 result;
             TSVector4.Multiply(ref value1, value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -778,13 +838,16 @@ namespace TrueSync
         /// <param name="value1">乘数（标量）</param>
         /// <param name="value2">要相乘的向量</param>
         /// <returns>相乘后的新向量</returns>
+
         #region public static TSVector4 operator *(FP value1, TSVector4 value2)
+
         public static TSVector4 operator *(FP value1, TSVector4 value2)
         {
             TSVector4 result;
             TSVector4.Multiply(ref value2, value1, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -794,13 +857,16 @@ namespace TrueSync
         /// <param name="value1">被减向量</param>
         /// <param name="value2">减向量</param>
         /// <returns>相减后的新向量</returns>
+
         #region public static TSVector4 operator -(TSVector4 value1, TSVector4 value2)
+
         public static TSVector4 operator -(TSVector4 value1, TSVector4 value2)
         {
-            TSVector4 result; 
+            TSVector4 result;
             TSVector4.Subtract(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -810,13 +876,16 @@ namespace TrueSync
         /// <param name="value1">第一个向量</param>
         /// <param name="value2">第二个向量</param>
         /// <returns>相加后的新向量</returns>
+
         #region public static TSVector4 operator +(TSVector4 value1, TSVector4 value2)
+
         public static TSVector4 operator +(TSVector4 value1, TSVector4 value2)
         {
-            TSVector4 result; 
+            TSVector4 result;
             TSVector4.Add(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>

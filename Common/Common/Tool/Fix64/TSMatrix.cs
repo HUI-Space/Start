@@ -1,16 +1,16 @@
 ﻿/* Copyright (C) <2009-2011> <Thorben Linneweber, Jitter Physics>
-* 
-*  本软件按"原样"提供，不提供任何明示或暗示的担保。
-*  作者不对因使用本软件而产生的任何损害承担责任。
-*
-*  允许任何人将本软件用于任何目的，包括商业应用，并可自由修改和重新分发，
-*  但需遵守以下限制：
-*
-*  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。如果您在产品中使用本软件，
-*     在产品文档中致谢是值得赞赏的，但不是必需的。
-*  2. 修改后的源代码版本必须明确标记为修改版，不得歪曲为原始软件。
-*  3. 本声明不得从任何源代码分发中删除或修改。 
-*/
+ *
+ *  本软件按"原样"提供，不提供任何明示或暗示的担保。
+ *  作者不对因使用本软件而产生的任何损害承担责任。
+ *
+ *  允许任何人将本软件用于任何目的，包括商业应用，并可自由修改和重新分发，
+ *  但需遵守以下限制：
+ *
+ *  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。如果您在产品中使用本软件，
+ *     在产品文档中致谢是值得赞赏的，但不是必需的。
+ *  2. 修改后的源代码版本必须明确标记为修改版，不得歪曲为原始软件。
+ *  3. 本声明不得从任何源代码分发中删除或修改。
+ */
 
 namespace TrueSync
 {
@@ -23,34 +23,43 @@ namespace TrueSync
         /// 矩阵第一行第一列的元素
         /// </summary>
         public FP M11; // 第一行向量的第一个元素
+
         /// <summary>
         /// 矩阵第一行第二列的元素
         /// </summary>
         public FP M12; // 第一行向量的第二个元素
+
         /// <summary>
         /// 矩阵第一行第三列的元素
         /// </summary>
         public FP M13; // 第一行向量的第三个元素
+
         /// <summary>
         /// 矩阵第二行第一列的元素
         /// </summary>
         public FP M21; // 第二行向量的第一个元素
+
         /// <summary>
         /// 矩阵第二行第二列的元素
         /// </summary>
         public FP M22; // 第二行向量的第二个元素
+
         /// <summary>
         /// 矩阵第二行第三列的元素
         /// </summary>
-        public FP M23; // 第二行向量的第三个元素
+        public FP M23;
+        // 第二行向量的第三个元素
+
         /// <summary>
         /// 矩阵第三行第一列的元素
         /// </summary>
         public FP M31; // 第三行向量的第一个元素
+
         /// <summary>
         /// 矩阵第三行第二列的元素
         /// </summary>
         public FP M32; // 第三行向量的第二个元素
+
         /// <summary>
         /// 矩阵第三行第三列的元素
         /// </summary>
@@ -65,6 +74,7 @@ namespace TrueSync
         /// 单位矩阵（对角线元素为1，其余为0）
         /// </summary>
         public static readonly TSMatrix Identity;
+
         /// <summary>
         /// 零矩阵（所有元素均为0）
         /// </summary>
@@ -91,8 +101,10 @@ namespace TrueSync
         /// <summary>
         /// 获取当前矩阵对应的欧拉角（以度为单位）
         /// </summary>
-        public TSVector eulerAngles {
-            get {
+        public TSVector eulerAngles
+        {
+            get
+            {
                 TSVector result = new TSVector();
 
                 // 通过矩阵元素计算欧拉角（X、Y、Z轴）
@@ -274,7 +286,9 @@ namespace TrueSync
         /// <param name="m31">第三行第一列元素</param>
         /// <param name="m32">第三行第二列元素</param>
         /// <param name="m33">第三行第三列元素</param>
+
         #region public JMatrix(FP m11, FP m12, FP m13, FP m21, FP m22, FP m23,FP m31, FP m32, FP m33)
+
         public TSMatrix(FP m11, FP m12, FP m13, FP m21, FP m22, FP m23, FP m31, FP m32, FP m33)
         {
             this.M11 = m11;
@@ -287,6 +301,7 @@ namespace TrueSync
             this.M32 = m32;
             this.M33 = m33;
         }
+
         #endregion
 
         /// <summary>
@@ -306,7 +321,9 @@ namespace TrueSync
         /// <param name="matrix1">第一个矩阵</param>
         /// <param name="matrix2">第二个矩阵</param>
         /// <returns>两个矩阵的乘积</returns>
+
         #region public static JMatrix Multiply(JMatrix matrix1, JMatrix matrix2)
+
         public static TSMatrix Multiply(TSMatrix matrix1, TSMatrix matrix2)
         {
             TSMatrix result;
@@ -344,6 +361,7 @@ namespace TrueSync
             result.M32 = num7;
             result.M33 = num8;
         }
+
         #endregion
 
         /// <summary>
@@ -352,7 +370,9 @@ namespace TrueSync
         /// <param name="matrix1">第一个矩阵</param>
         /// <param name="matrix2">第二个矩阵</param>
         /// <returns>两个矩阵的和</returns>
+
         #region public static JMatrix Add(JMatrix matrix1, JMatrix matrix2)
+
         public static TSMatrix Add(TSMatrix matrix1, TSMatrix matrix2)
         {
             TSMatrix result;
@@ -379,6 +399,7 @@ namespace TrueSync
             result.M32 = matrix1.M32 + matrix2.M32;
             result.M33 = matrix1.M33 + matrix2.M33;
         }
+
         #endregion
 
         /// <summary>
@@ -386,7 +407,9 @@ namespace TrueSync
         /// </summary>
         /// <param name="matrix">要求逆的矩阵</param>
         /// <returns>逆矩阵</returns>
+
         #region public static JMatrix Inverse(JMatrix matrix)
+
         public static TSMatrix Inverse(TSMatrix matrix)
         {
             TSMatrix result;
@@ -403,7 +426,7 @@ namespace TrueSync
         {
             // 计算行列式的倒数
             FP determinantInverse = 1 / matrix.Determinant();
-            
+
             // 根据伴随矩阵除以行列式的方法计算逆矩阵各元素
             FP m11 = (matrix.M22 * matrix.M33 - matrix.M23 * matrix.M32) * determinantInverse;
             FP m12 = (matrix.M13 * matrix.M32 - matrix.M33 * matrix.M12) * determinantInverse;
@@ -439,51 +462,54 @@ namespace TrueSync
         public static void Inverse(ref TSMatrix matrix, out TSMatrix result)
         {
             // 计算行列式（乘以1024以减少精度损失）
-			FP det = 1024 * matrix.M11 * matrix.M22 * matrix.M33 -
-				1024 * matrix.M11 * matrix.M23 * matrix.M32 -
-				1024 * matrix.M12 * matrix.M21 * matrix.M33 +
-				1024 * matrix.M12 * matrix.M23 * matrix.M31 +
-				1024 * matrix.M13 * matrix.M21 * matrix.M32 -
-				1024 * matrix.M13 * matrix.M22 * matrix.M31;
+            FP det = 1024 * matrix.M11 * matrix.M22 * matrix.M33 -
+                     1024 * matrix.M11 * matrix.M23 * matrix.M32 -
+                     1024 * matrix.M12 * matrix.M21 * matrix.M33 +
+                     1024 * matrix.M12 * matrix.M23 * matrix.M31 +
+                     1024 * matrix.M13 * matrix.M21 * matrix.M32 -
+                     1024 * matrix.M13 * matrix.M22 * matrix.M31;
 
             // 计算伴随矩阵元素（乘以1024）
-			FP num11 =1024* matrix.M22 * matrix.M33 - 1024*matrix.M23 * matrix.M32;
-			FP num12 =1024* matrix.M13 * matrix.M32 -1024* matrix.M12 * matrix.M33;
-			FP num13 =1024* matrix.M12 * matrix.M23 -1024* matrix.M22 * matrix.M13;
+            FP num11 = 1024 * matrix.M22 * matrix.M33 - 1024 * matrix.M23 * matrix.M32;
+            FP num12 = 1024 * matrix.M13 * matrix.M32 - 1024 * matrix.M12 * matrix.M33;
+            FP num13 = 1024 * matrix.M12 * matrix.M23 - 1024 * matrix.M22 * matrix.M13;
 
-			FP num21 =1024* matrix.M23 * matrix.M31 -1024* matrix.M33 * matrix.M21;
-			FP num22 =1024* matrix.M11 * matrix.M33 -1024* matrix.M31 * matrix.M13;
-			FP num23 =1024* matrix.M13 * matrix.M21 -1024* matrix.M23 * matrix.M11;
+            FP num21 = 1024 * matrix.M23 * matrix.M31 - 1024 * matrix.M33 * matrix.M21;
+            FP num22 = 1024 * matrix.M11 * matrix.M33 - 1024 * matrix.M31 * matrix.M13;
+            FP num23 = 1024 * matrix.M13 * matrix.M21 - 1024 * matrix.M23 * matrix.M11;
 
-			FP num31 =1024* matrix.M21 * matrix.M32 - 1024* matrix.M31 * matrix.M22;
-			FP num32 =1024* matrix.M12 * matrix.M31 - 1024* matrix.M32 * matrix.M11;
-			FP num33 =1024* matrix.M11 * matrix.M22 - 1024*matrix.M21 * matrix.M12;
+            FP num31 = 1024 * matrix.M21 * matrix.M32 - 1024 * matrix.M31 * matrix.M22;
+            FP num32 = 1024 * matrix.M12 * matrix.M31 - 1024 * matrix.M32 * matrix.M11;
+            FP num33 = 1024 * matrix.M11 * matrix.M22 - 1024 * matrix.M21 * matrix.M12;
 
             // 如果行列式为0，矩阵不可逆，结果设为无穷大
-			if(det == 0){
-				result.M11 = FP.PositiveInfinity;
-				result.M12 = FP.PositiveInfinity;
-				result.M13 = FP.PositiveInfinity;
-				result.M21 = FP.PositiveInfinity;
-				result.M22 = FP.PositiveInfinity;
-				result.M23 = FP.PositiveInfinity;
-				result.M31 = FP.PositiveInfinity;
-				result.M32 = FP.PositiveInfinity;
-				result.M33 = FP.PositiveInfinity;
-			} else{
+            if (det == 0)
+            {
+                result.M11 = FP.PositiveInfinity;
+                result.M12 = FP.PositiveInfinity;
+                result.M13 = FP.PositiveInfinity;
+                result.M21 = FP.PositiveInfinity;
+                result.M22 = FP.PositiveInfinity;
+                result.M23 = FP.PositiveInfinity;
+                result.M31 = FP.PositiveInfinity;
+                result.M32 = FP.PositiveInfinity;
+                result.M33 = FP.PositiveInfinity;
+            }
+            else
+            {
                 // 伴随矩阵除以行列式得到逆矩阵
-				result.M11 = num11 / det;
-				result.M12 = num12 / det;
-				result.M13 = num13 / det;
-				result.M21 = num21 / det;
-				result.M22 = num22 / det;
-				result.M23 = num23 / det;
-				result.M31 = num31 / det;
-				result.M32 = num32 / det;
-				result.M33 = num33 / det;
-			}
-            
+                result.M11 = num11 / det;
+                result.M12 = num12 / det;
+                result.M13 = num13 / det;
+                result.M21 = num21 / det;
+                result.M22 = num22 / det;
+                result.M23 = num23 / det;
+                result.M31 = num31 / det;
+                result.M32 = num32 / det;
+                result.M33 = num33 / det;
+            }
         }
+
         #endregion
 
         /// <summary>
@@ -492,7 +518,9 @@ namespace TrueSync
         /// <param name="matrix1">要缩放的矩阵</param>
         /// <param name="scaleFactor">缩放因子</param>
         /// <returns>缩放后的矩阵</returns>
+
         #region public static JMatrix Multiply(JMatrix matrix1, FP scaleFactor)
+
         public static TSMatrix Multiply(TSMatrix matrix1, FP scaleFactor)
         {
             TSMatrix result;
@@ -520,6 +548,7 @@ namespace TrueSync
             result.M32 = matrix1.M32 * num;
             result.M33 = matrix1.M33 * num;
         }
+
         #endregion
 
         /// <summary>
@@ -528,12 +557,13 @@ namespace TrueSync
         /// <param name="position">观察者位置</param>
         /// <param name="target">目标点位置</param>
         /// <returns>创建的观察矩阵</returns>
-		public static TSMatrix CreateFromLookAt(TSVector position, TSVector target){
-			TSMatrix result;
+        public static TSMatrix CreateFromLookAt(TSVector position, TSVector target)
+        {
+            TSMatrix result;
             // 计算前向向量（目标减位置），并使用上方向向量创建观察矩阵
-			LookAt (target - position, TSVector.up, out result);
-			return result;
-		}
+            LookAt(target - position, TSVector.up, out result);
+            return result;
+        }
 
         /// <summary>
         /// 根据前向向量和上方向向量创建观察矩阵
@@ -541,7 +571,8 @@ namespace TrueSync
         /// <param name="forward">前向向量</param>
         /// <param name="upwards">上方向向量</param>
         /// <returns>创建的观察矩阵</returns>
-        public static TSMatrix LookAt(TSVector forward, TSVector upwards) {
+        public static TSMatrix LookAt(TSVector forward, TSVector upwards)
+        {
             TSMatrix result;
             LookAt(forward, upwards, out result);
             return result;
@@ -553,11 +584,14 @@ namespace TrueSync
         /// <param name="forward">前向向量</param>
         /// <param name="upwards">上方向向量</param>
         /// <param name="result">输出参数，存储创建的观察矩阵</param>
-        public static void LookAt(TSVector forward, TSVector upwards, out TSMatrix result) {
+        public static void LookAt(TSVector forward, TSVector upwards, out TSMatrix result)
+        {
             // 标准化前向向量
-            TSVector zaxis = forward; zaxis.Normalize();
+            TSVector zaxis = forward;
+            zaxis.Normalize();
             // 计算右方向向量（上方向与前向向量的叉乘）并标准化
-            TSVector xaxis = TSVector.Cross(upwards, zaxis); xaxis.Normalize();
+            TSVector xaxis = TSVector.Cross(upwards, zaxis);
+            xaxis.Normalize();
             // 计算修正后的上方向向量（前向向量与右方向向量的叉乘）
             TSVector yaxis = TSVector.Cross(zaxis, xaxis);
 
@@ -578,11 +612,13 @@ namespace TrueSync
         /// </summary>
         /// <param name="quaternion">用于创建矩阵的四元数</param>
         /// <returns>表示方向的矩阵</returns>
+
         #region public static JMatrix CreateFromQuaternion(JQuaternion quaternion)
+
         public static TSMatrix CreateFromQuaternion(TSQuaternion quaternion)
         {
             TSMatrix result;
-            TSMatrix.CreateFromQuaternion(ref quaternion,out result);
+            TSMatrix.CreateFromQuaternion(ref quaternion, out result);
             return result;
         }
 
@@ -616,6 +652,7 @@ namespace TrueSync
             result.M32 = 2 * (yz - xw);
             result.M33 = FP.One - (2 * (y2 + x2));
         }
+
         #endregion
 
         /// <summary>
@@ -623,7 +660,9 @@ namespace TrueSync
         /// </summary>
         /// <param name="matrix">要转置的矩阵</param>
         /// <returns>转置后的矩阵</returns>
+
         #region public static JMatrix Transpose(JMatrix matrix)
+
         public static TSMatrix Transpose(TSMatrix matrix)
         {
             TSMatrix result;
@@ -649,6 +688,7 @@ namespace TrueSync
             result.M32 = matrix.M23;
             result.M33 = matrix.M33;
         }
+
         #endregion
 
         /// <summary>
@@ -657,12 +697,16 @@ namespace TrueSync
         /// <param name="value1">第一个矩阵</param>
         /// <param name="value2">第二个矩阵</param>
         /// <returns>两个矩阵的乘积</returns>
+
         #region public static JMatrix operator *(JMatrix value1,JMatrix value2)
+
         public static TSMatrix operator *(TSMatrix value1, TSMatrix value2)
         {
-            TSMatrix result; TSMatrix.Multiply(ref value1, ref value2, out result);
+            TSMatrix result;
+            TSMatrix.Multiply(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -680,12 +724,16 @@ namespace TrueSync
         /// <param name="value1">第一个矩阵</param>
         /// <param name="value2">第二个矩阵</param>
         /// <returns>两个矩阵的和</returns>
+
         #region public static JMatrix operator +(JMatrix value1, JMatrix value2)
+
         public static TSMatrix operator +(TSMatrix value1, TSMatrix value2)
         {
-            TSMatrix result; TSMatrix.Add(ref value1, ref value2, out result);
+            TSMatrix result;
+            TSMatrix.Add(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -694,14 +742,18 @@ namespace TrueSync
         /// <param name="value1">第一个矩阵（被减数）</param>
         /// <param name="value2">第二个矩阵（减数）</param>
         /// <returns>两个矩阵的差</returns>
+
         #region public static JMatrix operator -(JMatrix value1, JMatrix value2)
+
         public static TSMatrix operator -(TSMatrix value1, TSMatrix value2)
         {
             // 先将减数矩阵乘以-1，再与被减数矩阵相加
-            TSMatrix result; TSMatrix.Multiply(ref value2, -FP.One, out value2);
+            TSMatrix result;
+            TSMatrix.Multiply(ref value2, -FP.One, out value2);
             TSMatrix.Add(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -710,16 +762,17 @@ namespace TrueSync
         /// <param name="value1">第一个矩阵</param>
         /// <param name="value2">第二个矩阵</param>
         /// <returns>如果两个矩阵所有对应元素都相等则返回true，否则返回false</returns>
-        public static bool operator == (TSMatrix value1, TSMatrix value2) {
+        public static bool operator ==(TSMatrix value1, TSMatrix value2)
+        {
             return value1.M11 == value2.M11 &&
-                value1.M12 == value2.M12 &&
-                value1.M13 == value2.M13 &&
-                value1.M21 == value2.M21 &&
-                value1.M22 == value2.M22 &&
-                value1.M23 == value2.M23 &&
-                value1.M31 == value2.M31 &&
-                value1.M32 == value2.M32 &&
-                value1.M33 == value2.M33;
+                   value1.M12 == value2.M12 &&
+                   value1.M13 == value2.M13 &&
+                   value1.M21 == value2.M21 &&
+                   value1.M22 == value2.M22 &&
+                   value1.M23 == value2.M23 &&
+                   value1.M31 == value2.M31 &&
+                   value1.M32 == value2.M32 &&
+                   value1.M33 == value2.M33;
         }
 
         /// <summary>
@@ -728,16 +781,17 @@ namespace TrueSync
         /// <param name="value1">第一个矩阵</param>
         /// <param name="value2">第二个矩阵</param>
         /// <returns>如果两个矩阵有任何对应元素不相等则返回true，否则返回false</returns>
-        public static bool operator != (TSMatrix value1, TSMatrix value2) {
+        public static bool operator !=(TSMatrix value1, TSMatrix value2)
+        {
             return value1.M11 != value2.M11 ||
-                value1.M12 != value2.M12 ||
-                value1.M13 != value2.M13 ||
-                value1.M21 != value2.M21 ||
-                value1.M22 != value2.M22 ||
-                value1.M23 != value2.M23 ||
-                value1.M31 != value2.M31 ||
-                value1.M32 != value2.M32 ||
-                value1.M33 != value2.M33;
+                   value1.M12 != value2.M12 ||
+                   value1.M13 != value2.M13 ||
+                   value1.M21 != value2.M21 ||
+                   value1.M22 != value2.M22 ||
+                   value1.M23 != value2.M23 ||
+                   value1.M31 != value2.M31 ||
+                   value1.M32 != value2.M32 ||
+                   value1.M33 != value2.M33;
         }
 
         /// <summary>
@@ -745,37 +799,39 @@ namespace TrueSync
         /// </summary>
         /// <param name="obj">要比较的对象</param>
         /// <returns>如果相等则返回true，否则返回false</returns>
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj)
+        {
             if (!(obj is TSMatrix)) return false;
-            TSMatrix other = (TSMatrix) obj;
+            TSMatrix other = (TSMatrix)obj;
 
             // 比较所有对应元素
             return this.M11 == other.M11 &&
-                this.M12 == other.M12 &&
-                this.M13 == other.M13 &&
-                this.M21 == other.M21 &&
-                this.M22 == other.M22 &&
-                this.M23 == other.M23 &&
-                this.M31 == other.M31 &&
-                this.M32 == other.M32 &&
-                this.M33 == other.M33;
+                   this.M12 == other.M12 &&
+                   this.M13 == other.M13 &&
+                   this.M21 == other.M21 &&
+                   this.M22 == other.M22 &&
+                   this.M23 == other.M23 &&
+                   this.M31 == other.M31 &&
+                   this.M32 == other.M32 &&
+                   this.M33 == other.M33;
         }
 
         /// <summary>
         /// 获取当前对象的哈希码
         /// </summary>
         /// <returns>哈希码值</returns>
-        public override int GetHashCode() {
+        public override int GetHashCode()
+        {
             // 结合所有元素的哈希码生成当前对象的哈希码
             return M11.GetHashCode() ^
-                M12.GetHashCode() ^
-                M13.GetHashCode() ^
-                M21.GetHashCode() ^
-                M22.GetHashCode() ^
-                M23.GetHashCode() ^
-                M31.GetHashCode() ^
-                M32.GetHashCode() ^
-                M33.GetHashCode();
+                   M12.GetHashCode() ^
+                   M13.GetHashCode() ^
+                   M21.GetHashCode() ^
+                   M22.GetHashCode() ^
+                   M23.GetHashCode() ^
+                   M31.GetHashCode() ^
+                   M32.GetHashCode() ^
+                   M33.GetHashCode();
         }
 
         /// <summary>
@@ -784,7 +840,9 @@ namespace TrueSync
         /// <param name="axis">旋转轴</param>
         /// <param name="angle">旋转角度（弧度）</param>
         /// <param name="result">输出参数，存储创建的旋转矩阵</param>
+
         #region public static void CreateFromAxisAngle(ref JVector axis, FP angle, out JMatrix result)
+
         public static void CreateFromAxisAngle(ref TSVector axis, FP angle, out TSMatrix result)
         {
             // 获取旋转轴的分量
@@ -823,20 +881,23 @@ namespace TrueSync
         /// <returns>创建的旋转矩阵</returns>
         public static TSMatrix AngleAxis(FP angle, TSVector axis)
         {
-            TSMatrix result; CreateFromAxisAngle(ref axis, angle, out result);
+            TSMatrix result;
+            CreateFromAxisAngle(ref axis, angle, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
         /// 将矩阵转换为字符串表示形式
         /// </summary>
         /// <returns>矩阵的字符串表示</returns>
-        public override string ToString() {
+        public override string ToString()
+        {
             // 以特定格式输出矩阵各元素的原始值
-            return string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}", 
-                M11.RawValue, M12.RawValue, M13.RawValue, 
-                M21.RawValue, M22.RawValue, M23.RawValue, 
+            return string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}",
+                M11.RawValue, M12.RawValue, M13.RawValue,
+                M21.RawValue, M22.RawValue, M23.RawValue,
                 M31.RawValue, M32.RawValue, M33.RawValue);
         }
     }

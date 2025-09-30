@@ -1,16 +1,16 @@
 ﻿/* Copyright (C) <2009-2011> <Thorben Linneweber, Jitter Physics>
-* 
-*  本软件按"原样"提供，不附带任何明示或暗示的担保。
-*  作者不对因使用本软件而产生的任何损害承担责任。
-*
-*  允许任何人将本软件用于任何目的，包括商业应用，
-*  并可自由修改和重新分发，但需遵守以下限制：
-*
-*  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。
-*     如果您在产品中使用本软件，在产品文档中致谢将不胜感激，但非必需。
-*  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
-*  3. 本声明不得从任何源分发中删除或修改。
-*/
+ *
+ *  本软件按"原样"提供，不附带任何明示或暗示的担保。
+ *  作者不对因使用本软件而产生的任何损害承担责任。
+ *
+ *  允许任何人将本软件用于任何目的，包括商业应用，
+ *  并可自由修改和重新分发，但需遵守以下限制：
+ *
+ *  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。
+ *     如果您在产品中使用本软件，在产品文档中致谢将不胜感激，但非必需。
+ *  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
+ *  3. 本声明不得从任何源分发中删除或修改。
+ */
 
 using System;
 
@@ -26,10 +26,13 @@ namespace TrueSync
     {
         /// <summary>四元数的X分量（向量部分）</summary>
         public FP x;
+
         /// <summary>四元数的Y分量（向量部分）</summary>
         public FP y;
+
         /// <summary>四元数的Z分量（向量部分）</summary>
         public FP z;
+
         /// <summary>四元数的W分量（标量部分）</summary>
         public FP w;
 
@@ -111,9 +114,9 @@ namespace TrueSync
                 t2 = t2 < -1.0f ? -1.0f : t2;
 
                 // 计算各轴旋转角度（弧度转角度）
-                result.x = FP.Atan2(t3, t4) * FP.Rad2Deg;  // 绕X轴旋转（俯仰角）
-                result.y = FP.Asin(t2) * FP.Rad2Deg;       // 绕Y轴旋转（偏航角）
-                result.z = FP.Atan2(t1, t0) * FP.Rad2Deg;  // 绕Z轴旋转（翻滚角）
+                result.x = FP.Atan2(t3, t4) * FP.Rad2Deg; // 绕X轴旋转（俯仰角）
+                result.y = FP.Asin(t2) * FP.Rad2Deg; // 绕Y轴旋转（偏航角）
+                result.z = FP.Atan2(t1, t0) * FP.Rad2Deg; // 绕Z轴旋转（翻滚角）
 
                 // 反转结果以匹配标准欧拉角定义
                 return result * -1;
@@ -152,13 +155,16 @@ namespace TrueSync
         /// <param name="quaternion1">第一个四元数</param>
         /// <param name="quaternion2">第二个四元数</param>
         /// <returns>两个四元数的和</returns>
+
         #region public static JQuaternion Add(JQuaternion quaternion1, JQuaternion quaternion2)
+
         public static TSQuaternion Add(TSQuaternion quaternion1, TSQuaternion quaternion2)
         {
             TSQuaternion result;
             TSQuaternion.Add(ref quaternion1, ref quaternion2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -212,7 +218,7 @@ namespace TrueSync
 
             // 应用SLERP公式计算插值结果
             return Multiply(
-                Multiply(from, FP.Sin((1 - t) * halfTheta)) + Multiply(to, FP.Sin(t * halfTheta)), 
+                Multiply(from, FP.Sin((1 - t) * halfTheta)) + Multiply(to, FP.Sin(t * halfTheta)),
                 1 / FP.Sin(halfTheta)
             );
         }
@@ -255,7 +261,8 @@ namespace TrueSync
 
             // 应用插值计算
             return Multiply(
-                Multiply(from, FP.Sin((1 - maxDegreesDelta) * halfTheta)) + Multiply(to, FP.Sin(maxDegreesDelta * halfTheta)), 
+                Multiply(from, FP.Sin((1 - maxDegreesDelta) * halfTheta)) +
+                Multiply(to, FP.Sin(maxDegreesDelta * halfTheta)),
                 1 / FP.Sin(halfTheta)
             );
         }
@@ -301,7 +308,7 @@ namespace TrueSync
         public static TSQuaternion AngleAxis(FP angle, TSVector axis)
         {
             // 标准化旋转轴（确保是单位向量）
-            axis = axis * FP.Deg2Rad;  // 这里原代码可能有误，推测应为标准化操作
+            axis = axis * FP.Deg2Rad; // 这里原代码可能有误，推测应为标准化操作
             axis.Normalize();
 
             // 计算半角（四元数使用半角计算）
@@ -401,7 +408,8 @@ namespace TrueSync
         public static TSQuaternion Inverse(TSQuaternion rotation)
         {
             // 计算模的平方的倒数
-            FP invNorm = FP.One / ((rotation.x * rotation.x) + (rotation.y * rotation.y) + (rotation.z * rotation.z) + (rotation.w * rotation.w));
+            FP invNorm = FP.One / ((rotation.x * rotation.x) + (rotation.y * rotation.y) + (rotation.z * rotation.z) +
+                                   (rotation.w * rotation.w));
             // 共轭乘以模平方的倒数得到逆
             return TSQuaternion.Multiply(TSQuaternion.Conjugate(rotation), invNorm);
         }
@@ -467,13 +475,16 @@ namespace TrueSync
         /// <param name="quaternion1">被减四元数</param>
         /// <param name="quaternion2">减四元数</param>
         /// <returns>两个四元数的差</returns>
+
         #region public static JQuaternion Subtract(JQuaternion quaternion1, JQuaternion quaternion2)
+
         public static TSQuaternion Subtract(TSQuaternion quaternion1, TSQuaternion quaternion2)
         {
             TSQuaternion result;
             TSQuaternion.Subtract(ref quaternion1, ref quaternion2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -497,13 +508,16 @@ namespace TrueSync
         /// <param name="quaternion1">第一个四元数</param>
         /// <param name="quaternion2">第二个四元数</param>
         /// <returns>乘积四元数</returns>
+
         #region public static JQuaternion Multiply(JQuaternion quaternion1, JQuaternion quaternion2)
+
         public static TSQuaternion Multiply(TSQuaternion quaternion1, TSQuaternion quaternion2)
         {
             TSQuaternion result;
             TSQuaternion.Multiply(ref quaternion1, ref quaternion2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -536,7 +550,7 @@ namespace TrueSync
             result.z = ((z * num) + (num2 * w)) + num10;
             result.w = (w * num) - num9;
         }
-        
+
 
         /// <summary>
         /// 四元数与标量相乘（缩放四元数）
@@ -544,13 +558,16 @@ namespace TrueSync
         /// <param name="quaternion1">四元数</param>
         /// <param name="scaleFactor">缩放因子</param>
         /// <returns>缩放后的四元数</returns>
+
         #region public static JQuaternion Multiply(JQuaternion quaternion1, FP scaleFactor)
+
         public static TSQuaternion Multiply(TSQuaternion quaternion1, FP scaleFactor)
         {
             TSQuaternion result;
             TSQuaternion.Multiply(ref quaternion1, scaleFactor, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -566,13 +583,15 @@ namespace TrueSync
             result.z = quaternion1.z * scaleFactor;
             result.w = quaternion1.w * scaleFactor;
         }
-        
+
 
         /// <summary>
         /// 将四元数标准化（转换为单位四元数）
         /// 单位四元数的模为1，是表示旋转的有效四元数
         /// </summary>
+
         #region public void Normalize()
+
         public void Normalize()
         {
             // 计算模的平方
@@ -585,6 +604,7 @@ namespace TrueSync
             this.z *= num;
             this.w *= num;
         }
+
         #endregion
 
         /// <summary>
@@ -593,13 +613,16 @@ namespace TrueSync
         /// </summary>
         /// <param name="matrix">旋转矩阵</param>
         /// <returns>对应的四元数</returns>
+
         #region public static JQuaternion CreateFromMatrix(JMatrix matrix)
+
         public static TSQuaternion CreateFromMatrix(TSMatrix matrix)
         {
             TSQuaternion result;
             TSQuaternion.CreateFromMatrix(ref matrix, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -653,7 +676,7 @@ namespace TrueSync
                 result.w = (matrix.M12 - matrix.M21) * num2;
             }
         }
-        
+
 
         /// <summary>
         /// 重载乘法运算符，实现四元数相乘
@@ -661,13 +684,16 @@ namespace TrueSync
         /// <param name="value1">第一个四元数</param>
         /// <param name="value2">第二个四元数</param>
         /// <returns>乘积四元数</returns>
+
         #region public static FP operator *(JQuaternion value1, JQuaternion value2)
+
         public static TSQuaternion operator *(TSQuaternion value1, TSQuaternion value2)
         {
             TSQuaternion result;
             TSQuaternion.Multiply(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -676,13 +702,16 @@ namespace TrueSync
         /// <param name="value1">第一个四元数</param>
         /// <param name="value2">第二个四元数</param>
         /// <returns>和四元数</returns>
+
         #region public static FP operator +(JQuaternion value1, JQuaternion value2)
+
         public static TSQuaternion operator +(TSQuaternion value1, TSQuaternion value2)
         {
             TSQuaternion result;
             TSQuaternion.Add(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -691,13 +720,16 @@ namespace TrueSync
         /// <param name="value1">被减四元数</param>
         /// <param name="value2">减四元数</param>
         /// <returns>差四元数</returns>
+
         #region public static FP operator -(JQuaternion value1, JQuaternion value2)
+
         public static TSQuaternion operator -(TSQuaternion value1, TSQuaternion value2)
         {
             TSQuaternion result;
             TSQuaternion.Subtract(ref value1, ref value2, out result);
             return result;
         }
+
         #endregion
 
         /**
@@ -735,7 +767,8 @@ namespace TrueSync
         /// <returns>包含四元数分量的字符串</returns>
         public override string ToString()
         {
-            return string.Format("({0:f1}, {1:f1}, {2:f1}, {3:f1})", x.AsFloat(), y.AsFloat(), z.AsFloat(), w.AsFloat());
+            return string.Format("({0:f1}, {1:f1}, {2:f1}, {3:f1})", x.AsFloat(), y.AsFloat(), z.AsFloat(),
+                w.AsFloat());
         }
     }
 }

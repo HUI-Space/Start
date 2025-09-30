@@ -1,16 +1,16 @@
 ﻿/* Copyright (C) <2009-2011> <Thorben Linneweber, Jitter Physics>
-* 
-*  本软件按"原样"提供，不附带任何明示或暗示的担保。
-*  作者不对因使用本软件而产生的任何损害承担责任。
-*
-*  允许任何人将本软件用于任何目的，包括商业应用，并可自由修改和重新分发，
-*  但需遵守以下限制：
-*
-*  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。
-*     如果您在产品中使用本软件，在产品文档中致谢会受到赞赏，但非必需。
-*  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
-*  3. 本声明不得从任何源分发中删除或修改。 
-*/
+ *
+ *  本软件按"原样"提供，不附带任何明示或暗示的担保。
+ *  作者不对因使用本软件而产生的任何损害承担责任。
+ *
+ *  允许任何人将本软件用于任何目的，包括商业应用，并可自由修改和重新分发，
+ *  但需遵守以下限制：
+ *
+ *  1. 不得歪曲本软件的来源；不得声称您编写了原始软件。
+ *     如果您在产品中使用本软件，在产品文档中致谢会受到赞赏，但非必需。
+ *  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
+ *  3. 本声明不得从任何源分发中删除或修改。
+ */
 
 using System;
 
@@ -25,62 +25,78 @@ namespace TrueSync
     {
         // 内部静态变量，用于零向量判断的阈值平方值
         private static FP ZeroEpsilonSq = TSMath.Epsilon;
+
         // 内部零向量实例
         internal static TSVector InternalZero;
+
         // 内部任意向量实例（初始化为(1,1,1)）
         internal static TSVector Arbitrary;
 
         /// <summary>向量的X分量</summary>
         public FP x;
+
         /// <summary>向量的Y分量</summary>
         public FP y;
+
         /// <summary>向量的Z分量</summary>
         public FP z;
 
         #region 静态只读向量常量
+
         /// <summary>
         /// 零向量，分量为(0,0,0)
         /// </summary>
         public static readonly TSVector zero;
+
         /// <summary>
         /// 左方向向量，分量为(-1,0,0)
         /// </summary>
         public static readonly TSVector left;
+
         /// <summary>
         /// 右方向向量，分量为(1,0,0)
         /// </summary>
         public static readonly TSVector right;
+
         /// <summary>
         /// 上方向向量，分量为(0,1,0)
         /// </summary>
         public static readonly TSVector up;
+
         /// <summary>
         /// 下方向向量，分量为(0,-1,0)
         /// </summary>
         public static readonly TSVector down;
+
         /// <summary>
         /// 后方向向量，分量为(0,0,-1)
         /// </summary>
         public static readonly TSVector back;
+
         /// <summary>
         /// 前方向向量，分量为(0,0,1)
         /// </summary>
         public static readonly TSVector forward;
+
         /// <summary>
         /// 全1向量，分量为(1,1,1)
         /// </summary>
         public static readonly TSVector one;
+
         /// <summary>
         /// 最小值向量，各分量为FP类型的最小值
         /// </summary>
         public static readonly TSVector MinValue;
+
         /// <summary>
         /// 最大值向量，各分量为FP类型的最大值
         /// </summary>
         public static readonly TSVector MaxValue;
+
         #endregion
 
         #region 静态构造函数
+
         /// <summary>
         /// 静态构造函数，初始化所有静态只读向量常量
         /// </summary>
@@ -99,6 +115,7 @@ namespace TrueSync
             Arbitrary = new TSVector(1, 1, 1);
             InternalZero = zero;
         }
+
         #endregion
 
         /// <summary>
@@ -118,10 +135,7 @@ namespace TrueSync
         /// <returns>向量的平方长度</returns>
         public FP sqrMagnitude
         {
-            get
-            {
-                return (((this.x * this.x) + (this.y * this.y)) + (this.z * this.z));
-            }
+            get { return (((this.x * this.x) + (this.y * this.y)) + (this.z * this.z)); }
         }
 
         /// <summary>
@@ -166,6 +180,7 @@ namespace TrueSync
         }
 
         #region 构造函数
+
         /// <summary>
         /// 使用整数分量初始化向量实例
         /// </summary>
@@ -202,6 +217,7 @@ namespace TrueSync
             this.y = xyz;
             this.z = xyz;
         }
+
         #endregion
 
         /// <summary>
@@ -306,10 +322,12 @@ namespace TrueSync
             {
                 return (value1.z != value2.z);
             }
+
             return true;
         }
 
         #region 最小/最大向量计算
+
         /// <summary>
         /// 获取两个向量的分量级最小值向量
         /// 每个分量取两个向量对应分量中的较小值
@@ -360,7 +378,8 @@ namespace TrueSync
         /// <returns>两点之间的距离</returns>
         public static FP Distance(TSVector v1, TSVector v2)
         {
-            return FP.Sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z));
+            return FP.Sqrt(
+                (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z));
         }
 
         /// <summary>
@@ -376,6 +395,7 @@ namespace TrueSync
             result.y = (value1.y > value2.y) ? value1.y : value2.y;
             result.z = (value1.z > value2.z) ? value1.z : value2.z;
         }
+
         #endregion
 
         /// <summary>
@@ -409,6 +429,7 @@ namespace TrueSync
         }
 
         #region 矩阵变换
+
         /// <summary>
         /// 使用矩阵变换向量
         /// </summary>
@@ -457,9 +478,11 @@ namespace TrueSync
             result.y = num1;
             result.z = num2;
         }
+
         #endregion
 
         #region 点积计算
+
         /// <summary>
         /// 计算两个向量的点积（内积）
         /// 点积公式：v1·v2 = v1.x*v2.x + v1.y*v2.y + v1.z*v2.z
@@ -482,6 +505,7 @@ namespace TrueSync
         {
             return ((vector1.x * vector2.x) + (vector1.y * vector2.y)) + (vector1.z * vector2.z);
         }
+
         #endregion
 
         /// <summary>
@@ -541,6 +565,7 @@ namespace TrueSync
         }
 
         #region 向量加法
+
         /// <summary>
         /// 计算两个向量的和
         /// </summary>
@@ -571,9 +596,11 @@ namespace TrueSync
             result.y = num1;
             result.z = num2;
         }
+
         #endregion
 
         #region 向量除法
+
         /// <summary>
         /// 将向量除以一个标量（缩放）
         /// </summary>
@@ -600,9 +627,11 @@ namespace TrueSync
             result.y = value1.y / scaleFactor;
             result.z = value1.z / scaleFactor;
         }
+
         #endregion
 
         #region 向量减法
+
         /// <summary>
         /// 计算两个向量的差（v1 - v2）
         /// </summary>
@@ -633,9 +662,11 @@ namespace TrueSync
             result.y = num1;
             result.z = num2;
         }
+
         #endregion
 
         #region 叉积计算
+
         /// <summary>
         /// 计算两个向量的叉积（外积）
         /// 叉积结果是与两个输入向量都垂直的向量
@@ -666,6 +697,7 @@ namespace TrueSync
             result.y = num2;
             result.z = num;
         }
+
         #endregion
 
         /// <summary>
@@ -679,6 +711,7 @@ namespace TrueSync
         }
 
         #region 向量取反
+
         /// <summary>
         /// 反转当前向量的方向（所有分量取相反数）
         /// 会修改当前向量实例
@@ -717,9 +750,11 @@ namespace TrueSync
             result.y = num1;
             result.z = num2;
         }
+
         #endregion
 
         #region 向量归一化
+
         /// <summary>
         /// 将向量归一化（单位化），返回新的单位向量
         /// 单位向量长度为1，方向与原向量相同
@@ -759,6 +794,7 @@ namespace TrueSync
             result.y = value.y * num;
             result.z = value.z * num;
         }
+
         #endregion
 
         /// <summary>
@@ -785,6 +821,7 @@ namespace TrueSync
         }
 
         #region 向量乘法（与标量）
+
         /// <summary>
         /// 将向量与标量相乘（缩放向量）
         /// </summary>
@@ -811,9 +848,11 @@ namespace TrueSync
             result.y = value1.y * scaleFactor;
             result.z = value1.z * scaleFactor;
         }
+
         #endregion
 
         #region 运算符重载
+
         /// <summary>
         /// 重载取模运算符，用于计算两个向量的叉积
         /// </summary>
@@ -822,7 +861,8 @@ namespace TrueSync
         /// <returns>叉积结果向量</returns>
         public static TSVector operator %(TSVector value1, TSVector value2)
         {
-            TSVector result; TSVector.Cross(ref value1, ref value2, out result);
+            TSVector result;
+            TSVector.Cross(ref value1, ref value2, out result);
             return result;
         }
 
@@ -871,7 +911,8 @@ namespace TrueSync
         /// <returns>向量差</returns>
         public static TSVector operator -(TSVector value1, TSVector value2)
         {
-            TSVector result; TSVector.Subtract(ref value1, ref value2, out result);
+            TSVector result;
+            TSVector.Subtract(ref value1, ref value2, out result);
             return result;
         }
 
@@ -883,7 +924,8 @@ namespace TrueSync
         /// <returns>向量和</returns>
         public static TSVector operator +(TSVector value1, TSVector value2)
         {
-            TSVector result; TSVector.Add(ref value1, ref value2, out result);
+            TSVector result;
+            TSVector.Add(ref value1, ref value2, out result);
             return result;
         }
 
@@ -899,6 +941,7 @@ namespace TrueSync
             TSVector.Divide(ref value1, value2, out result);
             return result;
         }
+
         #endregion
 
         /// <summary>

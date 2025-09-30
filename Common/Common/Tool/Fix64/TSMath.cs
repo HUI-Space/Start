@@ -1,25 +1,26 @@
-﻿﻿using System;
+﻿using System;
+
 /* Copyright (C) <2009-2011> <Thorben Linneweber, Jitter Physics>
-* 
-*  本软件按"原样"提供，不附带任何明示或暗示的担保。
-*  作者不对因使用本软件而产生的任何损害承担责任。
-*
-*  允许任何人将本软件用于任何目的，包括商业应用，
-*  并可自由修改和重新分发，但需遵守以下限制：
-*
-*  1. 不得歪曲软件的来源；不得声称自己编写了原始软件。
-*     如果在产品中使用本软件，在产品文档中致谢会被认可但非强制。
-*  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
-*  3. 本声明不得从任何源分发中删除或修改。 
-*/
+ *
+ *  本软件按"原样"提供，不附带任何明示或暗示的担保。
+ *  作者不对因使用本软件而产生的任何损害承担责任。
+ *
+ *  允许任何人将本软件用于任何目的，包括商业应用，
+ *  并可自由修改和重新分发，但需遵守以下限制：
+ *
+ *  1. 不得歪曲软件的来源；不得声称自己编写了原始软件。
+ *     如果在产品中使用本软件，在产品文档中致谢会被认可但非强制。
+ *  2. 修改后的源版本必须明确标记为修改版，不得歪曲为原始软件。
+ *  3. 本声明不得从任何源分发中删除或修改。
+ */
 
-namespace TrueSync {
-
+namespace TrueSync
+{
     /// <summary>
     /// 包含常用的数学运算方法和常量，提供高精度定点数(FP)的数学操作支持
     /// </summary>
-    public sealed class TSMath {
-
+    public sealed class TSMath
+    {
         /// <summary>
         /// 圆周率常量(π)，值等同于FP类型的Pi常量
         /// </summary>
@@ -33,7 +34,7 @@ namespace TrueSync {
         /// <summary>
         /// 极小值常量，常用于判断数值结果是否为零的阈值
         /// </summary>
-		public static FP Epsilon = FP.Epsilon;
+        public static FP Epsilon = FP.Epsilon;
 
         /**
         *  @brief 角度转弧度的转换常量
@@ -56,10 +57,14 @@ namespace TrueSync {
         /// </summary>
         /// <param name="number">要计算平方根的数</param>
         /// <returns>返回number的平方根</returns>
+
         #region public static FP Sqrt(FP number)
-        public static FP Sqrt(FP number) {
+
+        public static FP Sqrt(FP number)
+        {
             return FP.Sqrt(number);
         }
+
         #endregion
 
         /// <summary>
@@ -68,10 +73,14 @@ namespace TrueSync {
         /// <param name="val1">第一个比较值</param>
         /// <param name="val2">第二个比较值</param>
         /// <returns>返回两个值中较大的那个</returns>
+
         #region public static FP Max(FP val1, FP val2)
-        public static FP Max(FP val1, FP val2) {
+
+        public static FP Max(FP val1, FP val2)
+        {
             return (val1 > val2) ? val1 : val2;
         }
+
         #endregion
 
         /// <summary>
@@ -80,10 +89,14 @@ namespace TrueSync {
         /// <param name="val1">第一个比较值</param>
         /// <param name="val2">第二个比较值</param>
         /// <returns>返回两个值中较小的那个</returns>
+
         #region public static FP Min(FP val1, FP val2)
-        public static FP Min(FP val1, FP val2) {
+
+        public static FP Min(FP val1, FP val2)
+        {
             return (val1 < val2) ? val1 : val2;
         }
+
         #endregion
 
         /// <summary>
@@ -93,11 +106,15 @@ namespace TrueSync {
         /// <param name="val2">第二个比较值</param>
         /// <param name="val3">第三个比较值</param>
         /// <returns>返回三个值中最大的那个</returns>
+
         #region public static FP Max(FP val1, FP val2,FP val3)
-        public static FP Max(FP val1, FP val2, FP val3) {
-            FP max12 = (val1 > val2) ? val1 : val2;  // 先比较前两个值，获取较大值
-            return (max12 > val3) ? max12 : val3;    // 再与第三个值比较，返回最大值
+
+        public static FP Max(FP val1, FP val2, FP val3)
+        {
+            FP max12 = (val1 > val2) ? val1 : val2; // 先比较前两个值，获取较大值
+            return (max12 > val3) ? max12 : val3; // 再与第三个值比较，返回最大值
         }
+
         #endregion
 
         /// <summary>
@@ -107,19 +124,25 @@ namespace TrueSync {
         /// <param name="min">最小值边界</param>
         /// <param name="max">最大值边界</param>
         /// <returns>如果value小于min则返回min；如果大于max则返回max；否则返回value本身</returns>
+
         #region public static FP Clamp(FP value, FP min, FP max)
-        public static FP Clamp(FP value, FP min, FP max) {
+
+        public static FP Clamp(FP value, FP min, FP max)
+        {
             if (value < min)
             {
                 value = min;
                 return value;
             }
+
             if (value > max)
             {
                 value = max;
             }
+
             return value;
         }
+
         #endregion
 
         /// <summary>
@@ -143,8 +166,11 @@ namespace TrueSync {
         /// </summary>
         /// <param name="matrix">输入矩阵</param>
         /// <param name="result">输出的绝对值矩阵</param>
+
         #region public static void Absolute(ref TSMatrix matrix,out TSMatrix result)
-        public static void Absolute(ref TSMatrix matrix, out TSMatrix result) {
+
+        public static void Absolute(ref TSMatrix matrix, out TSMatrix result)
+        {
             result.M11 = FP.Abs(matrix.M11);
             result.M12 = FP.Abs(matrix.M12);
             result.M13 = FP.Abs(matrix.M13);
@@ -155,6 +181,7 @@ namespace TrueSync {
             result.M32 = FP.Abs(matrix.M32);
             result.M33 = FP.Abs(matrix.M33);
         }
+
         #endregion
 
         /// <summary>
@@ -162,7 +189,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">角度（弧度）</param>
         /// <returns>返回value的正弦值</returns>
-        public static FP Sin(FP value) {
+        public static FP Sin(FP value)
+        {
             return FP.Sin(value);
         }
 
@@ -171,7 +199,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">角度（弧度）</param>
         /// <returns>返回value的余弦值</returns>
-        public static FP Cos(FP value) {
+        public static FP Cos(FP value)
+        {
             return FP.Cos(value);
         }
 
@@ -180,7 +209,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">角度（弧度）</param>
         /// <returns>返回value的正切值</returns>
-        public static FP Tan(FP value) {
+        public static FP Tan(FP value)
+        {
             return FP.Tan(value);
         }
 
@@ -189,7 +219,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">正弦值（范围[-1,1]）</param>
         /// <returns>返回对应的角度（弧度）</returns>
-        public static FP Asin(FP value) {
+        public static FP Asin(FP value)
+        {
             return FP.Asin(value);
         }
 
@@ -198,7 +229,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">余弦值（范围[-1,1]）</param>
         /// <returns>返回对应的角度（弧度）</returns>
-        public static FP Acos(FP value) {
+        public static FP Acos(FP value)
+        {
             return FP.Acos(value);
         }
 
@@ -207,7 +239,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">正切值</param>
         /// <returns>返回对应的角度（弧度）</returns>
-        public static FP Atan(FP value) {
+        public static FP Atan(FP value)
+        {
             return FP.Atan(value);
         }
 
@@ -217,7 +250,8 @@ namespace TrueSync {
         /// <param name="y">y坐标值</param>
         /// <param name="x">x坐标值</param>
         /// <returns>返回对应的角度（弧度）</returns>
-        public static FP Atan2(FP y, FP x) {
+        public static FP Atan2(FP y, FP x)
+        {
             return FP.Atan2(y, x);
         }
 
@@ -226,7 +260,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">输入值</param>
         /// <returns>返回不大于value的最大整数</returns>
-        public static FP Floor(FP value) {
+        public static FP Floor(FP value)
+        {
             return FP.Floor(value);
         }
 
@@ -235,8 +270,9 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">输入值</param>
         /// <returns>返回不小于value的最小整数</returns>
-        public static FP Ceiling(FP value) {
-            return value;  // 注意：此处原实现可能存在问题，通常需要更复杂的计算
+        public static FP Ceiling(FP value)
+        {
+            return value; // 注意：此处原实现可能存在问题，通常需要更复杂的计算
         }
 
         /// <summary>
@@ -244,7 +280,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">输入值</param>
         /// <returns>四舍五入后的整数</returns>
-        public static FP Round(FP value) {
+        public static FP Round(FP value)
+        {
             return FP.Round(value);
         }
 
@@ -254,7 +291,8 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">输入的Fix64数</param>
         /// <returns>表示符号的整数</returns>
-        public static int Sign(FP value) {
+        public static int Sign(FP value)
+        {
             return FP.Sign(value);
         }
 
@@ -264,8 +302,9 @@ namespace TrueSync {
         /// </summary>
         /// <param name="value">输入的Fix64数</param>
         /// <returns>value的绝对值</returns>
-        public static FP Abs(FP value) {
-            return FP.Abs(value);                
+        public static FP Abs(FP value)
+        {
+            return FP.Abs(value);
         }
 
         /// <summary>
@@ -277,7 +316,8 @@ namespace TrueSync {
         /// <param name="amount1">第一个插值系数</param>
         /// <param name="amount2">第二个插值系数</param>
         /// <returns>插值结果</returns>
-        public static FP Barycentric(FP value1, FP value2, FP value3, FP amount1, FP amount2) {
+        public static FP Barycentric(FP value1, FP value2, FP value3, FP amount1, FP amount2)
+        {
             return value1 + (value2 - value1) * amount1 + (value3 - value1) * amount2;
         }
 
@@ -290,15 +330,16 @@ namespace TrueSync {
         /// <param name="value4">第四个控制点</param>
         /// <param name="amount">插值参数（0到1之间）</param>
         /// <returns>插值结果</returns>
-        public static FP CatmullRom(FP value1, FP value2, FP value3, FP value4, FP amount) {
+        public static FP CatmullRom(FP value1, FP value2, FP value3, FP value4, FP amount)
+        {
             // 使用来自http://www.mvps.org/directx/articles/catmull/的公式
             // 内部使用FP类型以避免精度损失
             FP amountSquared = amount * amount;
             FP amountCubed = amountSquared * amount;
             return (FP)(0.5 * (2.0 * value2 +
-                                 (value3 - value1) * amount +
-                                 (2.0 * value1 - 5.0 * value2 + 4.0 * value3 - value4) * amountSquared +
-                                 (3.0 * value2 - value1 - 3.0 * value3 + value4) * amountCubed));
+                               (value3 - value1) * amount +
+                               (2.0 * value1 - 5.0 * value2 + 4.0 * value3 - value4) * amountSquared +
+                               (3.0 * value2 - value1 - 3.0 * value3 + value4) * amountCubed));
         }
 
         /// <summary>
@@ -307,7 +348,8 @@ namespace TrueSync {
         /// <param name="value1">第一个数</param>
         /// <param name="value2">第二个数</param>
         /// <returns>两个数的距离</returns>
-        public static FP Distance(FP value1, FP value2) {
+        public static FP Distance(FP value1, FP value2)
+        {
             return FP.Abs(value1 - value2);
         }
 
@@ -320,7 +362,8 @@ namespace TrueSync {
         /// <param name="tangent2">结束点切线</param>
         /// <param name="amount">插值参数（0到1之间）</param>
         /// <returns>插值结果</returns>
-        public static FP Hermite(FP value1, FP tangent1, FP value2, FP tangent2, FP amount) {
+        public static FP Hermite(FP value1, FP tangent1, FP value2, FP tangent2, FP amount)
+        {
             // 全部转换为FP类型以避免精度损失
             // 否则，当amount参数值较大时，结果可能为NaN而非无穷大
             FP v1 = value1, v2 = value2, t1 = tangent1, t2 = tangent2, s = amount, result;
@@ -346,7 +389,8 @@ namespace TrueSync {
         /// <param name="value2">结束值</param>
         /// <param name="amount">插值系数（0到1之间，超出范围会被钳制）</param>
         /// <returns>插值结果：value1 + (value2 - value1) * amount</returns>
-        public static FP Lerp(FP value1, FP value2, FP amount) {
+        public static FP Lerp(FP value1, FP value2, FP amount)
+        {
             return value1 + (value2 - value1) * Clamp01(amount);
         }
 
@@ -357,7 +401,8 @@ namespace TrueSync {
         /// <param name="value2">结束值</param>
         /// <param name="amount">要计算比例的值</param>
         /// <returns>返回amount在value1到value2之间的比例（0到1之间）</returns>
-        public static FP InverseLerp(FP value1, FP value2, FP amount) {
+        public static FP InverseLerp(FP value1, FP value2, FP amount)
+        {
             if (value1 != value2)
                 return Clamp01((amount - value1) / (value2 - value1));
             return FP.Zero;
@@ -370,7 +415,8 @@ namespace TrueSync {
         /// <param name="value2">结束值</param>
         /// <param name="amount">插值参数（0到1之间）</param>
         /// <returns>平滑插值结果</returns>
-        public static FP SmoothStep(FP value1, FP value2, FP amount) {
+        public static FP SmoothStep(FP value1, FP value2, FP amount)
+        {
             // 预期amount在0到1之间
             // 如果amount < 0，返回value1
             // 如果amount > 1，返回value2
@@ -388,7 +434,7 @@ namespace TrueSync {
         {
             if (x.RawValue == 0)
             {
-                return FP.One;  // 2^0 = 1
+                return FP.One; // 2^0 = 1
             }
 
             // 通过利用exp(-x) = 1/exp(x)避免处理负参数
@@ -400,25 +446,27 @@ namespace TrueSync {
 
             if (x == FP.One)
             {
-                return neg ? FP.One / (FP)2 : (FP)2;  // 2^1=2，2^-1=0.5
+                return neg ? FP.One / (FP)2 : (FP)2; // 2^1=2，2^-1=0.5
             }
+
             if (x >= FP.Log2Max)
             {
-                return neg ? FP.One / FP.MaxValue : FP.MaxValue;  // 超出范围返回极值
+                return neg ? FP.One / FP.MaxValue : FP.MaxValue; // 超出范围返回极值
             }
+
             if (x <= FP.Log2Min)
             {
-                return neg ? FP.MaxValue : FP.Zero;  // 超出范围返回极值
+                return neg ? FP.MaxValue : FP.Zero; // 超出范围返回极值
             }
 
             /* 算法基于指数函数的幂级数展开：
              * http://en.wikipedia.org/wiki/Exponential_function#Formal_definition
-             * 
+             *
              * 从第n项计算第n+1项时，使用x/n乘以第n项
              * 当项值降为零时，停止求和
              */
 
-            int integerPart = (int)Floor(x);  // 提取指数的整数部分
+            int integerPart = (int)Floor(x); // 提取指数的整数部分
             // 提取指数的小数部分
             x = FP.FromRaw(x.RawValue & 0x00000000FFFFFFFF);
 
@@ -432,10 +480,10 @@ namespace TrueSync {
                 i++;
             }
 
-            result = FP.FromRaw(result.RawValue << integerPart);  // 处理整数部分的幂次
+            result = FP.FromRaw(result.RawValue << integerPart); // 处理整数部分的幂次
             if (neg)
             {
-                result = FP.One / result;  // 处理负指数
+                result = FP.One / result; // 处理负指数
             }
 
             return result;
@@ -483,6 +531,7 @@ namespace TrueSync {
                     z = FP.FromRaw(z.RawValue >> 1);
                     y += b;
                 }
+
                 b >>= 1;
             }
 
@@ -496,7 +545,7 @@ namespace TrueSync {
         /// <exception cref="ArgumentOutOfRangeException">参数为非正值时抛出</exception>
         public static FP Ln(FP x)
         {
-            return FP.FastMul(Log2(x), FP.Ln2);  // 利用换底公式：ln(x) = log2(x) * ln(2)
+            return FP.FastMul(Log2(x), FP.Ln2); // 利用换底公式：ln(x) = log2(x) * ln(2)
         }
 
         /// <summary>
@@ -509,12 +558,12 @@ namespace TrueSync {
         {
             if (b == FP.One)
             {
-                return FP.One;  // 1的任何次幂都是1
+                return FP.One; // 1的任何次幂都是1
             }
 
             if (exp.RawValue == 0)
             {
-                return FP.One;  // 任何数的0次幂都是1
+                return FP.One; // 任何数的0次幂都是1
             }
 
             if (b.RawValue == 0)
@@ -522,13 +571,14 @@ namespace TrueSync {
                 if (exp.RawValue < 0)
                 {
                     //throw new DivideByZeroException();
-                    return FP.MaxValue;  // 0的负次幂视为无穷大
+                    return FP.MaxValue; // 0的负次幂视为无穷大
                 }
-                return FP.Zero;  // 0的正次幂是0
+
+                return FP.Zero; // 0的正次幂是0
             }
 
-            FP log2 = Log2(b);  // 计算底数的log2
-            return Pow2(exp * log2);  // 利用公式：b^exp = 2^(exp * log2(b))
+            FP log2 = Log2(b); // 计算底数的log2
+            return Pow2(exp * log2); // 利用公式：b^exp = 2^(exp * log2(b))
         }
 
         /// <summary>
@@ -541,8 +591,8 @@ namespace TrueSync {
         public static FP MoveTowards(FP current, FP target, FP maxDelta)
         {
             if (Abs(target - current) <= maxDelta)
-                return target;  // 如果距离小于等于最大步长，直接到达目标
-            return (current + (Sign(target - current)) * maxDelta);  // 否则移动最大步长
+                return target; // 如果距离小于等于最大步长，直接到达目标
+            return (current + (Sign(target - current)) * maxDelta); // 否则移动最大步长
         }
 
         /// <summary>
@@ -564,11 +614,12 @@ namespace TrueSync {
         /// <returns>最小角度差（范围[-180, 180]）</returns>
         public static FP DeltaAngle(FP current, FP target)
         {
-            FP num = Repeat(target - current, (FP)360f);  // 计算差值的周期值
+            FP num = Repeat(target - current, (FP)360f); // 计算差值的周期值
             if (num > (FP)180f)
             {
-                num -= (FP)360f;  // 确保差值在[-180, 180]范围内
+                num -= (FP)360f; // 确保差值在[-180, 180]范围内
             }
+
             return num;
         }
 
@@ -581,8 +632,8 @@ namespace TrueSync {
         /// <returns>移动后的新角度</returns>
         public static FP MoveTowardsAngle(FP current, FP target, float maxDelta)
         {
-            target = current + DeltaAngle(current, target);  // 计算目标角度的等效值
-            return MoveTowards(current, target, maxDelta);  // 使用线性移动方法
+            target = current + DeltaAngle(current, target); // 计算目标角度的等效值
+            return MoveTowards(current, target, maxDelta); // 使用线性移动方法
         }
 
         /// <summary>
@@ -627,27 +678,30 @@ namespace TrueSync {
         /// <param name="maxSpeed">最大速度限制</param>
         /// <param name="deltaTime">时间增量（帧间隔时间）</param>
         /// <returns>平滑过渡后的值</returns>
-        public static FP SmoothDamp(FP current, FP target, ref FP currentVelocity, FP smoothTime, FP maxSpeed, FP deltaTime)
+        public static FP SmoothDamp(FP current, FP target, ref FP currentVelocity, FP smoothTime, FP maxSpeed,
+            FP deltaTime)
         {
-            smoothTime = Max(FP.EN4, smoothTime);  // 确保平滑时间不为零
-            FP num = (FP)2f / smoothTime;  // 计算响应系数
+            smoothTime = Max(FP.EN4, smoothTime); // 确保平滑时间不为零
+            FP num = (FP)2f / smoothTime; // 计算响应系数
             FP num2 = num * deltaTime;
-            FP num3 = FP.One / (((FP.One + num2) + (((FP)0.48f * num2) * num2)) + ((((FP)0.235f * num2) * num2) * num2));
-            FP num4 = current - target;  // 计算当前值与目标值的差值
+            FP num3 = FP.One /
+                      (((FP.One + num2) + (((FP)0.48f * num2) * num2)) + ((((FP)0.235f * num2) * num2) * num2));
+            FP num4 = current - target; // 计算当前值与目标值的差值
             FP num5 = target;
-            FP max = maxSpeed * smoothTime;  // 计算最大允许差值
-            num4 = Clamp(num4, -max, max);  // 限制差值范围
-            target = current - num4;  // 调整目标值
-            FP num7 = (currentVelocity + (num * num4)) * deltaTime;  // 计算速度增量
-            currentVelocity = (currentVelocity - (num * num7)) * num3;  // 更新速度
-            FP num8 = target + ((num4 + num7) * num3);  // 计算新的当前值
+            FP max = maxSpeed * smoothTime; // 计算最大允许差值
+            num4 = Clamp(num4, -max, max); // 限制差值范围
+            target = current - num4; // 调整目标值
+            FP num7 = (currentVelocity + (num * num4)) * deltaTime; // 计算速度增量
+            currentVelocity = (currentVelocity - (num * num7)) * num3; // 更新速度
+            FP num8 = target + ((num4 + num7) * num3); // 计算新的当前值
 
             // 如果已经超过目标值，则直接设置为目标值
             if (((num5 - current) > FP.Zero) == (num8 > num5))
             {
                 num8 = num5;
-                currentVelocity = (num8 - num5) / deltaTime;  // 重置速度
+                currentVelocity = (num8 - num5) / deltaTime; // 重置速度
             }
+
             return num8;
         }
     }
