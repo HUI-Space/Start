@@ -12,7 +12,7 @@
  *  3. 本声明不得从任何源代码分发中删除或修改。
  */
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 表示一个3x3的矩阵结构，用于数学计算，特别是三维空间中的旋转和变换操作

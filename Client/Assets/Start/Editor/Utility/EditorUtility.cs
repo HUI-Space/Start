@@ -51,45 +51,7 @@ namespace Start.Editor
         
             return sb.ToString();
         }
-        
-        /// <summary>
-        /// 获取别名对应的类型
-        /// </summary>
-        /// <param name="alias">别名</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">无效的类型别名</exception>
-        public static Type GetTypeFromAlias(string alias)
-        {
-            // 动态生成代码：定义一个返回指定类型的方法
-            string code = $@"
-            using System;
-            using Start;
-            using System.Collections.Generic;
-            public class TypeHelper {{
-                public static Type GetType() {{
-                    return typeof({alias});
-                }}
-            }}";
 
-            // 使用 C# 编译器动态编译
-            using (CSharpCodeProvider provider = new CSharpCodeProvider())
-            {
-                CompilerParameters parameters = new CompilerParameters();
-                parameters.GenerateInMemory = true; // 仅在内存中生成，不写入磁盘
-
-                CompilerResults results = provider.CompileAssemblyFromSource(parameters, code);
-                if (results.Errors.HasErrors)
-                {
-                    throw new ArgumentException($"无效的类型别名: {alias}");
-                }
-
-                // 调用动态生成的方法获取类型
-                Assembly assembly = results.CompiledAssembly;
-                Type helperType = assembly.GetType("TypeHelper");
-                MethodInfo method = helperType.GetMethod("GetType");
-                return (Type)method.Invoke(null, null);
-            }
-        }
         
         public static T LoadJsonConfig<T>(string path)
         {

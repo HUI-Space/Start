@@ -14,7 +14,7 @@
 
 using System;
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 三维向量结构，用于表示三维空间中的点或方向

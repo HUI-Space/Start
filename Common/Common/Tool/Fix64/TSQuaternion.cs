@@ -14,7 +14,7 @@
 
 using System;
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 表示3D空间中方向的四元数结构

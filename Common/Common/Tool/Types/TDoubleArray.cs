@@ -3,17 +3,11 @@ using System.Text;
 
 namespace Start
 {
-    public class TDoubleArray : TType
+    public class TDoubleArray : TGenericType
     {
-        public Type Type => typeof(Array[,]);
+        public override Type Type => typeof(Array[,]);
         
-        protected TType _type;
-        
-        public TDoubleArray(TType type)
-        {
-            _type = type;
-        }
-        public string GetJsonFormat(string value)
+        public override string GetJsonFormat(string value)
         {
             string[] rows = value.Split('|');
             StringBuilder stringBuilder = new StringBuilder();
@@ -24,9 +18,9 @@ namespace Start
                 string[] values = rows[i].Split('_');
                 for (int j = 0; j < values.Length - 1; j++)
                 {
-                    stringBuilder.Append($"{_type.GetJsonFormat(values[j])},");
+                    stringBuilder.Append($"{GenericType.GetJsonFormat(values[j])},");
                 }
-                stringBuilder.Append($"{_type.GetJsonFormat(values[values.Length - 1])}");
+                stringBuilder.Append($"{GenericType.GetJsonFormat(values[values.Length - 1])}");
                 stringBuilder.Append("]");
                 if (i != rows.Length - 1)
                 {
@@ -35,6 +29,11 @@ namespace Start
             }
             stringBuilder.Append("]");
             return stringBuilder.ToString();
+        }
+        
+        public override string ToString()
+        {
+            return $"{GenericType}[,]";
         }
     }
 }

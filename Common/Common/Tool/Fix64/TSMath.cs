@@ -14,7 +14,7 @@
  *  3. 本声明不得从任何源分发中删除或修改。
  */
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 包含常用的数学运算方法和常量，提供高精度定点数(FP)的数学操作支持

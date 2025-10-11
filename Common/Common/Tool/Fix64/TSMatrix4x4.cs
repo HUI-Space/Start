@@ -12,7 +12,7 @@
  *  3. 本声明不得从任何源分发中删除或修改。
  */
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 4x4矩阵结构，用于表示三维空间中的变换（旋转、平移、缩放等）

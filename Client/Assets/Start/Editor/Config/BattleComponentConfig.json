@@ -6,24 +6,17 @@
             "ClassAttributes": [],
             "DynamicProperties": [
                 {
-                    "PropertyName": "Id",
+                    "PropertyName": "ID",
                     "PropertyType": "int",
-                    "PropertyDefaultValue": "-1",
-                    "PropertyComment": "ID",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "玩家ID",
                     "PropertyAttributes": []
                 },
                 {
-                    "PropertyName": "Ids",
+                    "PropertyName": "IDs",
                     "PropertyType": "int[]",
-                    "PropertyDefaultValue": "",
-                    "PropertyComment": "ID列表",
-                    "PropertyAttributes": []
-                },
-                {
-                    "PropertyName": "FixedPointNumber",
-                    "PropertyType": "FixedPointNumber",
-                    "PropertyDefaultValue": "",
-                    "PropertyComment": "FixedPointNumber",
+                    "PropertyDefaultValue": "new int[6]",
+                    "PropertyComment": "所有玩家",
                     "PropertyAttributes": []
                 },
                 {
@@ -35,9 +28,37 @@
                 },
                 {
                     "PropertyName": "Dictionary",
-                    "PropertyType": "Dictionary<int,string>",
+                    "PropertyType": "Dictionary<int,FP>",
                     "PropertyDefaultValue": "",
                     "PropertyComment": "字典",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "Copy",
+                    "PropertyType": "Copy",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "Copy",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "CopyList",
+                    "PropertyType": "List<Copy>",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "Copy列表",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "CopyDictionary",
+                    "PropertyType": "Dictionary<int,Copy>",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "Copy字典",
+                    "PropertyAttributes": []
+                },
+                {
+                    "PropertyName": "AA",
+                    "PropertyType": "AA",
+                    "PropertyDefaultValue": "",
+                    "PropertyComment": "AA",
                     "PropertyAttributes": []
                 }
             ]

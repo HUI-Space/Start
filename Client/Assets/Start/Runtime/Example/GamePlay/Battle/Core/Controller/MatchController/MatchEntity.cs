@@ -12,12 +12,12 @@ namespace Start
         /// <summary>
         /// 时间差或帧间隔时间
         /// </summary>
-        public FixedPointNumber DeltaTime;
+        public FP DeltaTime;
         
         /// <summary>
         /// 时间缩放
         /// </summary>
-        public FixedPointNumber TimeScale;
+        public FP TimeScale;
         
         public List<PlayerEntity> PlayerList = new List<PlayerEntity>();
 

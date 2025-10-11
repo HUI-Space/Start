@@ -32,7 +32,7 @@ SOFTWARE.
 
 using System;
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 表示二维空间中的向量，使用定点数(FP)进行高精度计算，适用于物理引擎、游戏开发等场景

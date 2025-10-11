@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public class MatchRuntimePropertyComponent : IComponent<MatchRuntimePropertyComponent>
+    /*public class MatchRuntimePropertyComponent : IComponent<MatchRuntimePropertyComponent>
     {
         public static MatchRuntimePropertyComponent Create()
         {
@@ -17,5 +17,5 @@
         {
             
         }
-    }
+    }*/
 }

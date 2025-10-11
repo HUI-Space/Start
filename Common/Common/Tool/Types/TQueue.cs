@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Start
 {
-    public class THashSet : TGenericType
+    public class TQueue : TGenericType
     {
-        public override Type Type => typeof(HashSet<>); 
+        public override Type Type => typeof(Queue<>); 
         
         
         public override string ToString()
         {
-            return $"HashSet<{GenericType}>";
+            return $"Queue<{GenericType}>";
         }
     }
 }

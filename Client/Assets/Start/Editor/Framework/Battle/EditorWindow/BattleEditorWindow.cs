@@ -1,19 +1,19 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+using System.Linq;
 using System.Text;
-using Microsoft.CSharp;
 using UnityEditor;
 using UnityEngine;
 
 namespace Start.Editor
 {
+    /// <summary>
+    /// TODO 生成代码后续再修改吧
+    /// 将就用着吧
+    /// </summary>
     public class BattleEditorWindow : EditorWindow
     {
-
-        
         private static BattleEditorWindow _window;
 
         public static void OpenEditorWindow()
@@ -40,12 +40,12 @@ namespace Start.Editor
         /// 滚动位置
         /// </summary>
         private Vector2 _scrollPosition;
-        
+
         /// <summary>
         /// 动态类配置
         /// </summary>
         private BattleComponentConfig _battleComponentConfig;
-        
+
         /// <summary>
         /// 类的特性列表
         /// </summary>
@@ -64,12 +64,14 @@ namespace Start.Editor
             "DirtyCheck",
             "NoDirtyCheck",
         };
-        
+
         private void OnEnable()
         {
-            _battleComponentConfig = File.Exists(BattlePath.BattleComponentConfigPath) ? Utility.LoadJsonConfig<BattleComponentConfig>(BattlePath.BattleComponentConfigPath) : new BattleComponentConfig();
+            _battleComponentConfig = File.Exists(BattlePath.BattleComponentConfigPath)
+                ? Utility.LoadJsonConfig<BattleComponentConfig>(BattlePath.BattleComponentConfigPath)
+                : new BattleComponentConfig();
         }
-        
+
         private void OnGUI()
         {
             ProcessDeletions();
@@ -94,7 +96,7 @@ namespace Start.Editor
             EditorGUILayout.Space();
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
-             
+
             for (int i = 0; i < _battleComponentConfig.DataList.Count; i++)
             {
                 BattleComponentClass battleComponentClass = _battleComponentConfig.DataList[i];
@@ -135,21 +137,22 @@ namespace Start.Editor
 
                             if (GUILayout.Button("删除类", GUILayout.Width(80)))
                             {
-                                if (EditorUtility.DisplayDialog("确认", $"确定要删除 {battleComponentClass.ClassName} 吗？", "是", "否"))
+                                if (EditorUtility.DisplayDialog("确认", $"确定要删除 {battleComponentClass.ClassName} 吗？", "是",
+                                        "否"))
                                 {
                                     _classToRemove = i; // 记录要删除的索引，延迟到布局结束后处理
                                 }
                             }
                         }
                         EditorGUILayout.EndHorizontal();
-                        
+
                         EditorGUILayout.BeginHorizontal();
                         {
                             battleComponentClass.ClassComment =
                                 EditorGUILayout.TextField("类注释:", battleComponentClass.ClassComment);
                         }
                         EditorGUILayout.EndHorizontal();
-                        
+
                         EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField("类名:", battleComponentClass.ClassName);
@@ -164,9 +167,10 @@ namespace Start.Editor
                         {
                             // 属性名
                             EditorGUILayout.Space();
-                            
-                            BattleComponentProperty battleComponentProperty = _battleComponentConfig.DataList[i].DynamicProperties[j];
-                            
+
+                            BattleComponentProperty battleComponentProperty =
+                                _battleComponentConfig.DataList[i].DynamicProperties[j];
+
                             // 绘制多选下拉框
                             EditorGUILayout.BeginHorizontal();
                             {
@@ -181,16 +185,20 @@ namespace Start.Editor
                                     {
                                         int index = k; // 捕获当前索引
                                         bool isSelected =
-                                            battleComponentProperty.PropertyAttributes.Contains(_propertyAttributes[index]);
+                                            battleComponentProperty.PropertyAttributes.Contains(
+                                                _propertyAttributes[index]);
                                         menu.AddItem(new GUIContent(_propertyAttributes[index]), isSelected, () =>
                                         {
-                                            if (battleComponentProperty.PropertyAttributes.Contains(_propertyAttributes[index]))
+                                            if (battleComponentProperty.PropertyAttributes.Contains(
+                                                    _propertyAttributes[index]))
                                             {
-                                                battleComponentProperty.PropertyAttributes.Remove(_propertyAttributes[index]);
+                                                battleComponentProperty.PropertyAttributes.Remove(
+                                                    _propertyAttributes[index]);
                                             }
                                             else
                                             {
-                                                battleComponentProperty.PropertyAttributes.Add(_propertyAttributes[index]);
+                                                battleComponentProperty.PropertyAttributes.Add(
+                                                    _propertyAttributes[index]);
                                             }
                                         });
                                     }
@@ -205,26 +213,45 @@ namespace Start.Editor
                                 }
                             }
                             EditorGUILayout.EndHorizontal();
-                            
+
                             // 属性注释
                             battleComponentProperty.PropertyComment =
                                 EditorGUILayout.TextField("属性注释:", battleComponentProperty.PropertyComment);
-                            
+
+                            EditorGUILayout.BeginHorizontal();
                             // 属性类型
                             battleComponentProperty.PropertyType =
                                 EditorGUILayout.TextField("属性类型:", battleComponentProperty.PropertyType);
-                            
+                            // 删除属性按钮
+                            if (GUILayout.Button("设置属性", GUILayout.Width(80)))
+                            {
+                                TTypeEditorWindow.ShowWindow(
+                                    new[]
+                                    {
+                                        typeof(int),
+                                        typeof(FP),
+                                        typeof(Array),
+                                        typeof(Array[,]),
+                                        typeof(List<>),
+                                        typeof(Dictionary<,>)
+                                    }, (value) =>
+                                    {
+                                        battleComponentProperty.PropertyType = value.ToString();
+                                        battleComponentProperty.PropertyDefaultValue = string.Empty;
+                                    });
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+
                             // 属性名称
                             battleComponentProperty.PropertyName =
                                 EditorGUILayout.TextField("属性名称:", battleComponentProperty.PropertyName);
-                            
+
                             // 属性类型
                             battleComponentProperty.PropertyDefaultValue =
                                 EditorGUILayout.TextField("属性默认值:", battleComponentProperty.PropertyDefaultValue);
-
-                            
                         }
-                        
+
                         EditorGUILayout.BeginHorizontal();
                         {
                             // 显示属性列表
@@ -253,6 +280,7 @@ namespace Start.Editor
             {
                 SaveConfig();
             }
+
             // 保存按钮
             if (GUILayout.Button("生成脚本", GUILayout.Height(30)))
             {
@@ -274,7 +302,7 @@ namespace Start.Editor
                 return;
             }
 
-            _battleComponentConfig.DataList.Add(new BattleComponentClass{ ClassName = _newClassName });
+            _battleComponentConfig.DataList.Add(new BattleComponentClass { ClassName = _newClassName });
             _newClassName = "";
         }
 
@@ -303,11 +331,12 @@ namespace Start.Editor
 
             if (_propToRemove.classIndex != -1 && _propToRemove.propIndex != -1)
             {
-                _battleComponentConfig.DataList[_propToRemove.classIndex].DynamicProperties.RemoveAt(_propToRemove.propIndex);
+                _battleComponentConfig.DataList[_propToRemove.classIndex].DynamicProperties
+                    .RemoveAt(_propToRemove.propIndex);
                 _propToRemove = (-1, -1);
             }
         }
-        
+
         private void SaveConfig()
         {
             string json = JsonUtility.ToJson(_battleComponentConfig, true);
@@ -324,7 +353,7 @@ namespace Start.Editor
             }
 
             string path = EditorUtility.SaveFolderPanel("保存组件脚本", "Assets", "");
-            
+
             if (string.IsNullOrEmpty(path)) return;
 
             if (!path.StartsWith(Application.dataPath))
@@ -332,179 +361,284 @@ namespace Start.Editor
                 EditorUtility.DisplayDialog("错误", "请保存在项目Assets目录下！", "确定");
                 return;
             }
-            
+
             StringBuilder code = new StringBuilder();
 
-            List<BattleComponentProperty> valueType = new List<BattleComponentProperty>();
-            List<BattleComponentProperty> genericType = new List<BattleComponentProperty>();
-            List<BattleComponentProperty> arrayType = new List<BattleComponentProperty>();
-            
+            List<BattleComponentProperty> classTypeProperties = new List<BattleComponentProperty>();
+            List<BattleComponentProperty> valueTypeProperties = new List<BattleComponentProperty>();
+            List<BattleComponentProperty> arrayTypeProperties = new List<BattleComponentProperty>();
+            List<BattleComponentProperty> genericTypeProperties = new List<BattleComponentProperty>();
+            List<BattleComponentProperty> copyValueTypeProperties = new List<BattleComponentProperty>();
             
             foreach (BattleComponentClass component in _battleComponentConfig.DataList)
             {
                 foreach (BattleComponentProperty battleComponentProperty in component.DynamicProperties)
                 {
-                    Type type;
                     if (TypeFactory.TryGetType(battleComponentProperty.PropertyType, out TType tType))
                     {
-                        type = tType.Type;
+                        if (tType is TGenericType tGenericType)
+                        {
+                            if (IsNestedPropertyName(tGenericType))
+                            {
+                                EditorUtility.DisplayDialog("提示", $"类名：{component.ClassName} \n属性：{battleComponentProperty.PropertyName} \n类型: {tGenericType} \n不支持嵌套！", "确定");
+                                return;
+                            }
+                            if (tGenericType is TArray)
+                            {
+                                arrayTypeProperties.Add(battleComponentProperty);
+                            }
+                            else
+                            {
+                                genericTypeProperties.Add(battleComponentProperty);
+                            }
+                        }
+                        else if (tType is TDictionary tDictionary)
+                        {
+                            if (IsNestedPropertyName(tDictionary))
+                            {
+                                EditorUtility.DisplayDialog("提示", $"类名：{component.ClassName} \n属性：{battleComponentProperty.PropertyName} \n类型：{tDictionary} \n不支持嵌套！", "确定");
+                                return;
+                            }
+                            genericTypeProperties.Add(battleComponentProperty);
+                        }
+                        else
+                        {
+                            valueTypeProperties.Add(battleComponentProperty);
+                        }
                     }
                     else
                     {
-                        type = Type.GetType(battleComponentProperty.PropertyType);
+                        Type type = TypeParser.Parse(battleComponentProperty.PropertyType);
+                        
                         if (type == null)
                         {
-                            type = AssemblyUtility.GetType(battleComponentProperty.PropertyType);
+                            Debug.LogError($"类型{battleComponentProperty.PropertyType}未找到！");
                         }
-                        if (type == null)
+                        
+                        if (type != null)
                         {
-                            type = Utility.GetTypeFromAlias(battleComponentProperty.PropertyType);
-                        }
-                    }
-                    
-                    if (type != null)
-                    {
-                        if (type.IsGenericType)
-                        {
-                            genericType.Add(battleComponentProperty);
-                        }
-                        else if (type.IsArray)
-                        {
-                            arrayType.Add(battleComponentProperty);
-                        }
-                        else if (type.IsValueType)
-                        {
-                            valueType.Add(battleComponentProperty);
+                            if (type.GetInterfaces().Any(i => i.IsGenericType && 
+                                                              i.GetGenericTypeDefinition() == typeof(ICopy<>)))
+                            {
+                                copyValueTypeProperties.Add(battleComponentProperty);
+                            }
+                            else if (type.IsGenericType)
+                            {
+                                genericTypeProperties.Add(battleComponentProperty);
+                            }
+                            else if (type.IsArray)
+                            {
+                                arrayTypeProperties.Add(battleComponentProperty);
+                            }
+                            else if (type.IsValueType)
+                            {
+                                valueTypeProperties.Add(battleComponentProperty);
+                            }
+                            else
+                            {
+                                classTypeProperties.Add(battleComponentProperty);
+                            }
                         }
                     }
                 }
+                
                 
                 code.AppendLine("using System;");
                 code.AppendLine("using System.Collections.Generic;");
                 code.AppendLine();
                 code.AppendLine("namespace Start");
                 code.AppendLine("{");
-                
+
                 if (!string.IsNullOrEmpty(component.ClassComment))
                 {
                     code.AppendLine($"    /// <summary>");
                     code.AppendLine($"    /// 动态生成的组件类: {component.ClassComment}");
                     code.AppendLine($"    /// </summary>");
                 }
+                
                 code.AppendLine($"    public class {component.ClassName} : IComponent<{component.ClassName}>");
                 code.AppendLine("    {");
+                
+                if (valueTypeProperties.Count > 0)
+                {
+                    code.AppendLine(
+                        $"        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Auto, Pack = 4)]");
+                    code.AppendLine($"        private struct Common");
+                    code.AppendLine("        {");
 
-                code.AppendLine($"        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Auto, Pack = 4)]");
-                code.AppendLine($"        private struct Common");
-                code.AppendLine("        {");
-                
-                foreach (BattleComponentProperty value in valueType)
-                {
-                    code.AppendLine($"        public {value.PropertyType} {value.PropertyName};");
-                }
-                
-                code.AppendLine($"            public Common(int no)");
-                code.AppendLine("            {");
-                foreach (BattleComponentProperty value in valueType)
-                {
-                    code.AppendLine(!string.IsNullOrEmpty(value.PropertyDefaultValue)
-                        ? $"            {value.PropertyName} = {value.PropertyDefaultValue};"
-                        : $"            {value.PropertyName} = default();");
-                }
-                code.AppendLine("            }");
-                code.AppendLine("        }");
-                
-                code.AppendLine();
-                code.AppendLine("        private Common _common = new Common();");
+                    foreach (BattleComponentProperty value in valueTypeProperties)
+                    {
+                        code.AppendLine($"            public {value.PropertyType} {value.PropertyName};");
+                    }
 
-                foreach (BattleComponentProperty value in valueType)
-                {
-                    code.AppendLine($"    public {value.PropertyType} {value.PropertyName}");
-                    code.AppendLine("    {");
-                    code.AppendLine($"    get {{ return _common.{value.PropertyName}; }}");
-                    code.AppendLine($"    set {{ _common.{value.PropertyName} = value; }}");
-                }
+                    code.AppendLine($"            public Common(int no)");
+                    code.AppendLine("            {");
+                    foreach (BattleComponentProperty value in valueTypeProperties)
+                    {
+                        code.AppendLine(!string.IsNullOrEmpty(value.PropertyDefaultValue)
+                            ? $"                {value.PropertyName} = {value.PropertyDefaultValue};"
+                            : $"                {value.PropertyName} = default;");
+                    }
 
-                foreach (BattleComponentProperty value in arrayType)
-                {
-                    code.AppendLine($"    private {value.PropertyType}[] _{value.PropertyName.ToLower()} = {value.PropertyDefaultValue}");
-                    code.AppendLine($"    public {value.PropertyType} {value.PropertyName}");
-                    code.AppendLine("    {");
-                    code.AppendLine($"        get {{return _{value.PropertyName.ToLower()};}}");
-                    code.AppendLine($"        set {{_{value.PropertyName.ToLower()} = value;}}");
-                    code.AppendLine("    }");
+                    code.AppendLine("            }");
+                    code.AppendLine("        }");
+
+                    code.AppendLine();
+                    code.AppendLine("        private Common _common = new Common();");
+                    code.AppendLine();
+                    foreach (BattleComponentProperty value in valueTypeProperties)
+                    {
+                        code.AppendLine($"        public {value.PropertyType} {value.PropertyName}");
+                        code.AppendLine("        {");
+                        code.AppendLine($"            get => _common.{value.PropertyName};");
+                        code.AppendLine($"            set => _common.{value.PropertyName} = value;");
+                        code.AppendLine("        }");
+                        code.AppendLine();
+                    }
                 }
                 
-                foreach (BattleComponentProperty value in genericType)
+                foreach (BattleComponentProperty value in classTypeProperties)
+                {
+                    string lowerPropertyName = value.PropertyName.ToLower();
+                    code.AppendLine($"        private {value.PropertyType} _{lowerPropertyName} = new {value.PropertyType}();");
+                    code.AppendLine($"        public {value.PropertyType} {value.PropertyName}");
+                    code.AppendLine("        {");
+                    code.AppendLine($"            get => _{lowerPropertyName};");
+                    code.AppendLine($"            set => _{lowerPropertyName} = value;");
+                    code.AppendLine("        }");
+                    code.AppendLine();
+                }
+                
+                foreach (BattleComponentProperty value in copyValueTypeProperties)
+                {
+                    string lowerPropertyName = value.PropertyName.ToLower();
+                    code.AppendLine($"        private {value.PropertyType} _{lowerPropertyName} = new {value.PropertyType}();");
+                    code.AppendLine($"        public {value.PropertyType} {value.PropertyName}");
+                    code.AppendLine("        {");
+                    code.AppendLine($"            get => _{lowerPropertyName};");
+                    code.AppendLine($"            set => _{lowerPropertyName} = value;");
+                    code.AppendLine("        }");
+                    code.AppendLine();
+                }
+                
+                
+                foreach (BattleComponentProperty value in arrayTypeProperties)
+                {
+                    string lowerPropertyName = value.PropertyName.ToLower();
+                    code.AppendLine($"        private {value.PropertyType} _{lowerPropertyName} = {value.PropertyDefaultValue};");
+                    code.AppendLine($"        public {value.PropertyType} {value.PropertyName}");
+                    code.AppendLine("        {");
+                    code.AppendLine($"            get => _{lowerPropertyName};");
+                    code.AppendLine($"            set => _{lowerPropertyName} = value;");
+                    code.AppendLine("        }");
+                    code.AppendLine();
+                }
+
+                foreach (BattleComponentProperty value in genericTypeProperties)
                 {
                     if (value.PropertyType.Contains("List") || value.PropertyType.Contains("Dictionary"))
                     {
-                        code.AppendLine($"    private {value.PropertyType} _{value.PropertyName.ToLower()} = new {value.PropertyType}();");
-                        code.AppendLine($"    public {value.PropertyType} {value.PropertyName}");
-                        code.AppendLine("    {");
-                        code.AppendLine($"        get {{return _{value.PropertyName.ToLower()};}}");
-                        code.AppendLine($"        set {{_{value.PropertyName.ToLower()} = value;}}");
-                        code.AppendLine("    }");
+                        string lowerPropertyName = value.PropertyName.ToLower();
+                        code.AppendLine($"        private {value.PropertyType} _{lowerPropertyName} = new {value.PropertyType}();");
+                        code.AppendLine($"        public {value.PropertyType} {value.PropertyName}");
+                        code.AppendLine("        {");
+                        code.AppendLine($"            get => _{lowerPropertyName};");
+                        code.AppendLine($"            set => _{lowerPropertyName} = value;");
+                        code.AppendLine("        }");
+                        code.AppendLine();
                     }
                 }
-                   
+                code.AppendLine();
+                
                 code.AppendLine($"        public void CopyTo({component.ClassName} component)");
                 code.AppendLine("        {");
-                if (valueType.Count > 0)
+                if (valueTypeProperties.Count > 0)
                 {
-                    code.AppendLine($"        component._common = _common");
-                }
-                foreach (BattleComponentProperty value in arrayType)
-                {
-                    string lowerPropertyName = value.PropertyName.ToLower();
-                    code.AppendLine($"        Array.Copy(_{lowerPropertyName}, component._{lowerPropertyName}, _{lowerPropertyName}.Length)");
+                    code.AppendLine($"            component._common = _common;");
                 }
                 
-                foreach (BattleComponentProperty value in genericType)
+                foreach (BattleComponentProperty value in classTypeProperties)
                 {
                     string lowerPropertyName = value.PropertyName.ToLower();
-                    if (value.PropertyType.Contains("List"))
-                    {
-                        
-                    }
-                    else if (value.PropertyType.Contains("Dictionary"))
-                    {
-                        
-                    }
+                    code.AppendLine($"            component._{lowerPropertyName} = _{lowerPropertyName};");
                 }
-                code.AppendLine("        }");
                 
-                code.AppendLine($"        public void Clear()");
-                code.AppendLine("        {");
-                if (valueType.Count > 0)
-                {
-                    code.AppendLine($"        _common = default(Common);");
-                }
-                foreach (BattleComponentProperty value in arrayType)
+                foreach (BattleComponentProperty value in copyValueTypeProperties)
                 {
                     string lowerPropertyName = value.PropertyName.ToLower();
-                    code.AppendLine($"        _{lowerPropertyName} = default();");
+                    code.AppendLine($"            _{lowerPropertyName}.CopyTo(component._{lowerPropertyName});");
                 }
-                foreach (BattleComponentProperty value in genericType)
+                
+                // 处理数组类型（包括多维数组和数组的数组）
+                foreach (BattleComponentProperty value in arrayTypeProperties)
                 {
                     string lowerPropertyName = value.PropertyName.ToLower();
-                    if (value.PropertyType.Contains("List") || value.PropertyType.Contains("Dictionary"))
+                    code.AppendLine($"            Array.Copy(_{lowerPropertyName}, component._{lowerPropertyName}, _{lowerPropertyName}.Length);");
+                }
+
+                // 处理泛型类型（List和Dictionary）
+                foreach (BattleComponentProperty value in genericTypeProperties)
+                {
+                    string lowerPropertyName = value.PropertyName.ToLower();
+                    if (value.PropertyType.StartsWith("List<") && value.PropertyType.EndsWith(">"))
                     {
-                        code.AppendLine($"        _{lowerPropertyName}.Clear();");
-                        code.AppendLine($"        _{lowerPropertyName} = default();");
+                        code.AppendLine($"            component._{lowerPropertyName}.Clear();");
+                        code.AppendLine($"            component._{lowerPropertyName}.Capacity = _{lowerPropertyName}.Count;");
+                        code.AppendLine($"            component._{lowerPropertyName}.AddRange(_{lowerPropertyName});");
+                        code.AppendLine();
+                    }
+                    else if (value.PropertyType.StartsWith("Dictionary<") && value.PropertyType.EndsWith(">"))
+                    {
+                        code.AppendLine($"            component._{lowerPropertyName}.Clear();");
+                        code.AppendLine($"            foreach (var item in _{lowerPropertyName})");
+                        code.AppendLine("            {");
+                        code.AppendLine($"                component._{lowerPropertyName}.Add(item.Key, item.Value);");
+                        code.AppendLine("            }");
                     }
                 }
+
                 code.AppendLine("        }");
                 code.AppendLine("    }");
                 code.AppendLine("}");
                 
                 File.WriteAllText(Path.Combine(path, component.ClassName + ".cs"), code.ToString());
-                valueType.Clear();
-                genericType.Clear();
-                arrayType.Clear();
+                valueTypeProperties.Clear();
+                genericTypeProperties.Clear();
+                arrayTypeProperties.Clear();
+                copyValueTypeProperties.Clear();
             }
+            
             AssetDatabase.Refresh();
             EditorUtility.DisplayDialog("成功", $"已保存到 {path}", "确定");
         }
+        
+        
+        private bool IsNestedPropertyName(TType tType)
+        {
+            if (tType is TGenericType tGenericType)
+            {
+                return IsNestedProperty(tGenericType.GenericType);
+            }
+            if (tType is TDictionary tDictionary)
+            {
+                return IsNestedProperty(tDictionary.KeyGenericType) || IsNestedProperty(tDictionary.ValueGenericType);
+            }
+            return false;
+        }
+        
+        private bool IsNestedProperty(TType tType)
+        {
+            if (tType is TGenericType tGenericType)
+            {
+                return true;
+            }
+            if (tType is TDictionary tDictionary)
+            {
+                return true;
+            }
+            return false;
+        }
+        
+        
     }
 }

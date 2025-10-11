@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TrueSync
+namespace Start
 {
     /**
      *  @brief 基于确定性确定性算法生成随机数的类，采用梅森旋转算法(Mersenne Twister)实现

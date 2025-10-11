@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace Start
 {
-    public class THashSet : TGenericType
+    public class TLinkedList : TGenericType
     {
-        public override Type Type => typeof(HashSet<>); 
-        
+        public override Type Type => typeof(LinkedList<>);
         
         public override string ToString()
         {
-            return $"HashSet<{GenericType}>";
+            return $"LinkedList<{GenericType}>";
         }
     }
 }

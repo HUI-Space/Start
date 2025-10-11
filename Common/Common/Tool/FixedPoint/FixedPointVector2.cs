@@ -17,8 +17,9 @@ namespace Start
             Y = y;
         }
         
-        public FixedPointNumber Magnitude => FixedPointNumber.CreateFromDouble(
-            Math.Sqrt((X.ToDouble() * X.ToDouble()) + (Y.ToDouble() * Y.ToDouble())));
+        public FixedPointNumber SqrMagnitude => this.X * this.X + this.Y * this.Y;
+
+        public FixedPointNumber Magnitude => FixedPointMath.Sqrt(SqrMagnitude);
 
         public FixedPointVector2 Normalized
         {

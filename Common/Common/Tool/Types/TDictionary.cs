@@ -1,22 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Start
 {
     public class TDictionary : TType
     {
-        private TType _key;
-        private TType _value;
+        public TType KeyGenericType { get; private set; }
+        public TType ValueGenericType { get; private set; }
         
-        public TDictionary(TType key , TType value) 
+        public void SetKeyTType(TType key) 
         {
-            _key = key;
-            _value = value;
+            KeyGenericType = key;
+        }
+        
+        public void SetValueTType(TType key) 
+        {
+            ValueGenericType = key;
+        }
+        
+        public void SetTType(TType key , TType value) 
+        {
+            KeyGenericType = key;
+            ValueGenericType = value;
         }
 
-        public Type Type { get; }
+        public virtual Type Type => typeof(Dictionary<,>);
 
-        public string GetJsonFormat(string value)
+        public virtual string GetJsonFormat(string value)
         {
             string[] values = value.Split('|');
             StringBuilder stringBuilder = new StringBuilder();
@@ -25,8 +36,8 @@ namespace Start
             {
                 string[] item = values[i].Split('_');
                 stringBuilder.AppendLine(i == values.Length - 1
-                    ? $"        \"{item[0]}\" : {_value.GetJsonFormat(item[1])}"
-                    : $"        \"{item[0]}\" : {_value.GetJsonFormat(item[1])},");
+                    ? $"        \"{item[0]}\" : {ValueGenericType.GetJsonFormat(item[1])}"
+                    : $"        \"{item[0]}\" : {ValueGenericType.GetJsonFormat(item[1])},");
             }
             stringBuilder.AppendLine("      }");
             return stringBuilder.ToString();
@@ -34,7 +45,7 @@ namespace Start
 
         public override string ToString()
         {
-            return $"Dictionary<{_key},{_value}>";
+            return $"Dictionary<{KeyGenericType},{ValueGenericType}>";
         }
     }
 }

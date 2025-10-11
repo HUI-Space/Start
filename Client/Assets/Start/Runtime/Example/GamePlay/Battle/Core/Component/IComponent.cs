@@ -1,8 +1,6 @@
-﻿
-
-namespace Start
+﻿namespace Start
 {
-    public interface IComponent<T> : IReference where T : IComponent<T>
+    public interface IComponent<T> where T : IComponent<T>
     {
         void CopyTo(T component);
     }

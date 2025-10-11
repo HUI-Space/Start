@@ -1,14 +1,17 @@
-﻿namespace Start
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Start
 {
-    public class TList : TArray
+    public class TList : TGenericType
     {
-        public TList(TType type) : base(type)
-        {
-        }
+        public override Type Type => typeof(List<>); 
+        
         
         public override string ToString()
         {
-            return $"List<{_type}>";
+            return $"List<{GenericType}>";
         }
     }
 }

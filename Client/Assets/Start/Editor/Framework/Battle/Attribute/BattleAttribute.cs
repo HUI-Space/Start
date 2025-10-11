@@ -71,6 +71,12 @@ public class NoDirtyCheckAttribute : Attribute
 }
 
 /// <summary>
+/// 可复制容器成员类型属性
+/// </summary>
+public class CopyableContainerMemberTypeAttribute : System.Attribute
+{
+}
+/// <summary>
 /// 序列化组件
 /// </summary>
 public class SerializeComponentAttribute : Attribute

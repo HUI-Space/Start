@@ -5,12 +5,12 @@
         /// <summary>
         /// 帧间隔
         /// </summary>
-        FixedPointNumber FrameInterval { get; }
+        FP FrameInterval { get; }
         
         /// <summary>
         /// 时间缩放
         /// </summary>
-        FixedPointNumber TimeScale { get; }
+        FP TimeScale { get; }
 
         /// <summary>
         /// 运行中

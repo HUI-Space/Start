@@ -14,7 +14,7 @@
 
 using System;
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 四维向量结构，用于表示具有X、Y、Z、W四个分量的向量数据

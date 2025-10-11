@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TrueSync
+namespace Start
 {
     /// <summary>
     /// 表示一个Q31.32格式的定点数（31位整数部分 + 32位小数部分）

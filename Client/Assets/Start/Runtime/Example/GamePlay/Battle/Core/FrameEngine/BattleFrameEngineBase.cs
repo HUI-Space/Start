@@ -4,9 +4,9 @@ namespace Start
 {
     public abstract class BattleFrameEngineBase : IBattleFrameEngine
     {
-        public FixedPointNumber FrameInterval { get; private set;}
+        public FP FrameInterval { get; private set;}
         
-        public FixedPointNumber TimeScale { get; private set;}
+        public FP TimeScale { get; private set;}
         
         public bool Running { get; private set;}
         
@@ -27,8 +27,8 @@ namespace Start
         
         public void StartEngine(EBattleType battleType,BattleData battleData)
         {
-            FrameInterval = new FixedPointNumber(FrameConst.FrameInterval,1000);
-            TimeScale = FixedPointNumber.One;
+            FrameInterval = new FP(FrameConst.FrameInterval) / new FP(1000);
+            TimeScale = FP.One;
             if (battleType == EBattleType.Remote)
             {
                 _netThread = new Thread(NetworkEngineUpdate);
@@ -56,8 +56,8 @@ namespace Start
             }
             _threadStop = false;
             Running = false;
-            TimeScale = FixedPointNumber.One;
-            FrameInterval = FixedPointNumber.Zero;
+            TimeScale = FP.One;
+            FrameInterval = FP.Zero;
         }
 
         public void Pause()

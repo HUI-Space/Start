@@ -5,6 +5,7 @@ namespace Start
     public class TUShort : TType
     {
         public Type Type => typeof(ushort);
+        
         public string GetJsonFormat(string value)
         {
             if (!ushort.TryParse(value, out var result))
