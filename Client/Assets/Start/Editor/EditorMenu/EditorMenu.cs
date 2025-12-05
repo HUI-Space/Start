@@ -42,17 +42,16 @@ namespace Start.Editor
         }
         
         [MenuItem("Start/框架/生成UI配置", false, 1600)]
-        public static void Generate()
+        public static void UIConfigGenerate()
         {
             GenerateUIConfig.Generate();
         }
         
-        [MenuItem("Start/框架/战斗编辑器", false, 1800)]
-        public static void OpenBattleEditorWindow()
+        [MenuItem("Start/框架/生成战斗组件", false, 1500)]
+        public static void ComponentsGenerate()
         {
-            BattleEditorWindow.OpenEditorWindow();
+            Components.Generate();
         }
-        
         
         #endregion
         

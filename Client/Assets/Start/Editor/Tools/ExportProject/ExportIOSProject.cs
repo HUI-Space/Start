@@ -2,7 +2,6 @@
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
 namespace Start.Editor
@@ -67,7 +66,7 @@ namespace Start.Editor
                 return;
             }
             
-            string pbxProjectPath = PBXProject.GetPBXProjectPath(xcodeProjectPath);
+            /*string pbxProjectPath = PBXProject.GetPBXProjectPath(xcodeProjectPath);
             PBXProject  pbxProject = new PBXProject();
             pbxProject.ReadFromString(File.ReadAllText(pbxProjectPath));
 
@@ -75,7 +74,7 @@ namespace Start.Editor
             string mainGuid = pbxProject.GetUnityMainTargetGuid();
             
             //UnityFramework
-            string frameworkGuid = pbxProject.GetUnityFrameworkTargetGuid();
+            string frameworkGuid = pbxProject.GetUnityFrameworkTargetGuid();*/
         }
     }
 }

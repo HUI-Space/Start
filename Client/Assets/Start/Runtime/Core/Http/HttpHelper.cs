@@ -16,7 +16,7 @@ namespace Start
         public Task<HttpResponse> Post(string url, byte[] postData, int timeout)
         {
             HttpResponse webResponse = HttpResponse.Create(url,postData);
-            UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, Encoding.UTF8.GetString(postData));
+            UnityWebRequest unityWebRequest = UnityWebRequest.PostWwwForm(url, Encoding.UTF8.GetString(postData));
             return SendRequest(unityWebRequest, webResponse , timeout);
         }
 

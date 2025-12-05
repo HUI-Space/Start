@@ -10,7 +10,6 @@ namespace Start.Editor
 {
     public class Components
     {
-        [MenuItem("Start/Generate")]
         public static void Generate()
         {
             string path = EditorUtility.SaveFolderPanel("保存组件脚本", "Assets", "");
