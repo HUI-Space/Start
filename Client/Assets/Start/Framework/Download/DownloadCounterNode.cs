@@ -1,8 +1,6 @@
-﻿
-
-namespace Start
+﻿namespace Start
 {
-    public class DownloadCounterNode : IReference
+    public class DownloadCounterNode : IReusable
     {
         public long DeltaLength { get; private set; }
 
@@ -10,7 +8,7 @@ namespace Start
 
         public static DownloadCounterNode Create()
         {
-            return ReferencePool.Acquire<DownloadCounterNode>();
+            return RecyclableObjectPool.Acquire<DownloadCounterNode>();
         }
 
         public void Update(float elapseSeconds, float realElapseSeconds)
@@ -23,7 +21,7 @@ namespace Start
             DeltaLength += deltaLength;
         }
 
-        public void Clear()
+        public void Reset()
         {
             DeltaLength = 0L;
             ElapseSeconds = 0f;

@@ -6,7 +6,7 @@ namespace Start
     {
         public static PriorityDelegate Create()
         {
-            PriorityDelegate priorityDelegate = ReferencePool.Acquire<PriorityDelegate>();
+            PriorityDelegate priorityDelegate = RecyclableObjectPool.Acquire<PriorityDelegate>();
             return priorityDelegate;
         }
 
@@ -30,7 +30,7 @@ namespace Start
     {
         public static PriorityDelegate<T> Create()
         {
-            PriorityDelegate<T> priorityDelegate = ReferencePool.Acquire<PriorityDelegate<T>>();
+            PriorityDelegate<T> priorityDelegate = RecyclableObjectPool.Acquire<PriorityDelegate<T>>();
             return priorityDelegate;
         }
 
@@ -54,7 +54,7 @@ namespace Start
     {
         public static PriorityDelegate<T1, T2> Create()
         {
-            PriorityDelegate<T1, T2> priorityDelegate = ReferencePool.Acquire<PriorityDelegate<T1, T2>>();
+            PriorityDelegate<T1, T2> priorityDelegate = RecyclableObjectPool.Acquire<PriorityDelegate<T1, T2>>();
             return priorityDelegate;
         }
 

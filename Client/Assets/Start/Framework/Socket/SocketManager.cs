@@ -183,7 +183,7 @@ namespace Start
                             {
                                 callbacks.Remove(messageId);
                                 callbackTool.Remove(handle.GetHashCode());
-                                ReferencePool.Release(priorityDelegate);
+                                RecyclableObjectPool.Recycle(priorityDelegate);
                                 if (callbacks.Count == 0)
                                 {
                                     _callbacks.Remove(channelId);

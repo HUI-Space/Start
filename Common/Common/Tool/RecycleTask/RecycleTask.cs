@@ -67,7 +67,7 @@ namespace Start
 
         public static RecycleTask Create(bool continueOnCapturedContext = true)
         {
-            RecycleTask instance = ReferencePool.Acquire<RecycleTask>();
+            RecycleTask instance = RecyclableObjectPool.Acquire<RecycleTask>();
             instance._synchronizationContext = continueOnCapturedContext ? SynchronizationContext.Current : null;
             return instance;
         }
@@ -77,7 +77,7 @@ namespace Start
             _delayTimer = new Timer(DelayTimerCallback, this, Timeout.Infinite, Timeout.Infinite);
         }
 
-        public void Clear()
+        public void Reset()
         {
             _awaiterStatus = EAwaiterStatus.Pending;
             _synchronizationContext = default;
@@ -120,11 +120,11 @@ namespace Start
             switch (_awaiterStatus)
             {
                 case EAwaiterStatus.Succeeded:
-                    ReferencePool.Release(this);
+                    RecyclableObjectPool.Recycle(this);
                     break;
                 case EAwaiterStatus.Faulted:
                     ExceptionDispatchInfo c = _callback as ExceptionDispatchInfo;
-                    ReferencePool.Release(this);
+                    RecyclableObjectPool.Recycle(this);
                     c?.Throw();
                     break;
                 default:
@@ -287,7 +287,7 @@ namespace Start
 
         public static RecycleTask<TResult> Create(bool continueOnCapturedContext = true)
         {
-            RecycleTask<TResult> instance = ReferencePool.Acquire<RecycleTask<TResult>>();
+            RecycleTask<TResult> instance = RecyclableObjectPool.Acquire<RecycleTask<TResult>>();
             instance._synchronizationContext = continueOnCapturedContext ? SynchronizationContext.Current : null;
             return instance;
         }
@@ -297,7 +297,7 @@ namespace Start
             _delayTimer = new Timer(DelayTimerCallback, this, Timeout.Infinite, Timeout.Infinite);
         }
 
-        public void Clear()
+        public void Reset()
         {
             _awaiterStatus = EAwaiterStatus.Pending;
             _synchronizationContext = default;
@@ -341,11 +341,11 @@ namespace Start
             switch (_awaiterStatus)
             {
                 case EAwaiterStatus.Succeeded:
-                    ReferencePool.Release(this);
+                    RecyclableObjectPool.Recycle(this);
                     return _result;
                 case EAwaiterStatus.Faulted:
                     ExceptionDispatchInfo c = _callback as ExceptionDispatchInfo;
-                    ReferencePool.Release(this);
+                    RecyclableObjectPool.Recycle(this);
                     c?.Throw();
                     return default;
                 default:

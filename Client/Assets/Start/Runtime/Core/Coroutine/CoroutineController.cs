@@ -25,7 +25,7 @@ namespace Start
         internal static void ReleaseCoroutineState(CoroutineState state)
         {
             _coroutineDic.Remove(state.CoroutineId);
-            ReferencePool.Release(state);
+            RecyclableObjectPool.Recycle(state);
         }
         
         /// <summary>

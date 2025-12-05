@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Start
 {
-    public class UIAnimationClipData : IReference
+    public class UIAnimationClipData : IReusable
     {
         /// <summary>
         /// 索引
@@ -43,7 +43,7 @@ namespace Start
 
         public static UIAnimationClipData Create(int index,UIAnimationClip clip)
         {
-            UIAnimationClipData uiAnimationClipData = ReferencePool.Acquire<UIAnimationClipData>();
+            UIAnimationClipData uiAnimationClipData = RecyclableObjectPool.Acquire<UIAnimationClipData>();
             uiAnimationClipData.Index = index;
             uiAnimationClipData.ActionType = clip.ActionType;
             uiAnimationClipData.AnimationClip = clip.Clip;
@@ -54,7 +54,7 @@ namespace Start
             return uiAnimationClipData;
         }
 
-        public void Clear()
+        public void Reset()
         {
             Index = default;
             ActionType = default;

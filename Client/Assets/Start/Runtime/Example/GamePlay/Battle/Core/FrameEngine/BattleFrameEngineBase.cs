@@ -1,14 +1,21 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 
 namespace Start
 {
     public abstract class BattleFrameEngineBase : IBattleFrameEngine
     {
-        public FP FrameInterval { get; private set;}
-        
-        public FP TimeScale { get; private set;}
+        /// <summary>
+        /// 时间计数器
+        /// </summary>
+        protected FrameTimeCounter _timeCounter { get; private set; }
         
         public bool Running { get; private set;}
+        
+        /// <summary>
+        /// 执行的时间
+        /// </summary>
+        protected Stopwatch _stopWatch;
         
         /// <summary>
         /// 逻辑线程
@@ -21,15 +28,17 @@ namespace Start
         private Thread _netThread;
         
         /// <summary>
-        /// 线程停止
+        /// 线程运行
         /// </summary>
-        private bool _threadStop;
+        private bool _threadRunning;
+
+        protected abstract void StartEngine(BattleData battleData);
         
-        public void StartEngine(EBattleType battleType,BattleData battleData)
+        public void StartBattle(BattleData battleData)
         {
-            FrameInterval = new FP(FrameConst.FrameInterval) / new FP(1000);
-            TimeScale = FP.One;
-            if (battleType == EBattleType.Remote)
+            StartEngine(battleData);
+            _timeCounter = new FrameTimeCounter(0, 0, battleData.FrameInterval);
+            if (battleData.BattleType == EBattleType.Remote)
             {
                 _netThread = new Thread(NetworkEngineUpdate);
                 _netThread.IsBackground = true;
@@ -38,12 +47,17 @@ namespace Start
             _logicThread = new Thread(LogicEngineUpdate);
             _logicThread.IsBackground = true;
             _logicThread.Start();
+            _stopWatch = new Stopwatch();
+            _stopWatch.Start();
+            _threadRunning = true;
             Running = true;
         }
 
         public void StopEngine()
         {
-            _threadStop = true;
+            _stopWatch.Stop();
+            _stopWatch = null;
+            _threadRunning = false;
             if (_logicThread != null)
             {
                 _logicThread.Join();
@@ -54,10 +68,7 @@ namespace Start
                 _netThread.Join();
                 _netThread = null;
             }
-            _threadStop = false;
             Running = false;
-            TimeScale = FP.One;
-            FrameInterval = FP.Zero;
         }
 
         public void Pause()
@@ -90,7 +101,7 @@ namespace Start
 
         private void NetworkEngineUpdate()
         {
-            while (_threadStop)
+            while (_threadRunning)
             {
                 if (Running)
                 {
@@ -102,7 +113,7 @@ namespace Start
         
         private void LogicEngineUpdate()
         {
-            while (_threadStop)
+            while (_threadRunning)
             {
                 if (Running)
                 {

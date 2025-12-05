@@ -59,11 +59,13 @@
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\UI\Model\ResourceBuilderModel.cs" />
     <Compile Include="Assets\Start\Editor\Framework\UI\OnInspectorGUI\UIDoubleState\UIDoubleStateEditor.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\AdvancedDropdown\ConfigReferenceDrawer.cs" />
+    <Compile Include="Assets\Start\Editor\Utility\GUI\TType\TTypeEditorWindow.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\BuildAssetBundleTask.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\ResourceBuilderHelper.cs" />
     <Compile Include="Assets\Start\Editor\Framework\UI\OnInspectorGUI\UIAudio\UIAudioEditor.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceConfig\View\ResourceTreeView.cs" />
     <Compile Include="Assets\Start\Editor\Tools\FindReferenceEditorWindow\FindReferenceEditorWindow.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\Battle\EditorWindow\TypeParser.cs" />
     <Compile Include="Assets\Start\Editor\Framework\UI\OnInspectorGUI\UIBase\UIBaseEditor.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Base\IResourceBuilder.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\EditorWindow\ConfigTreeViewItem.cs" />
@@ -74,16 +76,19 @@
     <Compile Include="Assets\Start\Editor\Framework\Config\EditorWindow\ConfigSettingView.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\PrepareAssetBundleBuildTask.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\AdvancedDropdown\ConfigRefDropdown.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattlePath.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\PrepareRemoteOptionalResourceTask.cs" />
     <Compile Include="Assets\Start\Editor\Framework\UI\MenuItem\UIConfig\GenerateUIConfig.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Data\Resource.cs" />
     <Compile Include="Assets\Start\Editor\Tools\TestBatch\TestBatch.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\BuildRemoteResourceVersionTask.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattleComponentConfig.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Base\IBuildTask.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\EditorWindow\ConfigController.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Battle\EditorWindow\BattleEditorWindow.cs" />
     <Compile Include="Assets\Start\Editor\Tools\MacroSettings\MacroSettingsEditor.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\PrepareBuiltInResourceTask.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattleComponentProperty.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\UI\Controller\ResourceBuilderController.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceConfig\Model\ResourceConfigModel.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Data\MainResource.cs" />
@@ -100,17 +105,14 @@
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\BuildLocalBuiltInManifestTask.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\Config\ResourcePath.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\BuildRemoteMandatoryManifestTask.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattleComponentClass.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\EditorWindow\Types\TypeHelper.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\Battle\Component\Components.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\ResourceBuilder.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceConfig\View\GroupTreeView.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceBuilder\Build\Task\BuildLocalGameVersionTask.cs" />
     <Compile Include="Assets\Start\Editor\Utility\GUI\EditorGUILayoutExtension.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\EditorWindow\ConfigEditorWindow.cs" />
-    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattlePath.cs" />
-    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattleComponentProperty.cs" />
-    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattleComponentClass.cs" />
-    <Compile Include="Assets\Start\Editor\Framework\Battle\Config\BattleComponentConfig.cs" />
-    <Compile Include="Assets\Start\Editor\Framework\Battle\Component\MatchRuntimePropertyComponent.cs" />
     <None Include="Assets\Start\Editor\Config\ResourceGroupConfig.json" />
     <None Include="Assets\Start\Editor\Config\ResourceBuildConfig.json" />
     <None Include="Assets\Start\Editor\Config\ExcelConfig.json" />
@@ -382,9 +384,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -393,9 +392,6 @@
     </Reference>
     <Reference Include="Sirenix.OdinValidator.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinValidator.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenProEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll</HintPath>
@@ -406,6 +402,9 @@
     <Reference Include="DOTweenEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Common">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
+    </Reference>
     <Reference Include="DemiEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
     </Reference>
@@ -415,9 +414,6 @@
     <Reference Include="ExcelDataReader.DataSet">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Editor\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
-    <Reference Include="log4netPlastic">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
-    </Reference>
     <Reference Include="Sirenix.Serialization.Config">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
     </Reference>
@@ -426,9 +422,6 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="unityplastic">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
@@ -444,9 +437,6 @@
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Common">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>H:\Start\Client\Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -864,9 +854,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>H:\Start\Client\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>H:\Start\Client\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>H:\Start\Client\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>

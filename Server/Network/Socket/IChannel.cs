@@ -3,7 +3,7 @@
 
 namespace Start.Server
 {
-    public interface IChannel : IReference
+    public interface IChannel : IReusable
     {
         int SessionId { get; }
         

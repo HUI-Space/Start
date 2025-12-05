@@ -42,14 +42,14 @@
             {
                 foreach (PriorityDelegate<IGenericData> priorityDelegate in dic.Values)
                 {
-                    ReferencePool.Release(priorityDelegate);
+                    RecyclableObjectPool.Recycle(priorityDelegate);
                 }
             }
             lock (_messageQueue)
             {
                 foreach (var Message in _messageQueue)
                 {
-                    ReferencePool.Release(Message);
+                    RecyclableObjectPool.Recycle(Message);
                 }
                 _messageQueue.Clear();
                 _messageQueue = default;
@@ -70,7 +70,7 @@
                 {
                     Event e = _messageQueue.Dequeue();
                     SendMessage(e.MessageType, e.MessageId, e.Data);
-                    ReferencePool.Release(e);
+                    RecyclableObjectPool.Recycle(e);
                 }
             }
         }
@@ -106,7 +106,7 @@
                     {
                         callBacks.Remove(messageId);
                     }
-                    ReferencePool.Release(callBack);
+                    RecyclableObjectPool.Recycle(callBack);
                 }
             }
         }
@@ -161,7 +161,7 @@
     
     public partial class EventManager
     {
-        private class Event : IReference
+        private class Event : IReusable
         {
             public int MessageType { get; private set; }
             public int MessageId { get; private set; }
@@ -169,14 +169,14 @@
     
             public static Event Create(int MessageType, int messageId, IGenericData data)
             {
-                Event e = ReferencePool.Acquire<Event>();
+                Event e = RecyclableObjectPool.Acquire<Event>();
                 e.MessageType = MessageType;
                 e.MessageId = messageId;
                 e.Data = data;
                 return e;
             }
     
-            public void Clear()
+            public void Reset()
             {
                 MessageId = default;
                 Data = default;

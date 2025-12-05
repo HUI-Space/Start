@@ -45,7 +45,7 @@ namespace Start
         
         public static AsyncOperationHandle<T> Create()
         {
-            var asyncOperationHandle = ReferencePool.Acquire<AsyncOperationHandle<T>>();
+            var asyncOperationHandle = RecyclableObjectPool.Acquire<AsyncOperationHandle<T>>();
             return asyncOperationHandle;
         }
         
@@ -83,7 +83,7 @@ namespace Start
             _recycleTask?.SetResult(Result);
         }
         
-        public void Clear()
+        public void Reset()
         {
             IsDone = false;
             Progress = 0;

@@ -1,4 +1,6 @@
-﻿
+﻿using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Start
 {
@@ -8,14 +10,39 @@ namespace Start
 
         private IBattleFrameEngine _battleFrameEngine;
 
+        public override Task Initialize()
+        {
+            Application.quitting += OnApplicationQuit; // 
+            return base.Initialize();
+        }
+        
+        private void OnApplicationQuit()
+        {
+            StopEngine();
+        }
+        
+        public override Task DeInitialize()
+        {
+            Application.quitting -= OnApplicationQuit; // 
+            return base.DeInitialize();
+        }
+
         public void Update(float elapseSeconds, float realElapseSeconds)
         {
             RenderUpdate();
         }
-        
-        public void StartEngine(EBattleType battleType, BattleData battleData)
+
+        public async void StartBattle(BattleData battleData)
         {
-            switch (battleType)
+            //加载场景
+            AsyncOperationHandle<Scene> asyncOperationHandle = SceneManager.Instance.LoadSceneAsync<Scene>("BattleScene", true);
+            await asyncOperationHandle.Task;
+            //加载模型
+            
+            //加载UI
+            await UIActions.OpenUI(nameof(BattlePanel));
+            //初始化
+            switch (battleData.BattleType)
             {
                 case EBattleType.Local:
                     _battleFrameEngine = new LocalBattleFrameEngine();
@@ -24,8 +51,9 @@ namespace Start
                     _battleFrameEngine = new RemoteBattleFrameEngine();
                     break;
             }
-            _battleFrameEngine.StartEngine(battleType,battleData);
+            _battleFrameEngine.StartBattle(battleData);
         }
+        
 
         public void StopEngine()
         {

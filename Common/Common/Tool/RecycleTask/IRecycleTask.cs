@@ -2,7 +2,7 @@
 
 namespace Start
 {
-    public interface IRecycleTask : ICriticalNotifyCompletion, IReference
+    public interface IRecycleTask : ICriticalNotifyCompletion, IReusable
     {
         bool IsCompleted { get; }
     }

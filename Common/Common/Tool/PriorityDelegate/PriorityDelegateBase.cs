@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Start
 {
-    public abstract class PriorityDelegateBase<TDelegate> : IReference where TDelegate : MulticastDelegate
+    public abstract class PriorityDelegateBase<TDelegate> : IReusable where TDelegate : MulticastDelegate
     {
         public bool CanBeReleased => _count == 0;
         private int _count = 0;
@@ -85,7 +85,7 @@ namespace Start
             RemoveAll();
         }
 
-        public void Clear()
+        public void Reset()
         {
             RemoveAll();
         }

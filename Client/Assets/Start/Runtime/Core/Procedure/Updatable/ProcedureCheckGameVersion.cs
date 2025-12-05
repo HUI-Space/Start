@@ -38,7 +38,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            ReferencePool.Release(response);
+            RecyclableObjectPool.Recycle(response);
             if (isSuccess)
             {
                 GameConfig.LocalGameVersion = Encoding.UTF8.GetString(result);
@@ -50,7 +50,7 @@ namespace Start
                 Logger.Error("获取本地版本号错误:" + error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetLocalVersionFailure, genericData);
-                ReferencePool.Release(genericData);
+                RecyclableObjectPool.Recycle(genericData);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            ReferencePool.Release(response);
+            RecyclableObjectPool.Recycle(response);
             if (isSuccess)
             {
                 GameClient gameClient = UnityUtility.FromJson<GameClient>(Encoding.UTF8.GetString(result));
@@ -83,7 +83,7 @@ namespace Start
                 Logger.Error("获取远程 GameClient 错误:" + error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetRemoteGameClientFailure, genericData);
-                ReferencePool.Release(genericData);
+                RecyclableObjectPool.Recycle(genericData);
             }
         }
         
@@ -103,7 +103,7 @@ namespace Start
                     Logger.Info("下载地址：" + GameConfig.GameClient.DownloadUrl);
                     IGenericData genericData = GenericData<string>.Create(GameConfig.GameClient.DownloadUrl);
                     RuntimeEvent.SendMessage((int)EMessageId.GameVersionUpdated, genericData);
-                    ReferencePool.Release(genericData);
+                    RecyclableObjectPool.Recycle(genericData);
                 }
             }
         }

@@ -2,12 +2,17 @@
 
 namespace Start
 {
-    public partial class MatchEntity : IReference
+    public partial class MatchEntity : IReusable
     {
         /// <summary>
         /// 当前MatchEntity 帧
         /// </summary>
-        public int AuthorityFrame = -1;
+        public int AuthorityFrame;
+
+        /// <summary>
+        /// 时间
+        /// </summary>
+        public FP Time;
         
         /// <summary>
         /// 时间差或帧间隔时间
@@ -19,19 +24,42 @@ namespace Start
         /// </summary>
         public FP TimeScale;
         
-        public List<PlayerEntity> PlayerList = new List<PlayerEntity>();
+        /// <summary>
+        /// 玩家列表
+        /// </summary>
+        public List<PlayerEntity> PlayerList;
+
+        #region Component
+        public StateComponent State = new StateComponent();
+
+        
+        #endregion
 
         public static MatchEntity Copy(MatchEntity matchEntity)
         {
-            MatchEntity newMatchEntity = ReferencePool.Acquire<MatchEntity>();
-            //TODO 把 matchEntity 复制到 newMatchEntity
-            
+            MatchEntity newMatchEntity = RecyclableObjectPool.Acquire<MatchEntity>();
+            newMatchEntity.AuthorityFrame = matchEntity.AuthorityFrame;
+            newMatchEntity.DeltaTime = matchEntity.DeltaTime;
+            newMatchEntity.TimeScale = matchEntity.TimeScale;
+            newMatchEntity.PlayerList = new List<PlayerEntity>(matchEntity.PlayerList.Count);
+            for (int i = 0; i < matchEntity.PlayerList.Count; i++)
+            {
+                PlayerEntity playerEntity = matchEntity.PlayerList[i];
+                newMatchEntity.PlayerList.Add(PlayerEntity.Copy(playerEntity));
+            }
             return newMatchEntity;
         }
         
-        public void Clear()
+        public void Reset()
         {
-            
+            AuthorityFrame = 0;
+            DeltaTime = default;
+            TimeScale = default;
+            foreach (PlayerEntity playerEntity in PlayerList)
+            {
+                RecyclableObjectPool.Recycle(playerEntity);
+            }
+            PlayerList.Clear();
         }
     }
 }

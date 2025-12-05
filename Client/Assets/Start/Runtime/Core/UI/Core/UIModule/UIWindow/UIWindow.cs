@@ -283,7 +283,7 @@ namespace Start
                         _loadHandles.Remove(uiBase);
                     }
                 }
-                ReferencePool.Release(uiProxy);
+                RecyclableObjectPool.Recycle(uiProxy);
                 _uiProxies.Remove(uiName);
                 return true;
             }
@@ -373,7 +373,7 @@ namespace Start
             _uiNames.Clear();
             foreach (var item in _uiProxies)
             {
-                ReferencePool.Release(item.Value);
+                RecyclableObjectPool.Recycle(item.Value);
             }
             _uiProxies.Clear();
         }
@@ -416,7 +416,7 @@ namespace Start
                 if (callbacks.CanBeReleased)
                 {
                     _uiCallbacks.Remove(uiDataName);
-                    ReferencePool.Release(callbacks);
+                    RecyclableObjectPool.Recycle(callbacks);
                 }
             }
         }
@@ -425,7 +425,7 @@ namespace Start
         {
             foreach (var item in _uiCallbacks)
             {
-                ReferencePool.Release(item.Value);
+                RecyclableObjectPool.Recycle(item.Value);
             }
             _uiCallbacks.Clear();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Start.Test
@@ -9,6 +10,9 @@ namespace Start.Test
         {
             try
             {
+                
+                print(Application.platform);
+                print(EditorUserBuildSettings.activeBuildTarget);
                 var a = AssetBundle.LoadFromFileAsync("");
                 await a;
                 print("111");

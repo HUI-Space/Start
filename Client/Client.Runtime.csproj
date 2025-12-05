@@ -50,6 +50,7 @@
     <Compile Include="Assets\Start\Runtime\Core\Socket\Tcp\NetMessage.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Main.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ObjectPoolPanel\ObjectPoolPanelData.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\MatchStateMachine\EMatchState.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\Core\KcpCore.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\FsmPanel\FsmPanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIWindow\Base\UIProxy.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Assets\Start\Runtime\Core\Event\RuntimeEvent.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Resource\ResourceConfig.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIWindow\Base\UIElement.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\Base\StateMachine.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Procedure\Updatable\ProcedureCheckResourceVersion.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\BattleManager.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\FrameEngine\BattleFrameEngineBase.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\UIAnimation\UIAnimationClipData.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Controller\ReplayController\ReplayController.cs" />
     <Compile Include="Assets\Start\Runtime\Example\MiniGame\TakeALeap\TALController.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Component\StateComponent.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\MainPanel\MainPanel.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\UIAnimation\UIAnimationPlayable.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ConfigPanel\UIActions.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\DataEntityPanel\DataEntityPanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Controller\RenderController\RenderController.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Resource\Enum\EResourceType.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\MatchStateMachine\State\MatchReadyState.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Game\GameClient.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\UIEffect\UIEffect.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\KcpChannelHelper.cs" />
@@ -110,8 +114,10 @@
     <Compile Include="Assets\Start\Runtime\Example\MiniGame\TakeALeap\GameObject\TALPlayer.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Coroutine\CoroutineController.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Resource\Manifest\ResourceInfo.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\MatchStateMachine\MatchStateBase.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Popup\RulePopup\UIActions.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIWindow\UIWindow.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\PlayerStateMachine\EPlayerState.cs" />
     <Compile Include="Assets\Start\Runtime\Example\MiniGame\TakeALeap\Module\TALSettingModule.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Audio\EAudioType.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Asset\EAssetType.cs" />
@@ -123,6 +129,7 @@
     <Compile Include="Assets\Start\Runtime\Core\Localization\LocalizationHelper.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Resource\Loader\IResourceLoader.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\DataSetPanel\DataSetPanel.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\PlayerStateMachine\PlayerStateBase.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Audio\AudioPlayer.cs" />
     <Compile Include="Assets\Start\Runtime\Example\MiniGame\TakeALeap\Module\TALRankModule.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\CoroutinePanel\CoroutinePanel.cs" />
@@ -134,17 +141,18 @@
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Render\UI\Panel\BattlePanel\BattlePanel.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ScrollerPanel\UIActions.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\Core\FakeKcpIO.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\PlayerStateMachine\State\PlayerMoveState.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\DataEntityPanel\DataEntityPanel.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Procedure\Updatable\ProcedureResourceUpdate.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\Scroller\HorizontalScroller.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIModuleBase.cs" />
     <Compile Include="Assets\Start\Runtime\Example\Config\LocalizationConfig.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIMask\UIMask.cs" />
-    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Component\MatchRuntimePropertyComponent.cs" />
     <Compile Include="Assets\Start\Runtime\Example\MiniGame\TakeALeap\UI\TALGamePanel.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UITips\UITips.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Controller\NetworkController\NetworkController.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ScrollerPanel\ScrollerPanelItem.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\PlayerStateMachine\PlayerStateMachine.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIWindow\Base\UIPanel.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\DataSetPanel\DataSetPanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\Core\KcpIO.cs" />
@@ -159,12 +167,14 @@
     <Compile Include="Assets\Start\Runtime\Example\MiniGame\TakeALeap\GameObject\TAlGround.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\FsmPanel\UIActions.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\Default\DefaultUIElement.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\MatchStateMachine\State\MatchPlayingState.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Resource\Enum\EResourceModeType.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\EBattleType.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Procedure\Updatable\ProcedureResourceInitialize.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIActions.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Procedure\Updatable\ProcedureCheckResourceUpdate.cs" />
     <Compile Include="Assets\Start\Runtime\Example\Config\ExampleConfig.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\Base\StateBase.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\UIAudio\EUIInputType.cs" />
     <Compile Include="Assets\Start\Runtime\Example\DataEntity\SimulationDataEntity.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UITips\Tips.cs" />
@@ -191,8 +201,8 @@
     <Compile Include="Assets\Start\Runtime\Core\Coroutine\CoroutineHandle.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Game\GameConfig.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\Core\KcpOutputWriter.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\MatchStateMachine\MatchStateMachine.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\Core\IKcpInterface.cs" />
-    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Component\IComponent.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ConfigPanel\ConfigPanel.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Setting\SettingHelper.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\EventPanel\UIActions.cs" />
@@ -204,6 +214,8 @@
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\LogPanel\LogPanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Game\GameController.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UILoading\UILoading.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\MatchStateMachine\MatchStateAttribute.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\PlayerStateMachine\State\PlayerIdleState.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\LocalizationPanel\LocalizationPanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\LocalizationPanel\LocalizationPanel.cs" />
     <Compile Include="Assets\Start\Runtime\Example\Fsm\Async\ExampleAsyncFsm.cs" />
@@ -230,13 +242,17 @@
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\CoroutinePanel\CoroutinePanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Render\UI\Panel\BattlePanel\BattlePanelData.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\HttpPanel\HttpPanel.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\StateMachine\PlayerStateMachine\PlayerStateAttribute.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIWindow\Base\EUIType.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Socket\Kcp\Core\Kcp.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Core\UIModule\UIWindow\Base\IUIBase.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ScrollerPanel\ScrollerPanel.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Render\Model\PlayerController.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Singleton\SingletonMonoBehaviourController.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Component\Base\ICopy.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\MainPanel\MainItem.cs" />
     <Compile Include="Assets\Start\Runtime\Example\UI\Panel\ScrollerPanel\ScrollerItem.cs" />
+    <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\Component\Base\IComponent.cs" />
     <Compile Include="Assets\Start\Runtime\Example\GamePlay\Battle\Core\FrameEngine\IBattleFrameEngine.cs" />
     <Compile Include="Assets\Start\Runtime\Core\Resource\Loader\ResourceLoader.cs" />
     <Compile Include="Assets\Start\Runtime\Core\UI\Common\UIAnimation\UIAnimationPlayableGraph.cs" />
@@ -500,9 +516,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -511,9 +524,6 @@
     </Reference>
     <Reference Include="Sirenix.OdinValidator.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinValidator.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenProEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll</HintPath>
@@ -524,6 +534,9 @@
     <Reference Include="DOTweenEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Common">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
+    </Reference>
     <Reference Include="DemiEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
     </Reference>
@@ -533,9 +546,6 @@
     <Reference Include="ExcelDataReader.DataSet">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Editor\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
-    <Reference Include="log4netPlastic">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
-    </Reference>
     <Reference Include="Sirenix.Serialization.Config">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
     </Reference>
@@ -544,9 +554,6 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="unityplastic">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
@@ -562,9 +569,6 @@
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Common">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:\Program Files\Unity 2021.3.42f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

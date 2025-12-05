@@ -1,6 +1,6 @@
 ﻿namespace Start.Server
 {
-    public class Room : IReference
+    public class Room : IReusable
     {
         public int RoomId { get; private set; }
         
@@ -15,7 +15,7 @@
         
         public static Room Create(int roomId)
         {
-            Room room = ReferencePool.Acquire<Room>();
+            Room room = RecyclableObjectPool.Acquire<Room>();
             room.RoomId = roomId;
             room.RoomPlayers = new RoomPlayer[FrameConst.MatchCount];
             room._frameInputs = new List<Dictionary<int,uint>>
@@ -132,7 +132,7 @@
             }
         }
         
-        public void Clear()
+        public void Reset()
         {
             
         }

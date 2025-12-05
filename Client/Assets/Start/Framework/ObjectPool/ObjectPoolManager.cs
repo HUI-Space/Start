@@ -62,7 +62,7 @@ namespace Start
                 throw new Exception($"已经存在 ObjectPool '{typeof(TObject)}'.");
             }
             
-            ObjectPool<TObject, TTarget> objectPool = ReferencePool.Acquire<ObjectPool<TObject, TTarget>>();
+            ObjectPool<TObject, TTarget> objectPool = RecyclableObjectPool.Acquire<ObjectPool<TObject, TTarget>>();
             objectPool.Initialize(capacity, allowMultiSpawn, autoReleaseInterval, expireTime, priority);
             _objectPools.Add(typeof(TObject), objectPool);
             return objectPool;
@@ -84,7 +84,7 @@ namespace Start
             if (_objectPools.TryGetValue(typeof(TObject), out IObjectPoolBase objectPool))
             {
                 objectPool.DeInitialize();
-                ReferencePool.Release(objectPool);
+                RecyclableObjectPool.Recycle(objectPool);
                 return _objectPools.Remove(typeof(TObject));
             }
 

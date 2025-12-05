@@ -86,5 +86,10 @@ namespace Start
         {
             Raw = value & 0x0FFFFFFF | (uint)((0xF & pos) << 28);
         }
+
+        public override string ToString()
+        {
+            return $"Index:{Index} Yaw:{Yaw} Button:{Button}";
+        }
     }
 }

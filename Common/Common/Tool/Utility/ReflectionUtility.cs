@@ -70,5 +70,29 @@ namespace Start
             // 返回字段的类型名称
             return fieldInfo.FieldType.Name;
         }
+        
+        /// <summary>
+        /// 判断类是否实现泛型接口
+        /// </summary>
+        /// <param name="classType">类的类型</param>
+        /// <param name="interfaceType">接口的类型</param>
+        /// <returns></returns>
+        public static bool ImplementsGenericInterface(Type classType,Type interfaceType)
+        {
+            Type[] types = classType.GetInterfaces();
+            foreach (Type type in types)
+            {
+                if (type.IsInterface && type.IsGenericType)
+                {
+                    Type genericTypeDefinition = type.GetGenericTypeDefinition();
+                    if (genericTypeDefinition != null && genericTypeDefinition == interfaceType)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
     }
 }

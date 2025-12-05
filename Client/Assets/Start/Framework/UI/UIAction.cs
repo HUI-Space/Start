@@ -13,13 +13,13 @@ namespace Start
             return UIManager.Instance.Dispatch(this);
         }
 
-        public void Clear()
+        public void Reset()
         {
             ActionType = default;
             UIName = default;
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = default;
             }
         }
@@ -31,7 +31,7 @@ namespace Start
         /// <returns></returns>
         public static UIAction Create(string actionType)
         {
-            UIAction uiAction = ReferencePool.Acquire<UIAction>();
+            UIAction uiAction = RecyclableObjectPool.Acquire<UIAction>();
             uiAction.ActionType = actionType;
             return uiAction;
         }
@@ -44,7 +44,7 @@ namespace Start
         /// <returns></returns>
         public static UIAction Create(string uiName, string actionType)
         {
-            UIAction uiAction = ReferencePool.Acquire<UIAction>();
+            UIAction uiAction = RecyclableObjectPool.Acquire<UIAction>();
             uiAction.UIName = uiName;
             uiAction.ActionType = actionType;
             return uiAction;
@@ -61,7 +61,7 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
             }
             _data = data;
         }
@@ -100,10 +100,10 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = null;
             }
-            _data = ReferencePool.Acquire<GenericData<T1>>().SetData(data1);
+            _data = RecyclableObjectPool.Acquire<GenericData<T1>>().SetData(data1);
             return this;
         }
 
@@ -111,10 +111,10 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = null;
             }
-            _data = ReferencePool.Acquire<GenericData<T1, T2>>().SetData(data1, data2);
+            _data = RecyclableObjectPool.Acquire<GenericData<T1, T2>>().SetData(data1, data2);
             return this;
         }
 
@@ -122,10 +122,10 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = null;
             }
-            _data = ReferencePool.Acquire<GenericData<T1, T2, T3>>().SetData(data1, data2, data3);
+            _data = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3>>().SetData(data1, data2, data3);
             return this;
         }
 
@@ -133,10 +133,10 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = null;
             }
-            _data = ReferencePool.Acquire<GenericData<T1, T2, T3, T4>>().SetData(data1, data2, data3, data4);
+            _data = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4>>().SetData(data1, data2, data3, data4);
             return this;
         }
 
@@ -144,10 +144,10 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = null;
             }
-            _data = ReferencePool.Acquire<GenericData<T1, T2, T3, T4, T5>>().SetData(data1, data2, data3, data4, data5);
+            _data = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4, T5>>().SetData(data1, data2, data3, data4, data5);
             return this;
         }
 
@@ -155,10 +155,10 @@ namespace Start
         {
             if (_data != null)
             {
-                ReferencePool.Release(_data);
+                RecyclableObjectPool.Recycle(_data);
                 _data = null;
             }
-            _data = ReferencePool.Acquire<GenericData<T1, T2, T3, T4, T5, T6>>().SetData(data1, data2, data3, data4,
+            _data = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4, T5, T6>>().SetData(data1, data2, data3, data4,
                 data5, data6);
             return this;
         }

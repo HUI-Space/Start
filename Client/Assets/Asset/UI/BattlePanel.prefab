@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9c5bba8cd3434982808db6caf23936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIJoystick: {fileID: 8493204440118923651}
   BattleButtons:
   - {fileID: 9054112995866647289}
   - {fileID: 7829970399976526896}
@@ -254,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4256092734631203986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -387,7 +388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1076140772996221347
 RectTransform:
   m_ObjectHideFlags: 0
@@ -484,8 +485,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 500, y: 540}
-  m_SizeDelta: {x: 1000, y: 1080}
+  m_AnchoredPosition: {x: 264.49, y: 540}
+  m_SizeDelta: {x: 528.98, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5378040863956918295
 CanvasRenderer:
@@ -529,6 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Background: {fileID: 8039174271712212929}
   Handle: {fileID: 2121065617190504976}
+  BackgroundIsCircle: 0
 --- !u!1 &2830286380048430720
 GameObject:
   m_ObjectHideFlags: 0

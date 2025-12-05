@@ -225,7 +225,7 @@ namespace Start
             foreach (KeyValuePair<TTarget, Object> objectInMap in _objectMap)
             {
                 objectInMap.Value.DeInitialize(true);
-                ReferencePool.Release(objectInMap.Value);
+                RecyclableObjectPool.Recycle(objectInMap.Value);
             }
             _objects.Clear();
             _objectMap.Clear();
@@ -233,7 +233,7 @@ namespace Start
             _cachedToReleaseObjects.Clear();
         }
 
-        public void Clear()
+        public void Reset()
         {
             Capacity = 0;
             AllowMultiSpawn = false;
@@ -292,7 +292,7 @@ namespace Start
             _objects.Remove(internalObject.Name);
             _objectMap.Remove(target);
             internalObject.DeInitialize(false);
-            ReferencePool.Release(internalObject);
+            RecyclableObjectPool.Recycle(internalObject);
             return true;
         }
         
@@ -342,7 +342,7 @@ namespace Start
         #endregion
         
         
-        private sealed class Object : IReference
+        private sealed class Object : IReusable
         {
             public TObject Target { get; private set; }
             public int SpawnCount { get; private set; }
@@ -355,7 +355,7 @@ namespace Start
 
             public static Object Create(TObject obj, bool spawned)
             {
-                var pooled = ReferencePool.Acquire<Object>();
+                var pooled = RecyclableObjectPool.Acquire<Object>();
                 pooled.Target = obj;
                 pooled.SpawnCount = spawned ? 1 : 0;
                 if (spawned) obj.OnSpawn();
@@ -398,10 +398,10 @@ namespace Start
             public void DeInitialize(bool isShutdown)
             {
                 Target.DeInitialize(isShutdown);
-                ReferencePool.Release(Target);
+                RecyclableObjectPool.Recycle(Target);
             }
 
-            public void Clear() => (Target, SpawnCount) = (default, default);
+            public void Reset() => (Target, SpawnCount) = (default, default);
         }
     }
 }

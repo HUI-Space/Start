@@ -24,9 +24,9 @@ namespace Start.Editor
         #region 框架
         
         [MenuItem("Start/框架/资源引用编辑器窗口", false, 100)]
-        public static void OpenReferencePoolEditor()
+        public static void OpenRecyclableObjectPoolEditor()
         {
-            ReferencePoolEditor.OpenEditorWindow();
+            RecyclableObjectPoolEditor.OpenEditorWindow();
         }
         
         [MenuItem("Start/框架/配置编辑器窗口", false, 200)]

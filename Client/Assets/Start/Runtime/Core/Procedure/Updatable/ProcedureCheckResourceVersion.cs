@@ -55,7 +55,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            ReferencePool.Release(response);
+            RecyclableObjectPool.Recycle(response);
             if (isSuccess)
             {
                 CheckResourceVersion(ResourceConfig.LocalResourceVersionPath, result);
@@ -65,7 +65,7 @@ namespace Start
                 Logger.Fatal("获取远程版本号错误:" + response.Error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetRemoteResourceVersionFailure, genericData);
-                ReferencePool.Release(genericData);
+                RecyclableObjectPool.Recycle(genericData);
             }
         }
 

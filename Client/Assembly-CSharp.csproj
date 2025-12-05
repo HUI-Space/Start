@@ -47,7 +47,6 @@
     <Compile Include="Assets\Start\Test\TestUI.cs" />
     <Compile Include="Assets\Start\Test\Test6.cs" />
     <Compile Include="Assets\Start\Test\Test2.cs" />
-    <Compile Include="Assets\Asset\MatchRuntimePropertyComponent.cs" />
     <None Include="Assets\Asset\Config\AudioConfig.json" />
     <None Include="Assets\Asset\Config\LocalizationConfig_English.json" />
     <None Include="Assets\Asset\Config\UIConfig.json" />
@@ -308,6 +307,9 @@
     <Reference Include="Sirenix.OdinInspector.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Common">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
+    </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
     </Reference>
@@ -331,9 +333,6 @@
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Common">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:\Program Files\Unity 2021.3.42f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -733,9 +732,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>H:\Start\Client\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>H:\Start\Client\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>H:\Start\Client\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>

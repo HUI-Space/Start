@@ -6,7 +6,7 @@ namespace Start
     {
         public static ResourceObject Create(string name, object target)
         {
-            ResourceObject resourceObject = ReferencePool.Acquire<ResourceObject>();
+            ResourceObject resourceObject = RecyclableObjectPool.Acquire<ResourceObject>();
             resourceObject.Initialize((AssetBundle)target,name);
             return resourceObject;
         }

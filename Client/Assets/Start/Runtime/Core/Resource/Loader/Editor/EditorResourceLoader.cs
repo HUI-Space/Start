@@ -99,7 +99,7 @@ namespace Start
                 {
                     UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(handle.AssetName);
                     _asyncOperationHandles.Remove(handle.AssetName);
-                    ReferencePool.Release(item.Item1);
+                    RecyclableObjectPool.Recycle(item.Item1);
                     // 可选：强制GC回收内存
                     GC.Collect();
                 }
@@ -135,7 +135,7 @@ namespace Start
                 else
                 {
                     _asyncOperationHandles.Remove(assetName);
-                    ReferencePool.Release(item.Item1);
+                    RecyclableObjectPool.Recycle(item.Item1);
                 }
             }
         }

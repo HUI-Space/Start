@@ -376,9 +376,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -387,9 +384,6 @@
     </Reference>
     <Reference Include="Sirenix.OdinValidator.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinValidator.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenProEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTweenPro\Editor\DOTweenProEditor.dll</HintPath>
@@ -400,6 +394,9 @@
     <Reference Include="DOTweenEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Common">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
+    </Reference>
     <Reference Include="DemiEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
     </Reference>
@@ -409,9 +406,6 @@
     <Reference Include="ExcelDataReader.DataSet">
       <HintPath>H:\Start\Client\Assets\Plugins\Dll\Editor\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
-    <Reference Include="log4netPlastic">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
-    </Reference>
     <Reference Include="Sirenix.Serialization.Config">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
     </Reference>
@@ -420,9 +414,6 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="unityplastic">
-      <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.5.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
@@ -438,9 +429,6 @@
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Common">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>D:\Program Files\Unity 2021.3.42f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

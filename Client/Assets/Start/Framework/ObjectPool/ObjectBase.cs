@@ -2,7 +2,7 @@
 
 namespace Start
 {
-    public abstract class ObjectBase<T> : IReference where T : class
+    public abstract class ObjectBase<T> : IReusable where T : class
     {
         /// <summary>
         /// 对象名称。
@@ -68,7 +68,7 @@ namespace Start
         }
 
         // 其他成员（如 Clear/OnSpawn 等）保持不变
-        public virtual void Clear()
+        public virtual void Reset()
         {
             Name = null;
             Target = null;  // 泛型默认值

@@ -1,28 +1,45 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Start;
 
-public class Program
-{
-    /// <summary>
-    /// 服务器代码就是一坨，后续有需要再修改
-    /// </summary>
-    /// <param name="args"></param>
-    public static async Task Main(string[] args)
-    {
-        string typeString = "Dictionary<Dictionary<int,List<string>>,List<int>>";
-        typeString = "Dictionary<Dictionary<int,List<string>>,Dictionary<Dictionary<int,List<string>>,List<int>>>";
-        if (TypeFactory.TryParseOuterDictionaryTypes(typeString, out string keyType, out string valueType))
-        {
-            Console.WriteLine($"外层字典的Key类型: {keyType}");   // 输出: Dictionary<int,List<string>>
-            Console.WriteLine($"外层字典的Value类型: {valueType}"); // 输出: List<int>
-        }
-        else
-        {
-            Console.WriteLine("解析失败");
-        }
 
-        TypeFactory.TryGetType(typeString, out TType type);
-        Console.WriteLine(type);
+// 测试示例
+class Program
+{
+    public class A
+    {
+        
+    }
+    static void Main()
+    {
+
+        List<A> a = new List<A>();
+        a.Capacity = 10;
+        Console.WriteLine(a[1]);
+        for (int i = 0; i < a.Count; i++)
+        {
+            Console.WriteLine("aa");
+        }
+        // 测试基础泛型容器
+        Console.WriteLine(GenericTypeNameHelper.IsGenericContainer(typeof(List<string>)));
+        // 输出：List<string>
+
+        Console.WriteLine(GenericTypeNameHelper.IsGenericContainer(typeof(Dictionary<int, string>)));
+        // 输出：Dictionary<int, string>
+
+        // 测试嵌套泛型
+        Console.WriteLine(GenericTypeNameHelper.IsGenericContainer(typeof(HashSet<List<int>>)));
+        // 输出：HashSet<List<int>>
+
+        // 测试复杂嵌套
+        Console.WriteLine(GenericTypeNameHelper.IsGenericContainer(typeof(ObservableCollection<string>)));
+        // 输出：Dictionary<string, HashSet<DateTime>>
+
+        // 测试可空类型和数组（额外支持）
+        Console.WriteLine(GenericTypeNameHelper.IsGenericContainer(typeof(int?)));
+        // 输出：int?
+        Console.WriteLine(GenericTypeNameHelper.IsGenericContainer(typeof(List<int>[])));
+        // 输出：List<int>[]
     }
 }

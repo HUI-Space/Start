@@ -2,7 +2,7 @@
 
 namespace Start.Server
 {
-    public class RoomPlayer : IReference
+    public class RoomPlayer : IReusable
     {
         public int SessionId { get; private set; }
         
@@ -14,7 +14,7 @@ namespace Start.Server
         
         public static RoomPlayer Create(int sessionId, int playerId)
         {
-            RoomPlayer roomPlayer = ReferencePool.Acquire<RoomPlayer>();
+            RoomPlayer roomPlayer = RecyclableObjectPool.Acquire<RoomPlayer>();
             roomPlayer.SessionId = sessionId;
             roomPlayer.PlayerId = playerId;
             return roomPlayer;
@@ -30,7 +30,7 @@ namespace Start.Server
             Progress = progress;
         }
         
-        public void Clear()
+        public void Reset()
         {
             Progress = default;
             IsOnline = default;

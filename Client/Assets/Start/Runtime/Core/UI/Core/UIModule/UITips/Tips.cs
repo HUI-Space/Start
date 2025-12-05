@@ -60,7 +60,7 @@ namespace Start
             EventHandler.IsThroughAllEvent = tipsData.IsThroughAll;
             EventHandler.ThroughEventCount = tipsData.ThroughCount;
             CanvasGroup.Switch(false);
-            ReferencePool.Release(tipsData);
+            RecyclableObjectPool.Recycle(tipsData);
         }
 
         private void OnDestroy()
@@ -68,12 +68,12 @@ namespace Start
             StopButton.onClick.RemoveAllListeners();
             foreach (var tipsData in _queue)
             {
-                ReferencePool.Release(tipsData);
+                RecyclableObjectPool.Recycle(tipsData);
             }
             _queue.Clear();
         }
         
-        private class TipsData : IReference
+        private class TipsData : IReusable
         {
             public string Message { get; private set; }
             public float DurationTime { get; private set; }
@@ -82,7 +82,7 @@ namespace Start
 
             public static TipsData Create(string message,float durationTime,bool isThroughAll,int throughCount)
             {
-                TipsData tipsData = ReferencePool.Acquire<TipsData>();
+                TipsData tipsData = RecyclableObjectPool.Acquire<TipsData>();
                 tipsData.Message = message;
                 tipsData.DurationTime = durationTime;
                 tipsData.IsThroughAll = isThroughAll;
@@ -90,7 +90,7 @@ namespace Start
                 return tipsData;
             }
             
-            public void Clear()
+            public void Reset()
             {
                 Message = null;
                 DurationTime = 0;

@@ -134,7 +134,7 @@ namespace Start
                 if (task.SerialId == serialId)
                 {
                     _waitingTasks.Remove(task);
-                    ReferencePool.Release(task);
+                    RecyclableObjectPool.Recycle(task);
                     return true;
                 }
             }
@@ -150,7 +150,7 @@ namespace Start
                     workingAgent.Reset();
                     _freeAgents.Push(workingAgent);
                     _workingAgents.Remove(currentWorkingAgent);
-                    ReferencePool.Release(task);
+                    RecyclableObjectPool.Recycle(task);
                     return true;
                 }
 
@@ -177,7 +177,7 @@ namespace Start
                 if (task.Tag == tag)
                 {
                     _waitingTasks.Remove(currentWaitingTask);
-                    ReferencePool.Release(task);
+                    RecyclableObjectPool.Recycle(task);
                     count++;
                 }
 
@@ -195,7 +195,7 @@ namespace Start
                     workingAgent.Reset();
                     _freeAgents.Push(workingAgent);
                     _workingAgents.Remove(currentWorkingAgent);
-                    ReferencePool.Release(task);
+                    RecyclableObjectPool.Recycle(task);
                     count++;
                 }
 
@@ -215,7 +215,7 @@ namespace Start
 
             foreach (T task in _waitingTasks)
             {
-                ReferencePool.Release(task);
+                RecyclableObjectPool.Recycle(task);
             }
 
             _waitingTasks.Clear();
@@ -225,7 +225,7 @@ namespace Start
                 T task = workingAgent.Task;
                 workingAgent.Reset();
                 _freeAgents.Push(workingAgent);
-                ReferencePool.Release(task);
+                RecyclableObjectPool.Recycle(task);
             }
 
             _workingAgents.Clear();
@@ -250,7 +250,7 @@ namespace Start
                 current.Value.Reset();
                 _freeAgents.Push(current.Value);
                 _workingAgents.Remove(current);
-                ReferencePool.Release(task);
+                RecyclableObjectPool.Recycle(task);
                 current = next;
             }
         }
@@ -279,7 +279,7 @@ namespace Start
 
                 if (status == EStartTaskStatus.Done || status == EStartTaskStatus.UnknownError)
                 {
-                    ReferencePool.Release(task);
+                    RecyclableObjectPool.Recycle(task);
                 }
 
                 current = next;

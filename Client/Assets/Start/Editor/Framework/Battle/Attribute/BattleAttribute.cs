@@ -40,19 +40,31 @@ public class CommentAttribute : Attribute
     }
 }
 
-
-
 /// <summary>
-/// 不可序列化字段
+/// 仅读字段属性
 /// </summary>
-public class NoneSerializeFiledAttribute : Attribute
+public class ReadOnlyAttribute : Attribute
 {
 }
 
 /// <summary>
-/// 仅读字段属性
+/// 拷贝属性
 /// </summary>
-public class ReadOnlyFieldAttribute : Attribute
+public class CopyAttribute : System.Attribute
+{
+}
+
+/// <summary>
+/// 不可序列化字段
+/// </summary>
+public class NoSerializeAttribute : Attribute
+{
+}
+
+/// <summary>
+/// 序列化组件
+/// </summary>
+public class SerializeAttribute : Attribute
 {
 }
 
@@ -70,15 +82,4 @@ public class NoDirtyCheckAttribute : Attribute
 {
 }
 
-/// <summary>
-/// 可复制容器成员类型属性
-/// </summary>
-public class CopyableContainerMemberTypeAttribute : System.Attribute
-{
-}
-/// <summary>
-/// 序列化组件
-/// </summary>
-public class SerializeComponentAttribute : Attribute
-{
-}
+

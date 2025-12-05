@@ -23,7 +23,7 @@ namespace Start
         {
             //回收UIAction
             Logger.Info($"回收UIAction UIName:{uiAction.UIName} 事件类型：{uiAction.ActionType}");
-            ReferencePool.Release(uiAction);
+            RecyclableObjectPool.Recycle(uiAction);
             return Task.CompletedTask;
         }
     }

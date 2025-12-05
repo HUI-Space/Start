@@ -3,7 +3,7 @@
 
 namespace Start
 {
-    public class CallTask : IReference, IComparable<CallTask>
+    public class CallTask : IReusable, IComparable<CallTask>
     {
         /// <summary>
         /// 序列号
@@ -42,7 +42,7 @@ namespace Start
             return other.SerialNumber.CompareTo(SerialNumber);
         }
 
-        public void Clear()
+        public void Reset()
         {
             SerialNumber = default;
             Request = default;
@@ -54,7 +54,7 @@ namespace Start
 
         public static CallTask Create(uint serialNumber, uint messageId, byte[] request)
         {
-            var callTask = ReferencePool.Acquire<CallTask>();
+            var callTask = RecyclableObjectPool.Acquire<CallTask>();
             callTask.SerialNumber = serialNumber;
             callTask.MessageId = messageId;
             callTask.Request = request;

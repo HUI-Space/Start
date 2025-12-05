@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Start
 {
-    public class AsyncFsm<T> : FsmBase, IReference, IAsyncFsm<T> where T : class
+    public class AsyncFsm<T> : FsmBase, IReusable, IAsyncFsm<T> where T : class
     {
         private readonly Dictionary<Type, AsyncFsmState<T>> _states = new Dictionary<Type, AsyncFsmState<T>>();
         private Dictionary<string, IGenericData> _data = new Dictionary<string, IGenericData>();
@@ -39,7 +39,7 @@ namespace Start
                 throw new Exception("FSM 的状态为空.");
             }
 
-            AsyncFsm<T> asyncFsm = ReferencePool.Acquire<AsyncFsm<T>>();
+            AsyncFsm<T> asyncFsm = RecyclableObjectPool.Acquire<AsyncFsm<T>>();
             asyncFsm.Name = name;
             asyncFsm.Owner = owner;
             asyncFsm._isDestroyed = false;
@@ -211,7 +211,7 @@ namespace Start
             _data.Remove(name);
             if (oldData != null)
             {
-                ReferencePool.Release(oldData);
+                RecyclableObjectPool.Recycle(oldData);
             }
 
             return true;
@@ -238,10 +238,10 @@ namespace Start
         
         internal override void DeInitialize()
         {
-            ReferencePool.Release(this);
+            RecyclableObjectPool.Recycle(this);
         }
         
-        public async void Clear()
+        public async void Reset()
         {
             foreach (KeyValuePair<Type, AsyncFsmState<T>> state in _states)
             {
@@ -260,7 +260,7 @@ namespace Start
                         continue;
                     }
 
-                    ReferencePool.Release(data.Value);
+                    RecyclableObjectPool.Recycle(data.Value);
                 }
 
                 _data.Clear();

@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public interface IAsyncOperationHandle : IReference
+    public interface IAsyncOperationHandle : IReusable
     {
         /// <summary>
         /// 是否完成

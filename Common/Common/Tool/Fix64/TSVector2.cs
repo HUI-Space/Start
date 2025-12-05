@@ -94,50 +94,32 @@ namespace Start
         /// <summary>
         /// 获取零向量 (0, 0)
         /// </summary>
-        public static TSVector2 zero
-        {
-            get { return zeroVector; }
-        }
+        public static TSVector2 zero => zeroVector;
 
         /// <summary>
         /// 获取单位向量 (1, 1)
         /// </summary>
-        public static TSVector2 one
-        {
-            get { return oneVector; }
-        }
+        public static TSVector2 one => oneVector;
 
         /// <summary>
         /// 获取右方向向量 (1, 0)
         /// </summary>
-        public static TSVector2 right
-        {
-            get { return rightVector; }
-        }
+        public static TSVector2 right => rightVector;
 
         /// <summary>
         /// 获取左方向向量 (-1, 0)
         /// </summary>
-        public static TSVector2 left
-        {
-            get { return leftVector; }
-        }
+        public static TSVector2 left => leftVector;
 
         /// <summary>
         /// 获取上方向向量 (0, 1)
         /// </summary>
-        public static TSVector2 up
-        {
-            get { return upVector; }
-        }
+        public static TSVector2 up => upVector;
 
         /// <summary>
         /// 获取下方向向量 (0, -1)
         /// </summary>
-        public static TSVector2 down
-        {
-            get { return downVector; }
-        }
+        public static TSVector2 down => downVector;
 
         /// <summary>
         /// 获取向量的模长（长度）
@@ -147,8 +129,7 @@ namespace Start
         {
             get
             {
-                FP result;
-                DistanceSquared(ref this, ref zeroVector, out result);
+                DistanceSquared(ref this, ref zeroVector, out var result);
                 return FP.Sqrt(result);
             }
         }
@@ -160,8 +141,7 @@ namespace Start
         {
             get
             {
-                TSVector2 result;
-                TSVector2.Normalize(ref this, out result);
+                Normalize(ref this, out var result);
                 return result;
             }
         }

@@ -94,7 +94,7 @@ namespace Start
                     break;
                 }
 
-                ReferencePool.Release(downloadCounterNode);
+                RecyclableObjectPool.Recycle(downloadCounterNode);
                 m_DownloadCounterNodes.RemoveFirst();
             }
 

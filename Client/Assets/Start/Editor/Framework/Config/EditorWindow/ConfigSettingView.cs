@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using PlasticGui.Gluon.WorkspaceWindow.Views.IncomingChanges;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Start.Editor

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Start
 {
-    public class CoroutineState : IReference
+    public class CoroutineState : IReusable
     {
         public long CoroutineId { get; private set; }
         public bool IsRunning { get; private set; }
@@ -17,14 +17,14 @@ namespace Start
 
         public static CoroutineState Create(long coroutineId, IEnumerator coroutine, Action<bool> onStopCallback = null)
         {
-            CoroutineState state = ReferencePool.Acquire<CoroutineState>();
+            CoroutineState state = RecyclableObjectPool.Acquire<CoroutineState>();
             state._coroutine = coroutine;
             state.CoroutineId = coroutineId;
             state.StopHandle += onStopCallback;
             return state;
         }
 
-        public void Clear()
+        public void Reset()
         {
             CoroutineId = default;
             IsRunning = default;

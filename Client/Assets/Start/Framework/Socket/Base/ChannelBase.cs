@@ -101,7 +101,7 @@ namespace Start
                 SendAsync(callTask, isCache);
                 await callTask.Task;
                 result = (callTask.ErrCode, ChannelHelper.Deserialize<ToC>(callTask.Response));
-                ReferencePool.Release(callTask);
+                RecyclableObjectPool.Recycle(callTask);
             }
             catch (Exception e)
             {

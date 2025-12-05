@@ -101,7 +101,7 @@ namespace Start
                 UIWindow.Instance.AfterReceive -= After;
                 foreach (UIAnimationClipData data in _list)
                 {
-                    ReferencePool.Release(data);
+                    RecyclableObjectPool.Recycle(data);
                 }
                 _list.Clear();
                 _graph.OnAnimationEnd -= AnimationEnd;

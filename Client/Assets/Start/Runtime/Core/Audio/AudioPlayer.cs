@@ -88,7 +88,7 @@ namespace Start
             
             if (_audioParam != null)
             {
-                ReferencePool.Release(_audioParam);
+                RecyclableObjectPool.Recycle(_audioParam);
             }
             _audioParam = AudioParam.Create(audioType,audioName,isLoop,volume,fadeIn,fadeOut);
             AudioSource.clip = clip;

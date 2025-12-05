@@ -223,7 +223,7 @@ namespace Start
                     {
                         _cachedResources.Remove(info.Name);
                         _asyncOperationHandles.Remove(handle.ResourceName);
-                        ReferencePool.Release(handle);
+                        RecyclableObjectPool.Recycle(handle);
                     }
                 }
                 _resourcePool.ReleaseAllUnused();

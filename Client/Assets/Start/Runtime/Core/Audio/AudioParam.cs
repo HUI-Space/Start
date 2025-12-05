@@ -2,7 +2,7 @@
 
 namespace Start
 {
-    public class AudioParam : IReference
+    public class AudioParam : IReusable
     {
         public int AudioType { get; private set; }
         public string AudioName { get; private set; }
@@ -14,7 +14,7 @@ namespace Start
 
         public static AudioParam Create(int audioType, string audioName, bool isLoop, float volume, float fadeIn, float fadeOut)
         {
-            AudioParam audioParam = ReferencePool.Acquire<AudioParam>();
+            AudioParam audioParam = RecyclableObjectPool.Acquire<AudioParam>();
             audioParam.AudioType = audioType;
             audioParam.AudioName = audioName;
             audioParam.IsLoop = isLoop;
@@ -24,7 +24,7 @@ namespace Start
             return audioParam;
         }
         
-        public void Clear()
+        public void Reset()
         {
             AudioType = default;
             AudioName = default;

@@ -9,7 +9,7 @@
             
         } 
 
-        public void Clear()
+        public void Reset()
         {
             
         }

@@ -489,7 +489,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654387848}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a625d31e92cd479396d242744619d2fa, type: 3}
   m_Name: 
@@ -513,12 +513,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654387848}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7e9cf192196a4f4fbc990786ebedf11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIName: FsmPanel
 --- !u!1 &2107228524
 GameObject:
   m_ObjectHideFlags: 0

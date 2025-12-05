@@ -45,7 +45,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            ReferencePool.Release(response);
+            RecyclableObjectPool.Recycle(response);
             if (isSuccess)
             {
                 Manifest remoteMandatoryManifest = SerializerUtility.DeserializeObject<Manifest>(result);
@@ -64,7 +64,7 @@ namespace Start
                 Logger.Error("获取远程资源清单失败:{0}", error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetRemoteMandatoryManifestFailure, genericData);
-                ReferencePool.Release(genericData);
+                RecyclableObjectPool.Recycle(genericData);
             }
         }
 
@@ -79,7 +79,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            ReferencePool.Release(response);
+            RecyclableObjectPool.Recycle(response);
             if (isSuccess)
             {
                 Dictionary<string, Manifest> remoteOptionalResourceManifests =
@@ -103,7 +103,7 @@ namespace Start
                 Logger.Error("获取远程资源清单失败:{0}", error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetRemoteOptionalManifestFailure, genericData);
-                ReferencePool.Release(genericData);
+                RecyclableObjectPool.Recycle(genericData);
             }
         }
 

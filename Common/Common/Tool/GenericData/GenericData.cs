@@ -6,12 +6,12 @@
 
         public static GenericData<T1> Create()
         {
-            return ReferencePool.Acquire<GenericData<T1>>();
+            return RecyclableObjectPool.Acquire<GenericData<T1>>();
         }
 
         public static GenericData<T1> Create(T1 t1)
         {
-            GenericData<T1> genericData = ReferencePool.Acquire<GenericData<T1>>();
+            GenericData<T1> genericData = RecyclableObjectPool.Acquire<GenericData<T1>>();
             return genericData.SetData(t1);
         }
 
@@ -56,7 +56,7 @@
             return default;
         }
 
-        public void Clear()
+        public void Reset()
         {
             _data1 = default;
         }
@@ -69,12 +69,12 @@
 
         public static GenericData<T1, T2> Create()
         {
-            return ReferencePool.Acquire<GenericData<T1, T2>>();
+            return RecyclableObjectPool.Acquire<GenericData<T1, T2>>();
         }
 
         public static GenericData<T1, T2> Create(T1 t1, T2 t2)
         {
-            GenericData<T1, T2> genericData = ReferencePool.Acquire<GenericData<T1, T2>>();
+            GenericData<T1, T2> genericData = RecyclableObjectPool.Acquire<GenericData<T1, T2>>();
             return genericData.SetData(t1, t2);
         }
 
@@ -125,7 +125,7 @@
             return default;
         }
 
-        public void Clear()
+        public void Reset()
         {
             _data1 = default;
             _data2 = default;
@@ -140,12 +140,12 @@
 
         public static GenericData<T1, T2, T3> Create()
         {
-            return ReferencePool.Acquire<GenericData<T1, T2, T3>>();
+            return RecyclableObjectPool.Acquire<GenericData<T1, T2, T3>>();
         }
 
         public static GenericData<T1, T2, T3> Create(T1 t1, T2 t2, T3 t3)
         {
-            GenericData<T1, T2, T3> genericData = ReferencePool.Acquire<GenericData<T1, T2, T3>>();
+            GenericData<T1, T2, T3> genericData = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3>>();
             return genericData.SetData(t1, t2, t3);
         }
 
@@ -157,7 +157,7 @@
             return this;
         }
 
-        public void Clear()
+        public void Reset()
         {
             _data1 = default;
             _data2 = default;
@@ -219,12 +219,12 @@
 
         public static GenericData<T1, T2, T3, T4> Create()
         {
-            return ReferencePool.Acquire<GenericData<T1, T2, T3, T4>>();
+            return RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4>>();
         }
 
         public static GenericData<T1, T2, T3, T4> Create(T1 t1, T2 t2, T3 t3, T4 t4)
         {
-            GenericData<T1, T2, T3, T4> genericData = ReferencePool.Acquire<GenericData<T1, T2, T3, T4>>();
+            GenericData<T1, T2, T3, T4> genericData = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4>>();
             return genericData.SetData(t1, t2, t3, t4);
         }
 
@@ -237,7 +237,7 @@
             return this;
         }
 
-        public void Clear()
+        public void Reset()
         {
             _data1 = default;
             _data2 = default;
@@ -306,12 +306,12 @@
 
         public static GenericData<T1, T2, T3, T4, T5> Create()
         {
-            return ReferencePool.Acquire<GenericData<T1, T2, T3, T4, T5>>();
+            return RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4, T5>>();
         }
 
         public static GenericData<T1, T2, T3, T4, T5> Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
         {
-            GenericData<T1, T2, T3, T4, T5> genericData = ReferencePool.Acquire<GenericData<T1, T2, T3, T4, T5>>();
+            GenericData<T1, T2, T3, T4, T5> genericData = RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4, T5>>();
             return genericData.SetData(t1, t2, t3, t4, t5);
         }
 
@@ -325,7 +325,7 @@
             return this;
         }
 
-        public void Clear()
+        public void Reset()
         {
             _data1 = default;
             _data2 = default;
@@ -401,13 +401,13 @@
 
         public static GenericData<T1, T2, T3, T4, T5, T6> Create()
         {
-            return ReferencePool.Acquire<GenericData<T1, T2, T3, T4, T5, T6>>();
+            return RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4, T5, T6>>();
         }
 
         public static GenericData<T1, T2, T3, T4, T5, T6> Create(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
         {
             GenericData<T1, T2, T3, T4, T5, T6> genericData =
-                ReferencePool.Acquire<GenericData<T1, T2, T3, T4, T5, T6>>();
+                RecyclableObjectPool.Acquire<GenericData<T1, T2, T3, T4, T5, T6>>();
             return genericData.SetData(t1, t2, t3, t4, t5, t6);
         }
 
@@ -422,7 +422,7 @@
             return this;
         }
 
-        public void Clear()
+        public void Reset()
         {
             _data1 = default;
             _data2 = default;

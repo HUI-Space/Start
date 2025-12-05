@@ -1,7 +1,7 @@
 ﻿namespace Start
 {
     // 泛型对象池基接口
-    public interface IObjectPoolBase : IReference
+    public interface IObjectPoolBase : IReusable
     {
         /// <summary>
         /// 获取或设置对象池的优先级。

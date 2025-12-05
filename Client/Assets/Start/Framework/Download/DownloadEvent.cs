@@ -2,7 +2,7 @@
 
 namespace Start
 {
-    public class DownloadEvent : IReference
+    public class DownloadEvent : IReusable
     {
         /// <summary>
         /// 任务的序列编号
@@ -55,7 +55,7 @@ namespace Start
             string ErrorMessage, 
             object userData)
         {
-            DownloadEvent @event = ReferencePool.Acquire<DownloadEvent>();
+            DownloadEvent @event = RecyclableObjectPool.Acquire<DownloadEvent>();
             @event.SerialId = serialId;
             @event.StatusType = statusType;
             @event.CurrentLength = currentLength;
@@ -66,7 +66,7 @@ namespace Start
             return @event;
         }
 
-        public void Clear()
+        public void Reset()
         {
             SerialId = default;
             StatusType = default;

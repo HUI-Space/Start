@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public class UIProxy : IReference
+    public class UIProxy : IReusable
     {
         public string UIName { get; private set; }
         public string UIDataName { get; private set; }
@@ -11,7 +11,7 @@
         
         public static UIProxy Create(string uiName, EUIType euiType, IUIBase uiBase, IUIData uiData, IUIBase[] allUIBases)
         {
-            UIProxy uiProxy = ReferencePool.Acquire<UIProxy>();
+            UIProxy uiProxy = RecyclableObjectPool.Acquire<UIProxy>();
             uiProxy.UIName = uiName;
             uiProxy.UIType = euiType;
             uiProxy.UIBase = uiBase;
@@ -21,7 +21,7 @@
             return uiProxy;
         }
 
-        public void Clear()
+        public void Reset()
         {
             UIName = default;
             UIType = default;

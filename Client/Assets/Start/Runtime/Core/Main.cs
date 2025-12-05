@@ -29,7 +29,7 @@ namespace Start
         private async void OnDestroy()
         {
             await Manager.DeInitialize();
-            ReferencePool.ClearAll();
+            RecyclableObjectPool.ClearAll();
             Root = null;
         }
     }

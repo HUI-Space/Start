@@ -1,64 +1,50 @@
 {
     "DataList": [
         {
-            "ClassName": "MatchRuntimePropertyComponent",
-            "ClassComment": "比赛运行是属性组件",
+            "ClassName": "StateComponent",
+            "ClassComment": "状态组件",
             "ClassAttributes": [],
             "DynamicProperties": [
                 {
-                    "PropertyName": "ID",
+                    "PropertyName": "CurrentState",
                     "PropertyType": "int",
                     "PropertyDefaultValue": "",
-                    "PropertyComment": "玩家ID",
+                    "PropertyComment": "当前状态",
                     "PropertyAttributes": []
                 },
                 {
-                    "PropertyName": "IDs",
-                    "PropertyType": "int[]",
-                    "PropertyDefaultValue": "new int[6]",
-                    "PropertyComment": "所有玩家",
-                    "PropertyAttributes": []
-                },
-                {
-                    "PropertyName": "List",
-                    "PropertyType": "List<int>",
+                    "PropertyName": "NextState",
+                    "PropertyType": "int",
                     "PropertyDefaultValue": "",
-                    "PropertyComment": "列表",
+                    "PropertyComment": "下个状态",
                     "PropertyAttributes": []
                 },
                 {
-                    "PropertyName": "Dictionary",
-                    "PropertyType": "Dictionary<int,FP>",
+                    "PropertyName": "PrevState",
+                    "PropertyType": "int",
                     "PropertyDefaultValue": "",
-                    "PropertyComment": "字典",
+                    "PropertyComment": "上一个状态",
                     "PropertyAttributes": []
                 },
                 {
-                    "PropertyName": "Copy",
-                    "PropertyType": "Copy",
+                    "PropertyName": "ForceStateId",
+                    "PropertyType": "int",
                     "PropertyDefaultValue": "",
-                    "PropertyComment": "Copy",
+                    "PropertyComment": "强制切换的状态",
                     "PropertyAttributes": []
                 },
                 {
-                    "PropertyName": "CopyList",
-                    "PropertyType": "List<Copy>",
+                    "PropertyName": "EnterTime",
+                    "PropertyType": "FP",
                     "PropertyDefaultValue": "",
-                    "PropertyComment": "Copy列表",
+                    "PropertyComment": "进入时间",
                     "PropertyAttributes": []
                 },
                 {
-                    "PropertyName": "CopyDictionary",
-                    "PropertyType": "Dictionary<int,Copy>",
+                    "PropertyName": "EndTime",
+                    "PropertyType": "FP",
                     "PropertyDefaultValue": "",
-                    "PropertyComment": "Copy字典",
-                    "PropertyAttributes": []
-                },
-                {
-                    "PropertyName": "AA",
-                    "PropertyType": "AA",
-                    "PropertyDefaultValue": "",
-                    "PropertyComment": "AA",
+                    "PropertyComment": "退出时间",
                     "PropertyAttributes": []
                 }
             ]

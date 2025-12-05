@@ -6,23 +6,11 @@ namespace Start
     public class RemoteBattleFrameEngine : BattleFrameEngineBase
     {
         /// <summary>
-        /// 权威帧
-        /// </summary>
-        public int AuthorityFrame = -1;
-        
-        /// <summary>
         /// 预测帧
         /// </summary>
         public int PredictionFrame = -1;
         
         public FrameBuffer FrameBuffer { get; private set;}
-        
-        public FrameTimeCounter TimeCounter { get; private set; }
-        
-        /// <summary>
-        /// 执行的时间
-        /// </summary>
-        private Stopwatch _stopWatch;
         
         /// <summary>
         /// 权威帧数据
@@ -48,15 +36,17 @@ namespace Start
         /// 预测实体队列
         /// </summary>
         private readonly Queue<MatchEntity> _predictionMatchEntityQueue = new Queue<MatchEntity>();
-        
-        public RemoteBattleFrameEngine()
+
+
+        protected override void StartEngine(BattleData battleData)
         {
-            TimeCounter = new FrameTimeCounter(0, 0, FrameConst.FrameInterval);
             FrameBuffer = new FrameBuffer();
-            _stopWatch = new Stopwatch();
-            _stopWatch.Start();
+            AuthorityMatchEntity = RecyclableObjectPool.Acquire<MatchEntity>();
+            AuthorityMatchEntity.AuthorityFrame = -1;
+            AuthorityMatchEntity.DeltaTime = new FP(battleData.FrameInterval) / new FP(1000);
+            AuthorityMatchEntity.TimeScale = FP.One;
         }
-        
+
         protected override void NetworkUpdate()
         {
             
@@ -67,12 +57,12 @@ namespace Start
             //当前时间
             long timeNow = _stopWatch.ElapsedMilliseconds;
             //如果当前时间小于下一帧时间 则返回
-            
+            int AuthorityFrame = AuthorityMatchEntity.AuthorityFrame;
             //先预测
             while (true)
             {
                 //如果当前是小于预测帧下一帧时间 则返回
-                if (timeNow < TimeCounter.FrameTime(PredictionFrame + 1))
+                if (timeNow < _timeCounter.FrameTime(PredictionFrame + 1))
                 {
                     break;
                 }
@@ -93,7 +83,7 @@ namespace Start
                 _predictionFrameQueue.Enqueue(predictionFrame);
                 
                 //预测更新数据
-                Prediction(predictionFrame);
+                UpdatePredictionFrameData(predictionFrame);
                 
                 //更新表现层
 
@@ -131,26 +121,26 @@ namespace Start
                     MatchEntity predictionMatchEntity = _predictionMatchEntityQueue.Dequeue();
                     MatchEntity lastAuthorityMatchEntity = AuthorityMatchEntity;
                     AuthorityMatchEntity = predictionMatchEntity;
-                    ReferencePool.Release(lastAuthorityMatchEntity);
+                    RecyclableObjectPool.Recycle(lastAuthorityMatchEntity);
                 }
                 else
                 {
                     //权威帧和预测帧不一致 回滚
-                    MatchController.UpdateMatchEntity(AuthorityMatchEntity,authorityFrame);
-                    MatchController.LogicUpdateState(AuthorityMatchEntity);
+                    MatchController.Instance.CopyFrameDataToMatchEntity(AuthorityMatchEntity,authorityFrame);
+                    MatchController.Instance.LogicUpdateState(AuthorityMatchEntity);
                     
                     //预测帧队列出队回收
                     while (_predictionMatchEntityQueue.Count > 0)
                     {
                         MatchEntity predictionMatchEntity = _predictionMatchEntityQueue.Dequeue();
-                        ReferencePool.Release(predictionMatchEntity);
+                        RecyclableObjectPool.Recycle(predictionMatchEntity);
                     }
                     _predictionFrameQueue.Clear();
                     
                     //将权威帧数据拷贝给预测帧，然后再回收
                     MatchEntity lastPredictionMatchEntity = PredictionMatchEntity;
                     PredictionMatchEntity = MatchEntity.Copy(AuthorityMatchEntity);
-                    ReferencePool.Release(lastPredictionMatchEntity);
+                    RecyclableObjectPool.Recycle(lastPredictionMatchEntity);
                     
                     // 重新执行预测的帧(这样做的是为了防止网络卡顿追帧太快卡住)
                     int predictionFrameCount = AuthorityFrame + 1 + _authorityFrameQueue.Count;
@@ -158,7 +148,7 @@ namespace Start
                     {
                         FrameData prediction = FrameBuffer.GetPredictionFrameData(i);
                         _predictionFrameQueue.Enqueue(prediction);
-                        Prediction(prediction);
+                        UpdatePredictionFrameData(prediction);
                     }
                 }
             }
@@ -170,13 +160,13 @@ namespace Start
         }
         
         /// <summary>
-        /// 预测
+        /// 更新预测帧数据
         /// </summary>
         /// <param name="predictionFrame">预测帧</param>
-        private void Prediction(FrameData predictionFrame)
+        private void UpdatePredictionFrameData(FrameData predictionFrame)
         {
-            MatchController.UpdateMatchEntity(PredictionMatchEntity,predictionFrame);
-            MatchController.LogicUpdateState(PredictionMatchEntity);
+            MatchController.Instance.CopyFrameDataToMatchEntity(PredictionMatchEntity,predictionFrame);
+            MatchController.Instance.LogicUpdateState(PredictionMatchEntity);
             MatchEntity matchEntity = MatchEntity.Copy(PredictionMatchEntity);
             _predictionMatchEntityQueue.Enqueue(matchEntity);
         }

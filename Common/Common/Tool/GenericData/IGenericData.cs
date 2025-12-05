@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public interface IGenericData : IReference
+    public interface IGenericData : IReusable
     {
         T GetData1<T>();
         T GetData2<T>();

@@ -25,7 +25,9 @@ namespace Start.Editor
 
 
         private string _newClassName;
-
+        
+        private int _changeIndex = -1;
+        
         /// <summary>
         /// 标记要删除的类索引
         /// </summary>
@@ -100,179 +102,15 @@ namespace Start.Editor
             for (int i = 0; i < _battleComponentConfig.DataList.Count; i++)
             {
                 BattleComponentClass battleComponentClass = _battleComponentConfig.DataList[i];
-                EditorGUILayout.BeginVertical("box");
+
+                if (_changeIndex == i)
                 {
-                    // 类名和删除按钮
-                    EditorGUILayout.BeginVertical("box");
-                    {
-                        EditorGUILayout.BeginHorizontal();
-                        {
-                            EditorGUILayout.LabelField("类的特性:", GUILayout.Width(148));
-                            string content = string.Join(",", battleComponentClass.ClassAttributes);
-                            if (EditorGUILayout.DropdownButton(new GUIContent(content), FocusType.Keyboard))
-                            {
-                                GenericMenu menu = new GenericMenu();
-
-                                // 添加所有选项到菜单
-                                for (int k = 0; k < _componentAttributes.Count; k++)
-                                {
-                                    int index = k; // 捕获当前索引
-                                    bool isSelected =
-                                        battleComponentClass.ClassAttributes.Contains(_componentAttributes[index]);
-                                    menu.AddItem(new GUIContent(_componentAttributes[index]), isSelected, () =>
-                                    {
-                                        if (battleComponentClass.ClassAttributes.Contains(_componentAttributes[index]))
-                                        {
-                                            battleComponentClass.ClassAttributes.Remove(_componentAttributes[index]);
-                                        }
-                                        else
-                                        {
-                                            battleComponentClass.ClassAttributes.Add(_componentAttributes[index]);
-                                        }
-                                    });
-                                }
-
-                                menu.ShowAsContext();
-                            }
-
-                            if (GUILayout.Button("删除类", GUILayout.Width(80)))
-                            {
-                                if (EditorUtility.DisplayDialog("确认", $"确定要删除 {battleComponentClass.ClassName} 吗？", "是",
-                                        "否"))
-                                {
-                                    _classToRemove = i; // 记录要删除的索引，延迟到布局结束后处理
-                                }
-                            }
-                        }
-                        EditorGUILayout.EndHorizontal();
-
-                        EditorGUILayout.BeginHorizontal();
-                        {
-                            battleComponentClass.ClassComment =
-                                EditorGUILayout.TextField("类注释:", battleComponentClass.ClassComment);
-                        }
-                        EditorGUILayout.EndHorizontal();
-
-                        EditorGUILayout.BeginHorizontal();
-                        {
-                            EditorGUILayout.LabelField("类名:", battleComponentClass.ClassName);
-                        }
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    EditorGUILayout.EndVertical();
-
-                    EditorGUILayout.BeginVertical("box");
-                    {
-                        for (int j = 0; j < _battleComponentConfig.DataList[i].DynamicProperties.Count; j++)
-                        {
-                            // 属性名
-                            EditorGUILayout.Space();
-
-                            BattleComponentProperty battleComponentProperty =
-                                _battleComponentConfig.DataList[i].DynamicProperties[j];
-
-                            // 绘制多选下拉框
-                            EditorGUILayout.BeginHorizontal();
-                            {
-                                EditorGUILayout.LabelField("属性特性:", GUILayout.Width(148));
-                                string content = string.Join(",", battleComponentProperty.PropertyAttributes);
-                                if (EditorGUILayout.DropdownButton(new GUIContent(content), FocusType.Keyboard))
-                                {
-                                    GenericMenu menu = new GenericMenu();
-
-                                    // 添加所有选项到菜单
-                                    for (int k = 0; k < _propertyAttributes.Count; k++)
-                                    {
-                                        int index = k; // 捕获当前索引
-                                        bool isSelected =
-                                            battleComponentProperty.PropertyAttributes.Contains(
-                                                _propertyAttributes[index]);
-                                        menu.AddItem(new GUIContent(_propertyAttributes[index]), isSelected, () =>
-                                        {
-                                            if (battleComponentProperty.PropertyAttributes.Contains(
-                                                    _propertyAttributes[index]))
-                                            {
-                                                battleComponentProperty.PropertyAttributes.Remove(
-                                                    _propertyAttributes[index]);
-                                            }
-                                            else
-                                            {
-                                                battleComponentProperty.PropertyAttributes.Add(
-                                                    _propertyAttributes[index]);
-                                            }
-                                        });
-                                    }
-
-                                    menu.ShowAsContext();
-                                }
-
-                                // 删除属性按钮
-                                if (GUILayout.Button("删除属性", GUILayout.Width(80)))
-                                {
-                                    _propToRemove = (i, j); // 记录要删除的索引，延迟处理
-                                }
-                            }
-                            EditorGUILayout.EndHorizontal();
-
-                            // 属性注释
-                            battleComponentProperty.PropertyComment =
-                                EditorGUILayout.TextField("属性注释:", battleComponentProperty.PropertyComment);
-
-                            EditorGUILayout.BeginHorizontal();
-                            // 属性类型
-                            battleComponentProperty.PropertyType =
-                                EditorGUILayout.TextField("属性类型:", battleComponentProperty.PropertyType);
-                            // 删除属性按钮
-                            if (GUILayout.Button("设置属性", GUILayout.Width(80)))
-                            {
-                                TTypeEditorWindow.ShowWindow(
-                                    new[]
-                                    {
-                                        typeof(int),
-                                        typeof(FP),
-                                        typeof(Array),
-                                        typeof(Array[,]),
-                                        typeof(List<>),
-                                        typeof(Dictionary<,>)
-                                    }, (value) =>
-                                    {
-                                        battleComponentProperty.PropertyType = value.ToString();
-                                        battleComponentProperty.PropertyDefaultValue = string.Empty;
-                                    });
-                            }
-
-                            EditorGUILayout.EndHorizontal();
-
-                            // 属性名称
-                            battleComponentProperty.PropertyName =
-                                EditorGUILayout.TextField("属性名称:", battleComponentProperty.PropertyName);
-
-                            // 属性类型
-                            battleComponentProperty.PropertyDefaultValue =
-                                EditorGUILayout.TextField("属性默认值:", battleComponentProperty.PropertyDefaultValue);
-                        }
-
-                        EditorGUILayout.BeginHorizontal();
-                        {
-                            // 显示属性列表
-                            //EditorGUILayout.LabelField("属性:");
-                            if (GUILayout.Button("添加属性"))
-                            {
-                                _battleComponentConfig.DataList[i].DynamicProperties.Add(new BattleComponentProperty
-                                {
-                                    PropertyName = "NewProperty",
-                                    PropertyType = "NewType",
-                                    PropertyDefaultValue = "",
-                                    PropertyComment = "",
-                                    PropertyAttributes = new List<string>(),
-                                });
-                            }
-                        }
-                        EditorGUILayout.EndHorizontal();
-                    }
-                    EditorGUILayout.EndVertical();
+                    ShowComponentProperty(battleComponentClass, i);
                 }
-                EditorGUILayout.EndVertical();
+                else
+                {
+                    UpdateComponentProperty(battleComponentClass, i);
+                }
             }
 
             EditorGUILayout.EndScrollView();
@@ -288,6 +126,196 @@ namespace Start.Editor
             }
         }
 
+        private void UpdateComponentProperty(BattleComponentClass battleComponentClass, int i)
+        {
+            EditorGUILayout.BeginVertical("box");
+            {
+                // 类名和删除按钮
+                EditorGUILayout.BeginVertical("box");
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        EditorGUILayout.LabelField("类的特性:", GUILayout.Width(148));
+                        string content = string.Join(",", battleComponentClass.ClassAttributes);
+                        if (EditorGUILayout.DropdownButton(new GUIContent(content), FocusType.Keyboard))
+                        {
+                            GenericMenu menu = new GenericMenu();
+
+                            // 添加所有选项到菜单
+                            for (int k = 0; k < _componentAttributes.Count; k++)
+                            {
+                                int index = k; // 捕获当前索引
+                                bool isSelected =
+                                    battleComponentClass.ClassAttributes.Contains(_componentAttributes[index]);
+                                menu.AddItem(new GUIContent(_componentAttributes[index]), isSelected, () =>
+                                {
+                                    if (battleComponentClass.ClassAttributes.Contains(_componentAttributes[index]))
+                                    {
+                                        battleComponentClass.ClassAttributes.Remove(_componentAttributes[index]);
+                                    }
+                                    else
+                                    {
+                                        battleComponentClass.ClassAttributes.Add(_componentAttributes[index]);
+                                    }
+                                });
+                            }
+
+                            menu.ShowAsContext();
+                        }
+
+                        if (GUILayout.Button("删除类", GUILayout.Width(80)))
+                        {
+                            if (EditorUtility.DisplayDialog("确认", $"确定要删除 {battleComponentClass.ClassName} 吗？", "是",
+                                    "否"))
+                            {
+                                _classToRemove = i; // 记录要删除的索引，延迟到布局结束后处理
+                            }
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        battleComponentClass.ClassComment =
+                            EditorGUILayout.TextField("类注释:", battleComponentClass.ClassComment);
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        EditorGUILayout.LabelField("类名:", battleComponentClass.ClassName);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.BeginVertical("box");
+                {
+                    for (int j = 0; j < _battleComponentConfig.DataList[i].DynamicProperties.Count; j++)
+                    {
+                        // 属性名
+                        EditorGUILayout.Space();
+
+                        BattleComponentProperty battleComponentProperty =
+                            _battleComponentConfig.DataList[i].DynamicProperties[j];
+
+                        // 绘制多选下拉框
+                        EditorGUILayout.BeginHorizontal();
+                        {
+                            EditorGUILayout.LabelField("属性特性:", GUILayout.Width(148));
+                            string content = string.Join(",", battleComponentProperty.PropertyAttributes);
+                            if (EditorGUILayout.DropdownButton(new GUIContent(content), FocusType.Keyboard))
+                            {
+                                GenericMenu menu = new GenericMenu();
+
+                                // 添加所有选项到菜单
+                                for (int k = 0; k < _propertyAttributes.Count; k++)
+                                {
+                                    int index = k; // 捕获当前索引
+                                    bool isSelected =
+                                        battleComponentProperty.PropertyAttributes.Contains(
+                                            _propertyAttributes[index]);
+                                    menu.AddItem(new GUIContent(_propertyAttributes[index]), isSelected, () =>
+                                    {
+                                        if (battleComponentProperty.PropertyAttributes.Contains(
+                                                _propertyAttributes[index]))
+                                        {
+                                            battleComponentProperty.PropertyAttributes.Remove(
+                                                _propertyAttributes[index]);
+                                        }
+                                        else
+                                        {
+                                            battleComponentProperty.PropertyAttributes.Add(
+                                                _propertyAttributes[index]);
+                                        }
+                                    });
+                                }
+
+                                menu.ShowAsContext();
+                            }
+
+                            // 删除属性按钮
+                            if (GUILayout.Button("删除属性", GUILayout.Width(80)))
+                            {
+                                _propToRemove = (i, j); // 记录要删除的索引，延迟处理
+                            }
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+                        // 属性注释
+                        battleComponentProperty.PropertyComment =
+                            EditorGUILayout.TextField("属性注释:", battleComponentProperty.PropertyComment);
+
+                        EditorGUILayout.BeginHorizontal();
+                        // 属性类型
+                        battleComponentProperty.PropertyType =
+                            EditorGUILayout.TextField("属性类型:", battleComponentProperty.PropertyType);
+                        // 删除属性按钮
+                        if (GUILayout.Button("设置属性", GUILayout.Width(80)))
+                        {
+                            TTypeEditorWindow.ShowWindow(
+                                new[]
+                                {
+                                    typeof(int),
+                                    typeof(FP),
+                                    typeof(TSVector2),
+                                    typeof(Array),
+                                    typeof(Array[,]),
+                                    typeof(List<>),
+                                    typeof(Dictionary<,>)
+                                }, (value) =>
+                                {
+                                    battleComponentProperty.PropertyType = value.ToString();
+                                    battleComponentProperty.PropertyDefaultValue = string.Empty;
+                                });
+                        }
+
+                        EditorGUILayout.EndHorizontal();
+
+                        // 属性名称
+                        battleComponentProperty.PropertyName =
+                            EditorGUILayout.TextField("属性名称:", battleComponentProperty.PropertyName);
+
+                        // 属性类型
+                        battleComponentProperty.PropertyDefaultValue =
+                            EditorGUILayout.TextField("属性默认值:", battleComponentProperty.PropertyDefaultValue);
+                    }
+
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        // 显示属性列表
+                        //EditorGUILayout.LabelField("属性:");
+                        if (GUILayout.Button("添加属性"))
+                        {
+                            _battleComponentConfig.DataList[i].DynamicProperties.Add(new BattleComponentProperty
+                            {
+                                PropertyName = "NewProperty",
+                                PropertyType = "NewType",
+                                PropertyDefaultValue = "",
+                                PropertyComment = "",
+                                PropertyAttributes = new List<string>(),
+                            });
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorGUILayout.EndVertical();
+            }
+            EditorGUILayout.EndVertical();
+        }
+
+        private void ShowComponentProperty(BattleComponentClass battleComponentClass, int i)
+        {
+            EditorGUILayout.BeginVertical("box");
+            {
+                for (int j = 0; j < _battleComponentConfig.DataList[i].DynamicProperties.Count; j++)
+                {
+                    
+                }
+            }
+            EditorGUILayout.EndVertical();
+        }
+        
         private void CreateNewClass()
         {
             if (_battleComponentConfig.DataList.Exists(c => c.ClassName == _newClassName))
@@ -418,7 +446,7 @@ namespace Start.Editor
                         if (type != null)
                         {
                             if (type.GetInterfaces().Any(i => i.IsGenericType && 
-                                                              i.GetGenericTypeDefinition() == typeof(ICopy<>)))
+                                                              i.GetGenericTypeDefinition() == typeof(IComponent<>)))
                             {
                                 copyValueTypeProperties.Add(battleComponentProperty);
                             }

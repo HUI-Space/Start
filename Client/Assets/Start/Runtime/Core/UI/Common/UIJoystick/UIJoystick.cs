@@ -133,7 +133,7 @@ namespace Start
             // 计算方向向量（归一化） 作为摇杆方向向量 帧同步使用
             Direction = (handlePos - backgroundPos).normalized;
             
-            print($"方向向量:{Direction} 区域:{GetRegion(Direction, 24)}");
+            //print($"方向向量:{Direction} 区域:{GetRegion(Direction, 24)}");
         }
 
         private Rect ClampPositionToRectangle()

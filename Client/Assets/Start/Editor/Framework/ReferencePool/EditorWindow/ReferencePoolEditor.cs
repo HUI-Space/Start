@@ -7,18 +7,18 @@ using UnityEngine;
 
 namespace Start.Editor
 {
-    public class ReferencePoolEditor : EditorWindow
+    public class RecyclableObjectPoolEditor : EditorWindow
     {
-        private static ReferencePoolEditor _window;
+        private static RecyclableObjectPoolEditor _window;
 
-        private readonly Dictionary<string, List<ReferencePoolInfo>> m_ReferencePoolInfos = new Dictionary<string, List<ReferencePoolInfo>>(StringComparer.Ordinal);
+        private readonly Dictionary<string, List<RecyclablePoolStats>> m_RecyclableObjectPoolInfos = new Dictionary<string, List<RecyclablePoolStats>>(StringComparer.Ordinal);
 
         private readonly HashSet<string> m_OpenedItems = new HashSet<string>();
         private bool m_ShowFullClassName = false;
         
         public static void OpenEditorWindow()
         {
-            _window = (ReferencePoolEditor)GetWindow(typeof(ReferencePoolEditor), false, "ReferencePool");
+            _window = (RecyclableObjectPoolEditor)GetWindow(typeof(RecyclableObjectPoolEditor), false, "RecyclableObjectPool");
             _window.minSize = new Vector2(1400f, 800f);
             _window.Show();
         }
@@ -27,36 +27,36 @@ namespace Start.Editor
         {
             
 
-            EditorGUILayout.LabelField("Reference Pool Count", ReferencePool.Count.ToString());
+            EditorGUILayout.LabelField("Reference Pool Count", RecyclableObjectPool.Count.ToString());
             m_ShowFullClassName = EditorGUILayout.Toggle("Show Full Class Name", m_ShowFullClassName);
-            m_ReferencePoolInfos.Clear();
-            ReferencePoolInfo[] referencePoolInfos = ReferencePool.GetAllReferencePoolInfos();
-            foreach (ReferencePoolInfo referencePoolInfo in referencePoolInfos)
+            m_RecyclableObjectPoolInfos.Clear();
+            RecyclablePoolStats[] RecyclableObjectPoolInfos = RecyclableObjectPool.GetAllPoolInfos();
+            foreach (RecyclablePoolStats RecyclablePoolStats in RecyclableObjectPoolInfos)
             {
-                string assemblyName = referencePoolInfo.Type.Assembly.GetName().Name;
-                List<ReferencePoolInfo> results = null;
-                if (!m_ReferencePoolInfos.TryGetValue(assemblyName, out results))
+                string assemblyName = RecyclablePoolStats.Type.Assembly.GetName().Name;
+                List<RecyclablePoolStats> results = null;
+                if (!m_RecyclableObjectPoolInfos.TryGetValue(assemblyName, out results))
                 {
-                    results = new List<ReferencePoolInfo>();
-                    m_ReferencePoolInfos.Add(assemblyName, results);
+                    results = new List<RecyclablePoolStats>();
+                    m_RecyclableObjectPoolInfos.Add(assemblyName, results);
                 }
 
-                results.Add(referencePoolInfo);
+                results.Add(RecyclablePoolStats);
             }
 
-            foreach (KeyValuePair<string, List<ReferencePoolInfo>> assemblyReferencePoolInfo in m_ReferencePoolInfos)
+            foreach (KeyValuePair<string, List<RecyclablePoolStats>> assemblyRecyclableObjectPoolInfo in m_RecyclableObjectPoolInfos)
             {
-                bool lastState = m_OpenedItems.Contains(assemblyReferencePoolInfo.Key);
-                bool currentState = EditorGUILayout.Foldout(lastState, assemblyReferencePoolInfo.Key);
+                bool lastState = m_OpenedItems.Contains(assemblyRecyclableObjectPoolInfo.Key);
+                bool currentState = EditorGUILayout.Foldout(lastState, assemblyRecyclableObjectPoolInfo.Key);
                 if (currentState != lastState)
                 {
                     if (currentState)
                     {
-                        m_OpenedItems.Add(assemblyReferencePoolInfo.Key);
+                        m_OpenedItems.Add(assemblyRecyclableObjectPoolInfo.Key);
                     }
                     else
                     {
-                        m_OpenedItems.Remove(assemblyReferencePoolInfo.Key);
+                        m_OpenedItems.Remove(assemblyRecyclableObjectPoolInfo.Key);
                     }
                 }
 
@@ -64,42 +64,42 @@ namespace Start.Editor
                 {
                     EditorGUILayout.BeginVertical("box");
                     {
-                        DrawReferencePoolInfo(m_ShowFullClassName ? "对象的全程" : "对象的名称",
+                        DrawRecyclableObjectPoolInfo(m_ShowFullClassName ? "对象的全程" : "对象的名称",
                             "未使用引用数量",
                             "正在使用引用数量",
                             "获取引用数量",
                             "归还引用数量",
                             "增加引用数量",
                             "移除引用数量");
-                        assemblyReferencePoolInfo.Value.Sort(Comparison);
-                        foreach (ReferencePoolInfo referencePoolInfo in assemblyReferencePoolInfo.Value)
+                        assemblyRecyclableObjectPoolInfo.Value.Sort(Comparison);
+                        foreach (RecyclablePoolStats RecyclablePoolStats in assemblyRecyclableObjectPoolInfo.Value)
                         {
-                            DrawReferencePoolInfo(m_ShowFullClassName ? referencePoolInfo.Type.FullName : referencePoolInfo.Type.GetFormattedName(),
-                                $"{referencePoolInfo.UnusedReferenceCount}",
-                                $"{referencePoolInfo.UsingReferenceCount}",
-                                $"{referencePoolInfo.AcquireReferenceCount}",
-                                $"{referencePoolInfo.ReleaseReferenceCount}",
-                                $"{referencePoolInfo.AddReferenceCount}",
-                                $"{referencePoolInfo.RemoveReferenceCount}");
+                            DrawRecyclableObjectPoolInfo(m_ShowFullClassName ? RecyclablePoolStats.Type.FullName : RecyclablePoolStats.Type.GetFormattedName(),
+                                $"{RecyclablePoolStats.UnusedCount}",
+                                $"{RecyclablePoolStats.UsingCount}",
+                                $"{RecyclablePoolStats.AcquireCount}",
+                                $"{RecyclablePoolStats.ReleaseCount}",
+                                $"{RecyclablePoolStats.AddCount}",
+                                $"{RecyclablePoolStats.RemoveCount}");
                         }
 
                         if (GUILayout.Button("Export CSV Data"))
                         {
                             string exportFileName = EditorUtility.SaveFilePanel("Export CSV Data", string.Empty,
-                                $"Reference Pool Data - {assemblyReferencePoolInfo.Key}.csv",
+                                $"Reference Pool Data - {assemblyRecyclableObjectPoolInfo.Key}.csv",
                                 string.Empty);
                             if (!string.IsNullOrEmpty(exportFileName))
                             {
                                 try
                                 {
                                     int index = 0;
-                                    string[] data = new string[assemblyReferencePoolInfo.Value.Count + 1];
+                                    string[] data = new string[assemblyRecyclableObjectPoolInfo.Value.Count + 1];
                                     data[index++] =
                                         "Class Name,Full Class Name,Unused,Using,Acquire,Release,Add,Remove";
-                                    foreach (ReferencePoolInfo referencePoolInfo in assemblyReferencePoolInfo.Value)
+                                    foreach (RecyclablePoolStats RecyclablePoolStats in assemblyRecyclableObjectPoolInfo.Value)
                                     {
                                         data[index++] =
-                                            $"{referencePoolInfo.Type.Name},{referencePoolInfo.Type.FullName},{referencePoolInfo.UnusedReferenceCount},{referencePoolInfo.UsingReferenceCount},{referencePoolInfo.AcquireReferenceCount},{referencePoolInfo.ReleaseReferenceCount},{referencePoolInfo.AddReferenceCount},{referencePoolInfo.RemoveReferenceCount}";
+                                            $"{RecyclablePoolStats.Type.Name},{RecyclablePoolStats.Type.FullName},{RecyclablePoolStats.UnusedCount},{RecyclablePoolStats.UsingCount},{RecyclablePoolStats.AcquireCount},{RecyclablePoolStats.ReleaseCount},{RecyclablePoolStats.AddCount},{RecyclablePoolStats.RemoveCount}";
                                     }
 
                                     File.WriteAllLines(exportFileName, data, Encoding.UTF8);
@@ -123,7 +123,7 @@ namespace Start.Editor
         
         
         
-        private void DrawReferencePoolInfo(params string[] parameterName)
+        private void DrawRecyclableObjectPoolInfo(params string[] parameterName)
         {
             EditorGUILayout.BeginHorizontal();
             foreach (string item in parameterName)
@@ -134,7 +134,7 @@ namespace Start.Editor
         }
         
 
-        private int Comparison(ReferencePoolInfo a, ReferencePoolInfo b)
+        private int Comparison(RecyclablePoolStats a, RecyclablePoolStats b)
         {
             if (m_ShowFullClassName)
             {
