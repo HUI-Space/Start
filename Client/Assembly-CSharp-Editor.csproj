@@ -46,7 +46,7 @@
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\Config\ResourceBuildConfig.cs" />
     <Compile Include="Assets\Start\Editor\Framework\UI\OnInspectorGUI\Scroller\ScrollBaseEditor.cs" />
     <Compile Include="Assets\Start\Editor\Tools\EditorIconEditorWindow\EditorIconEditorWindow.cs" />
-    <Compile Include="Assets\Start\Editor\Framework\ReferencePool\EditorWindow\ReferencePoolEditor.cs" />
+    <Compile Include="Assets\Start\Editor\Framework\RecyclableObjectPool\EditorWindow\RecyclableObjectPool.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Config\EditorWindow\ConfigTreeView.cs" />
     <Compile Include="Assets\Start\Editor\Framework\Resource\EditorWindow\ResourceConfig\View\ResourceConfigView.cs" />
     <Compile Include="Assets\Start\Editor\Tools\ExportProject\ExportAndroidProject.cs" />
