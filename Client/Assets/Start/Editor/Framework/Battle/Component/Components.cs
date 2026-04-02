@@ -12,7 +12,7 @@ namespace Start.Editor
     {
         public static void Generate()
         {
-            string path = EditorUtility.SaveFolderPanel("保存组件脚本", "Assets", "");
+            string path = EditorUtility.SaveFolderPanel("保存组件脚本", "Assets\\Start\\Runtime\\Example\\FrameSync\\Battle\\Component", "");
             if (string.IsNullOrEmpty(path)) return;
 
             if (!path.StartsWith(Application.dataPath))
@@ -62,8 +62,8 @@ namespace Start.Editor
                 code.AppendLine("-----------------------------------------------------------------*/");
                 code.AppendLine();
                 code.AppendLine("using System;");
+                code.AppendLine("using System.Text;");
                 code.AppendLine("using System.Collections.Generic;");
-                code.AppendLine("using Start;");
                 code.AppendLine("namespace Start");
                 code.AppendLine("{");
                 var attributes = type.GetCustomAttributes(false);
@@ -82,35 +82,6 @@ namespace Start.Editor
 
                 code.AppendLine($"    public class {type.Name} : IComponent<{type.Name}>");
                 code.AppendLine("    {");
-
-                if (valueFieldInfo.Count > 0)
-                {
-                    code.AppendLine(
-                        $"        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Auto, Pack = 4)]");
-                    code.AppendLine($"        private struct Common");
-                    code.AppendLine("        {");
-                    foreach (FieldInfo fieldInfo in valueFieldInfo)
-                    {
-                        code.AppendLine($"            public {fieldInfo.FieldType.Name} {fieldInfo.Name};");
-                    }
-
-                    code.AppendLine();
-                    code.AppendLine($"            public Common(int no)");
-                    code.AppendLine("            {");
-                    foreach (FieldInfo fieldInfo in valueFieldInfo)
-                    {
-                        code.AppendLine(TryGetAttribute(fieldInfo, out DefaultAttribute attribute)
-                            ? $"                {fieldInfo.Name} = {attribute.DefaultValue};"
-                            : $"                {fieldInfo.Name} = default;");
-                    }
-
-                    code.AppendLine("            }");
-                    code.AppendLine("        }");
-                    code.AppendLine();
-                    code.AppendLine("        private Common _common = new Common();");
-                }
-
-                code.AppendLine();
                 foreach (FieldInfo fieldInfo in valueFieldInfo)
                 {
                     GenerateCommentCode(fieldInfo, code);
@@ -170,7 +141,35 @@ namespace Start.Editor
 
                     code.AppendLine();
                 }
+                
+                if (valueFieldInfo.Count > 0)
+                {
+                    code.AppendLine(
+                        $"        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Auto, Pack = 4)]");
+                    code.AppendLine($"        private struct Common");
+                    code.AppendLine("        {");
+                    foreach (FieldInfo fieldInfo in valueFieldInfo)
+                    {
+                        code.AppendLine($"            public {fieldInfo.FieldType.Name} {fieldInfo.Name};");
+                    }
 
+                    code.AppendLine();
+                    code.AppendLine($"            public Common(int no)");
+                    code.AppendLine("            {");
+                    foreach (FieldInfo fieldInfo in valueFieldInfo)
+                    {
+                        code.AppendLine(TryGetAttribute(fieldInfo, out DefaultAttribute attribute)
+                            ? $"                {fieldInfo.Name} = {attribute.DefaultValue};"
+                            : $"                {fieldInfo.Name} = default;");
+                    }
+
+                    code.AppendLine("            }");
+                    code.AppendLine("        }");
+                    code.AppendLine();
+                    code.AppendLine("        private Common _common = new Common();");
+                }
+                code.AppendLine();
+                
                 code.AppendLine($"        public void CopyTo({type.Name} component)");
                 code.AppendLine("        {");
                 if (valueFieldInfo.Count > 0)
@@ -182,8 +181,17 @@ namespace Start.Editor
                 {
                     foreach (FieldInfo fieldInfo in arrayFieldInfo)
                     {
-                        code.AppendLine(
-                            $"            Array.Copy({fieldInfo.Name}, component.{fieldInfo.Name}, {fieldInfo.Name}.Length);");
+                        if (TryGetAttribute(fieldInfo, out DefaultAttribute attribute))
+                        {
+                            code.AppendLine($"            Array.Copy({fieldInfo.Name}, component.{fieldInfo.Name}, {fieldInfo.Name}.Length);");
+                        }
+                        else
+                        {
+                            code.AppendLine($"            if ({fieldInfo.Name} != null)");
+                            code.AppendLine("            {");
+                            code.AppendLine($"                Array.Copy({fieldInfo.Name}, component.{fieldInfo.Name}, {fieldInfo.Name}.Length);");
+                            code.AppendLine("            }");
+                        }
                     }
                 }
 
@@ -214,8 +222,54 @@ namespace Start.Editor
                 }
                 code.AppendLine("        }");
                 code.AppendLine();
-                code.AppendLine("        public void Reset()");
+                
+                code.AppendLine($"        public void SerializeToLog(StringBuilder stringBuilder)");
                 code.AppendLine("        {");
+                code.AppendLine($"            stringBuilder.AppendLine($\"[{type.Name}]\");");
+                if (valueFieldInfo.Count > 0)
+                {
+                    foreach (FieldInfo fieldInfo in valueFieldInfo)
+                    {
+                        code.AppendLine($"            stringBuilder.AppendLine($\"{fieldInfo.Name} : {{{fieldInfo.Name}}}\");");
+                    }
+                }
+                if (arrayFieldInfo.Count > 0)
+                {
+                    foreach (FieldInfo fieldInfo in arrayFieldInfo)
+                    {
+                        code.AppendLine($"            if ({fieldInfo.Name} != null)");
+                        code.AppendLine("            {");
+                        code.AppendLine($"                stringBuilder.AppendLine($\"{fieldInfo.Name} (Count: {{{fieldInfo.Name}.Length}})\");");
+                        code.AppendLine($"                for (int i = 0; i < {fieldInfo.Name}.Length; i++)");
+                        code.AppendLine("                {");
+                        code.AppendLine($"                    stringBuilder.AppendLine($\"   [{{i}}] : {{{fieldInfo.Name}[i]}}\");");
+                        code.AppendLine("                }");
+                        code.AppendLine("            }");
+                    }
+                }
+                if (GenericFieldInfo.Count > 0)
+                {
+                    foreach (var fieldInfo in GenericFieldInfo)
+                    {
+                        Type genericDef = fieldInfo.FieldType.GetGenericTypeDefinition();
+                        if (genericDef == typeof(List<>))
+                        {
+                            code.AppendLine($"            stringBuilder.AppendLine($\"{fieldInfo.Name} (Count : {{{fieldInfo.Name}.Count}})\");");
+                            code.AppendLine($"            for (int i = 0; i < {fieldInfo.Name}.Count; i++)");
+                            code.AppendLine("            {");
+                            code.AppendLine($"               stringBuilder.AppendLine($\"   [{{i}}] : {{{fieldInfo.Name}[i]}}\");");
+                            code.AppendLine("            }");
+                        }
+                        else if (genericDef == typeof(Dictionary<,>))
+                        {
+                            code.AppendLine($"            stringBuilder.AppendLine($\"{fieldInfo.Name} (Count : {{{fieldInfo.Name}.Count}})\");");
+                            code.AppendLine($"            foreach (var item in {fieldInfo.Name})");
+                            code.AppendLine("            {");
+                            code.AppendLine($"               stringBuilder.AppendLine($\"   [{{item.Key}}] : {{item.Value}}\");");
+                            code.AppendLine("            }");
+                        }
+                    }
+                }
                 code.AppendLine("        }");
                 
                 code.AppendLine("    }");
@@ -257,7 +311,7 @@ namespace Start.Editor
         /// <returns></returns>
         private static bool TryGetAttribute<T>(FieldInfo fieldInfo,out T attribute) where T : Attribute
         {
-            attribute = fieldInfo.FieldType.GetCustomAttribute<T>();
+            attribute = fieldInfo.GetCustomAttribute<T>();
             return attribute != null;
         }
         
@@ -291,7 +345,7 @@ namespace Start.Editor
                         code.AppendLine($"{space}component.{sourceVarName}.Capacity = component.{sourceVarName}.Capacity > {sourceVarName}.Capacity ? component.{sourceVarName}.Capacity : {sourceVarName}.Capacity;");
                         code.AppendLine($"{space}for (int i = 0; i < {sourceVarName}.Count; i++)");
                         code.AppendLine($"{space}{{");
-                        code.AppendLine($"{space}   {elementType} item = i < component.{sourceVarName}.Count ? component.{sourceVarName}[i] : RecyclableObjectPool.Acquire<{elementType}>();");
+                        code.AppendLine($"{space}   {elementType} item = i < component.{sourceVarName}.Count ? component.{sourceVarName}[i] : RecyclablePool.Acquire<{elementType}>();");
                         code.AppendLine($"{space}   {sourceVarName}[i].CopyTo(item);");
                         code.AppendLine($"{space}   component.{sourceVarName}.Add(item);");
                         code.AppendLine($"{space}}}");
@@ -299,7 +353,7 @@ namespace Start.Editor
                     else
                     {
                         code.AppendLine($"{space}component.{sourceVarName}.Clear();");
-                        code.AppendLine($"{space}component.{sourceVarName}.AddRange(Data);");
+                        code.AppendLine($"{space}component.{sourceVarName}.AddRange({sourceVarName});");
                     }
                     
                 }
@@ -313,7 +367,7 @@ namespace Start.Editor
                     string keyType = GenericTypeNameHelper.GetFriendlyName(genericArgs[0]);
                     string valueType = GenericTypeNameHelper.GetFriendlyName(genericArgs[1]);
 
-                    if (!genericArgs[0].IsValueType || !genericArgs[1].IsEnum)
+                    if (!genericArgs[0].IsValueType && !genericArgs[0].IsEnum)
                     {
                         EditorUtility.DisplayDialog("错误", $"Dictionary 的 Key 必须为值类型或者枚举类型", "确定");
                         return string.Empty;
@@ -321,9 +375,9 @@ namespace Start.Editor
                         {
                             code.AppendLine($"{space}foreach (KeyValuePair<{keyType},{valueType}> item in {sourceVarName})");
                             code.AppendLine($"{space}{{");
-                            code.AppendLine($"{space}    {keyType} key = RecyclableObjectPool.Acquire<{keyType}>();");
+                            code.AppendLine($"{space}    {keyType} key = RecyclablePool.Acquire<{keyType}>();");
                             code.AppendLine($"{space}    item.Key.CopyTo(key);");
-                            code.AppendLine($"{space}    {valueType} value = RecyclableObjectPool.Acquire<{valueType}>();");
+                            code.AppendLine($"{space}    {valueType} value = RecyclablePool.Acquire<{valueType}>();");
                             code.AppendLine($"{space}    item.Value.CopyTo(value);");
                             code.AppendLine($"{space}    component.{sourceVarName}.Add(key, value);");
                             code.AppendLine($"{space}}}");
@@ -332,7 +386,7 @@ namespace Start.Editor
                         {
                             code.AppendLine($"{space}foreach (KeyValuePair<{keyType},{valueType}> item in {sourceVarName})");
                             code.AppendLine($"{space}{{");
-                            code.AppendLine($"{space}    {keyType} key = RecyclableObjectPool.Acquire<{keyType}>();");
+                            code.AppendLine($"{space}    {keyType} key = RecyclablePool.Acquire<{keyType}>();");
                             code.AppendLine($"{space}    item.Key.CopyTo(key);");
                             code.AppendLine($"{space}    component.{sourceVarName}.Add(key, item.Value);");
                             code.AppendLine($"{space}}}");
@@ -342,7 +396,7 @@ namespace Start.Editor
                     {
                         code.AppendLine($"{space}foreach (KeyValuePair<{keyType},{valueType}> item in {sourceVarName})");
                         code.AppendLine($"{space}{{");
-                        code.AppendLine($"{space}    {valueType} value = RecyclableObjectPool.Acquire<{valueType}>();");
+                        code.AppendLine($"{space}    {valueType} value = RecyclablePool.Acquire<{valueType}>();");
                         code.AppendLine($"{space}    item.Value.CopyTo(value);");
                         code.AppendLine($"{space}    component.{sourceVarName}.Add(item.Key, value);");
                         code.AppendLine($"{space}}}");
@@ -369,28 +423,30 @@ namespace Start.Editor
     [Comment("坐标组件")]
     public class TransformComponent : IComponent
     {
-        [Comment("坐标")] public TSVector3 Position;
-        [Comment("旋转")] public TSVector4 Rotation;
-        [Comment("缩放")] public TSVector3 Scale;
-        [Comment("前向向量")] public TSVector3 Forward;
-        [Comment("偏移量")] public TSVector3 MoveDelta;
+        [Comment("坐标")] public TSVector Position;
+        [Comment("旋转")] public TSQuaternion Rotation;
+        [Comment("缩放")] public TSVector Scale;
+        [Comment("前向向量")] public TSVector Forward;
+        [Comment("偏移量")] public TSVector MoveDelta;
     }
 
 
     [Comment("移动组件")]
     public class MoveComponent : IComponent
     {
-        [Comment("移动方向")] public TSVector3 MoveDirection;
-        [Comment("移动速度")] public FP MoveSpeed;
+        [Comment("移动方向")] public TSVector Direction;
+        [Comment("移动速度")] public FP Speed;
 
-        [Comment("上一次移动方向")] public TSVector3 LastMoveDirection;
-        [Comment("上一次移动速度")] public FP LastMoveSpeed;
+        [Comment("上一次移动方向")] public TSVector LastDirection;
+        [Comment("上一次移动速度")] public FP LastSpeed;
     }
 
     [Comment("输入组件")]
     public class InputComponent : IComponent
     {
-        [Comment("玩家输入")] public int Yaw;
+        [Comment("玩家摇杆(0 ~ 24) 0 为不动")] public byte Yaw;
+        [Comment("玩家按钮")] public byte Button;
+        [Comment("玩家放弃")] public byte GiveUp;
     }
 
     [Comment("状态组件")]
@@ -399,8 +455,16 @@ namespace Start.Editor
         [Comment("当前状态")] public int CurrentState;
         [Comment("下一状态")] public int NextState;
         [Comment("上一状态")] public int PrevState;
-        [Comment("强制状态")] public int ForceStateId;
+        [Comment("强制状态")] public int ForceState;
         [Comment("状态开始时间")] public FP EnterTime;
         [Comment("状态结束时间")] public FP EndTime;
+    }
+    
+    public class MatchPropertyComponent : IComponent
+    {
+        [Comment("属性")] public FP Property;
+        [Comment("属性索引")] public int[] array;
+        [Comment("属性值")] public List<FP> Value;
+        [Comment("属性索引")] public Dictionary<int,FP> Index;
     }
 }

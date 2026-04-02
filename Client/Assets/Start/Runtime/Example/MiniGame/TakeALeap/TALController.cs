@@ -18,6 +18,7 @@
 
         public override void DeInitialize()
         {
+            base.DeInitialize();
             LogicModule.DeInitialize();
             LogicModule = default;
             SettingModule = default;

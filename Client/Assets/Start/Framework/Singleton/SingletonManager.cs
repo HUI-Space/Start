@@ -17,6 +17,15 @@ namespace Start
             singleton.Initialize();
             return singleton;
         }
+        
+        public void DestroySingleton<T>() where T : ISingleton
+        {
+            if (_singletonDic.TryGetValue(typeof(T), out ISingleton singleton))
+            {
+                singleton.DeInitialize();
+                _singletonDic.Remove(typeof(T));
+            }
+        }
 
         public override Task DeInitialize()
         {

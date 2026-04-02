@@ -2,7 +2,7 @@
 
 namespace Start
 {
-    public class AudioParam : IReusable
+    public class AudioParam : IRecycle
     {
         public int AudioType { get; private set; }
         public string AudioName { get; private set; }
@@ -14,7 +14,7 @@ namespace Start
 
         public static AudioParam Create(int audioType, string audioName, bool isLoop, float volume, float fadeIn, float fadeOut)
         {
-            AudioParam audioParam = RecyclableObjectPool.Acquire<AudioParam>();
+            AudioParam audioParam = RecyclablePool.Acquire<AudioParam>();
             audioParam.AudioType = audioType;
             audioParam.AudioName = audioName;
             audioParam.IsLoop = isLoop;
@@ -24,7 +24,7 @@ namespace Start
             return audioParam;
         }
         
-        public void Reset()
+        public void Recycle()
         {
             AudioType = default;
             AudioName = default;

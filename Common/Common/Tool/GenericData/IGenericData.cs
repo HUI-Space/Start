@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public interface IGenericData : IReusable
+    public interface IGenericData : IRecycle
     {
         T GetData1<T>();
         T GetData2<T>();

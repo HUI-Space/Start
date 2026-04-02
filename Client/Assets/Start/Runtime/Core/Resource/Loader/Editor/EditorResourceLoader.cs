@@ -17,6 +17,11 @@ namespace Start
         {
         }
 
+        public void Update(float elapseSeconds, float realElapseSeconds)
+        {
+            
+        }
+
         public void DeInitialize()
         {
         }
@@ -97,9 +102,9 @@ namespace Start
                 }
                 else
                 {
-                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(handle.AssetName);
+                    //UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(handle.AssetName);
                     _asyncOperationHandles.Remove(handle.AssetName);
-                    RecyclableObjectPool.Recycle(item.Item1);
+                    RecyclablePool.Recycle(item.Item1);
                     // 可选：强制GC回收内存
                     GC.Collect();
                 }
@@ -135,7 +140,7 @@ namespace Start
                 else
                 {
                     _asyncOperationHandles.Remove(assetName);
-                    RecyclableObjectPool.Recycle(item.Item1);
+                    RecyclablePool.Recycle(item.Item1);
                 }
             }
         }

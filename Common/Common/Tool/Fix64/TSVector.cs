@@ -33,55 +33,55 @@ namespace Start
         internal static TSVector Arbitrary;
 
         /// <summary>向量的X分量</summary>
-        public FP x;
+        public FP X;
 
         /// <summary>向量的Y分量</summary>
-        public FP y;
+        public FP Y;
 
         /// <summary>向量的Z分量</summary>
-        public FP z;
+        public FP Z;
 
         #region 静态只读向量常量
 
         /// <summary>
         /// 零向量，分量为(0,0,0)
         /// </summary>
-        public static readonly TSVector zero;
+        public static readonly TSVector Zero;
 
         /// <summary>
         /// 左方向向量，分量为(-1,0,0)
         /// </summary>
-        public static readonly TSVector left;
+        public static readonly TSVector Left;
 
         /// <summary>
         /// 右方向向量，分量为(1,0,0)
         /// </summary>
-        public static readonly TSVector right;
+        public static readonly TSVector Right;
 
         /// <summary>
         /// 上方向向量，分量为(0,1,0)
         /// </summary>
-        public static readonly TSVector up;
+        public static readonly TSVector Up;
 
         /// <summary>
         /// 下方向向量，分量为(0,-1,0)
         /// </summary>
-        public static readonly TSVector down;
+        public static readonly TSVector Down;
 
         /// <summary>
         /// 后方向向量，分量为(0,0,-1)
         /// </summary>
-        public static readonly TSVector back;
+        public static readonly TSVector Back;
 
         /// <summary>
         /// 前方向向量，分量为(0,0,1)
         /// </summary>
-        public static readonly TSVector forward;
+        public static readonly TSVector Forward;
 
         /// <summary>
         /// 全1向量，分量为(1,1,1)
         /// </summary>
-        public static readonly TSVector one;
+        public static readonly TSVector One;
 
         /// <summary>
         /// 最小值向量，各分量为FP类型的最小值
@@ -102,18 +102,18 @@ namespace Start
         /// </summary>
         static TSVector()
         {
-            one = new TSVector(1, 1, 1);
-            zero = new TSVector(0, 0, 0);
-            left = new TSVector(-1, 0, 0);
-            right = new TSVector(1, 0, 0);
-            up = new TSVector(0, 1, 0);
-            down = new TSVector(0, -1, 0);
-            back = new TSVector(0, 0, -1);
-            forward = new TSVector(0, 0, 1);
+            One = new TSVector(1, 1, 1);
+            Zero = new TSVector(0, 0, 0);
+            Left = new TSVector(-1, 0, 0);
+            Right = new TSVector(1, 0, 0);
+            Up = new TSVector(0, 1, 0);
+            Down = new TSVector(0, -1, 0);
+            Back = new TSVector(0, 0, -1);
+            Forward = new TSVector(0, 0, 1);
             MinValue = new TSVector(FP.MinValue);
             MaxValue = new TSVector(FP.MaxValue);
             Arbitrary = new TSVector(1, 1, 1);
-            InternalZero = zero;
+            InternalZero = Zero;
         }
 
         #endregion
@@ -125,7 +125,7 @@ namespace Start
         /// <returns>各分量取绝对值后的新向量</returns>
         public static TSVector Abs(TSVector other)
         {
-            return new TSVector(FP.Abs(other.x), FP.Abs(other.y), FP.Abs(other.z));
+            return new TSVector(FP.Abs(other.X), FP.Abs(other.Y), FP.Abs(other.Z));
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Start
         /// <returns>向量的平方长度</returns>
         public FP sqrMagnitude
         {
-            get { return (((this.x * this.x) + (this.y * this.y)) + (this.z * this.z)); }
+            get { return (((this.X * this.X) + (this.Y * this.Y)) + (this.Z * this.Z)); }
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Start
         {
             get
             {
-                FP num = ((this.x * this.x) + (this.y * this.y)) + (this.z * this.z);
+                FP num = ((this.X * this.X) + (this.Y * this.Y)) + (this.Z * this.Z);
                 return FP.Sqrt(num);
             }
         }
@@ -173,7 +173,7 @@ namespace Start
         {
             get
             {
-                TSVector result = new TSVector(this.x, this.y, this.z);
+                TSVector result = new TSVector(this.X, this.Y, this.Z);
                 result.Normalize();
                 return result;
             }
@@ -189,9 +189,9 @@ namespace Start
         /// <param name="z">Z分量</param>
         public TSVector(int x, int y, int z)
         {
-            this.x = (FP)x;
-            this.y = (FP)y;
-            this.z = (FP)z;
+            this.X = (FP)x;
+            this.Y = (FP)y;
+            this.Z = (FP)z;
         }
 
         /// <summary>
@@ -202,9 +202,9 @@ namespace Start
         /// <param name="z">Z分量</param>
         public TSVector(FP x, FP y, FP z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
         }
 
         /// <summary>
@@ -213,9 +213,9 @@ namespace Start
         /// <param name="xyz">用于初始化所有分量的值</param>
         public TSVector(FP xyz)
         {
-            this.x = xyz;
-            this.y = xyz;
-            this.z = xyz;
+            this.X = xyz;
+            this.Y = xyz;
+            this.Z = xyz;
         }
 
         #endregion
@@ -227,9 +227,9 @@ namespace Start
         /// <param name="other">用于缩放的向量</param>
         public void Scale(TSVector other)
         {
-            this.x = x * other.x;
-            this.y = y * other.y;
-            this.z = z * other.z;
+            this.X = X * other.X;
+            this.Y = Y * other.Y;
+            this.Z = Z * other.Z;
         }
 
         /// <summary>
@@ -241,9 +241,9 @@ namespace Start
         /// <param name="z">新的Z分量</param>
         public void Set(FP x, FP y, FP z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Start
         /// <returns>向量的字符串表示</returns>
         public override string ToString()
         {
-            return string.Format("({0:f1}, {1:f1}, {2:f1})", x.AsFloat(), y.AsFloat(), z.AsFloat());
+            return string.Format("({0:f1}, {1:f1}, {2:f1})", X.AsFloat(), Y.AsFloat(), Z.AsFloat());
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Start
         {
             if (!(obj is TSVector)) return false;
             TSVector other = (TSVector)obj;
-            return (((x == other.x) && (y == other.y)) && (z == other.z));
+            return (((X == other.X) && (Y == other.Y)) && (Z == other.Z));
         }
 
         /// <summary>
@@ -291,9 +291,9 @@ namespace Start
         public static TSVector Scale(TSVector vecA, TSVector vecB)
         {
             TSVector result;
-            result.x = vecA.x * vecB.x;
-            result.y = vecA.y * vecB.y;
-            result.z = vecA.z * vecB.z;
+            result.X = vecA.X * vecB.X;
+            result.Y = vecA.Y * vecB.Y;
+            result.Z = vecA.Z * vecB.Z;
             return result;
         }
 
@@ -306,7 +306,7 @@ namespace Start
         /// <returns>是否相等</returns>
         public static bool operator ==(TSVector value1, TSVector value2)
         {
-            return (((value1.x == value2.x) && (value1.y == value2.y)) && (value1.z == value2.z));
+            return (((value1.X == value2.X) && (value1.Y == value2.Y)) && (value1.Z == value2.Z));
         }
 
         /// <summary>
@@ -318,9 +318,9 @@ namespace Start
         /// <returns>是否不相等</returns>
         public static bool operator !=(TSVector value1, TSVector value2)
         {
-            if ((value1.x == value2.x) && (value1.y == value2.y))
+            if ((value1.X == value2.X) && (value1.Y == value2.Y))
             {
-                return (value1.z != value2.z);
+                return (value1.Z != value2.Z);
             }
 
             return true;
@@ -351,9 +351,9 @@ namespace Start
         /// <param name="result">输出的分量级最小值向量</param>
         public static void Min(ref TSVector value1, ref TSVector value2, out TSVector result)
         {
-            result.x = (value1.x < value2.x) ? value1.x : value2.x;
-            result.y = (value1.y < value2.y) ? value1.y : value2.y;
-            result.z = (value1.z < value2.z) ? value1.z : value2.z;
+            result.X = (value1.X < value2.X) ? value1.X : value2.X;
+            result.Y = (value1.Y < value2.Y) ? value1.Y : value2.Y;
+            result.Z = (value1.Z < value2.Z) ? value1.Z : value2.Z;
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Start
         public static FP Distance(TSVector v1, TSVector v2)
         {
             return FP.Sqrt(
-                (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z));
+                (v1.X - v2.X) * (v1.X - v2.X) + (v1.Y - v2.Y) * (v1.Y - v2.Y) + (v1.Z - v2.Z) * (v1.Z - v2.Z));
         }
 
         /// <summary>
@@ -391,9 +391,9 @@ namespace Start
         /// <param name="result">输出的分量级最大值向量</param>
         public static void Max(ref TSVector value1, ref TSVector value2, out TSVector result)
         {
-            result.x = (value1.x > value2.x) ? value1.x : value2.x;
-            result.y = (value1.y > value2.y) ? value1.y : value2.y;
-            result.z = (value1.z > value2.z) ? value1.z : value2.z;
+            result.X = (value1.X > value2.X) ? value1.X : value2.X;
+            result.Y = (value1.Y > value2.Y) ? value1.Y : value2.Y;
+            result.Z = (value1.Z > value2.Z) ? value1.Z : value2.Z;
         }
 
         #endregion
@@ -404,9 +404,9 @@ namespace Start
         /// </summary>
         public void MakeZero()
         {
-            x = FP.Zero;
-            y = FP.Zero;
-            z = FP.Zero;
+            X = FP.Zero;
+            Y = FP.Zero;
+            Z = FP.Zero;
         }
 
         /// <summary>
@@ -452,13 +452,13 @@ namespace Start
         /// <param name="result">变换后的向量</param>
         public static void Transform(ref TSVector position, ref TSMatrix matrix, out TSVector result)
         {
-            FP num0 = ((position.x * matrix.M11) + (position.y * matrix.M21)) + (position.z * matrix.M31);
-            FP num1 = ((position.x * matrix.M12) + (position.y * matrix.M22)) + (position.z * matrix.M32);
-            FP num2 = ((position.x * matrix.M13) + (position.y * matrix.M23)) + (position.z * matrix.M33);
+            FP num0 = ((position.X * matrix.M11) + (position.Y * matrix.M21)) + (position.Z * matrix.M31);
+            FP num1 = ((position.X * matrix.M12) + (position.Y * matrix.M22)) + (position.Z * matrix.M32);
+            FP num2 = ((position.X * matrix.M13) + (position.Y * matrix.M23)) + (position.Z * matrix.M33);
 
-            result.x = num0;
-            result.y = num1;
-            result.z = num2;
+            result.X = num0;
+            result.Y = num1;
+            result.Z = num2;
         }
 
         /// <summary>
@@ -470,13 +470,13 @@ namespace Start
         /// <param name="result">变换后的向量</param>
         public static void TransposedTransform(ref TSVector position, ref TSMatrix matrix, out TSVector result)
         {
-            FP num0 = ((position.x * matrix.M11) + (position.y * matrix.M12)) + (position.z * matrix.M13);
-            FP num1 = ((position.x * matrix.M21) + (position.y * matrix.M22)) + (position.z * matrix.M23);
-            FP num2 = ((position.x * matrix.M31) + (position.y * matrix.M32)) + (position.z * matrix.M33);
+            FP num0 = ((position.X * matrix.M11) + (position.Y * matrix.M12)) + (position.Z * matrix.M13);
+            FP num1 = ((position.X * matrix.M21) + (position.Y * matrix.M22)) + (position.Z * matrix.M23);
+            FP num2 = ((position.X * matrix.M31) + (position.Y * matrix.M32)) + (position.Z * matrix.M33);
 
-            result.x = num0;
-            result.y = num1;
-            result.z = num2;
+            result.X = num0;
+            result.Y = num1;
+            result.Z = num2;
         }
 
         #endregion
@@ -503,7 +503,7 @@ namespace Start
         /// <returns>点积结果</returns>
         public static FP Dot(ref TSVector vector1, ref TSVector vector2)
         {
-            return ((vector1.x * vector2.x) + (vector1.y * vector2.y)) + (vector1.z * vector2.z);
+            return ((vector1.X * vector2.X) + (vector1.Y * vector2.Y)) + (vector1.Z * vector2.Z);
         }
 
         #endregion
@@ -519,7 +519,7 @@ namespace Start
         {
             FP sqrtMag = Dot(onNormal, onNormal);
             if (sqrtMag < TSMath.Epsilon)
-                return zero;
+                return Zero;
             else
                 return onNormal * Dot(vector, onNormal) / sqrtMag;
         }
@@ -588,13 +588,13 @@ namespace Start
         /// <param name="result">向量和</param>
         public static void Add(ref TSVector value1, ref TSVector value2, out TSVector result)
         {
-            FP num0 = value1.x + value2.x;
-            FP num1 = value1.y + value2.y;
-            FP num2 = value1.z + value2.z;
+            FP num0 = value1.X + value2.X;
+            FP num1 = value1.Y + value2.Y;
+            FP num2 = value1.Z + value2.Z;
 
-            result.x = num0;
-            result.y = num1;
-            result.z = num2;
+            result.X = num0;
+            result.Y = num1;
+            result.Z = num2;
         }
 
         #endregion
@@ -623,9 +623,9 @@ namespace Start
         /// <param name="result">除法结果向量</param>
         public static void Divide(ref TSVector value1, FP scaleFactor, out TSVector result)
         {
-            result.x = value1.x / scaleFactor;
-            result.y = value1.y / scaleFactor;
-            result.z = value1.z / scaleFactor;
+            result.X = value1.X / scaleFactor;
+            result.Y = value1.Y / scaleFactor;
+            result.Z = value1.Z / scaleFactor;
         }
 
         #endregion
@@ -654,13 +654,13 @@ namespace Start
         /// <param name="result">向量差</param>
         public static void Subtract(ref TSVector value1, ref TSVector value2, out TSVector result)
         {
-            FP num0 = value1.x - value2.x;
-            FP num1 = value1.y - value2.y;
-            FP num2 = value1.z - value2.z;
+            FP num0 = value1.X - value2.X;
+            FP num1 = value1.Y - value2.Y;
+            FP num2 = value1.Z - value2.Z;
 
-            result.x = num0;
-            result.y = num1;
-            result.z = num2;
+            result.X = num0;
+            result.Y = num1;
+            result.Z = num2;
         }
 
         #endregion
@@ -690,12 +690,12 @@ namespace Start
         /// <param name="result">叉积结果向量</param>
         public static void Cross(ref TSVector vector1, ref TSVector vector2, out TSVector result)
         {
-            FP num3 = (vector1.y * vector2.z) - (vector1.z * vector2.y);
-            FP num2 = (vector1.z * vector2.x) - (vector1.x * vector2.z);
-            FP num = (vector1.x * vector2.y) - (vector1.y * vector2.x);
-            result.x = num3;
-            result.y = num2;
-            result.z = num;
+            FP num3 = (vector1.Y * vector2.Z) - (vector1.Z * vector2.Y);
+            FP num2 = (vector1.Z * vector2.X) - (vector1.X * vector2.Z);
+            FP num = (vector1.X * vector2.Y) - (vector1.Y * vector2.X);
+            result.X = num3;
+            result.Y = num2;
+            result.Z = num;
         }
 
         #endregion
@@ -707,7 +707,7 @@ namespace Start
         /// <returns>哈希码</returns>
         public override int GetHashCode()
         {
-            return x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode();
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         }
 
         #region 向量取反
@@ -718,9 +718,9 @@ namespace Start
         /// </summary>
         public void Negate()
         {
-            this.x = -this.x;
-            this.y = -this.y;
-            this.z = -this.z;
+            this.X = -this.X;
+            this.Y = -this.Y;
+            this.Z = -this.Z;
         }
 
         /// <summary>
@@ -742,13 +742,13 @@ namespace Start
         /// <param name="result">反转后的向量</param>
         public static void Negate(ref TSVector value, out TSVector result)
         {
-            FP num0 = -value.x;
-            FP num1 = -value.y;
-            FP num2 = -value.z;
+            FP num0 = -value.X;
+            FP num1 = -value.Y;
+            FP num2 = -value.Z;
 
-            result.x = num0;
-            result.y = num1;
-            result.z = num2;
+            result.X = num0;
+            result.Y = num1;
+            result.Z = num2;
         }
 
         #endregion
@@ -774,11 +774,11 @@ namespace Start
         /// </summary>
         public void Normalize()
         {
-            FP num2 = ((this.x * this.x) + (this.y * this.y)) + (this.z * this.z);
+            FP num2 = ((this.X * this.X) + (this.Y * this.Y)) + (this.Z * this.Z);
             FP num = FP.One / FP.Sqrt(num2);
-            this.x *= num;
-            this.y *= num;
-            this.z *= num;
+            this.X *= num;
+            this.Y *= num;
+            this.Z *= num;
         }
 
         /// <summary>
@@ -788,11 +788,11 @@ namespace Start
         /// <param name="result">归一化后的单位向量</param>
         public static void Normalize(ref TSVector value, out TSVector result)
         {
-            FP num2 = ((value.x * value.x) + (value.y * value.y)) + (value.z * value.z);
+            FP num2 = ((value.X * value.X) + (value.Y * value.Y)) + (value.Z * value.Z);
             FP num = FP.One / FP.Sqrt(num2);
-            result.x = value.x * num;
-            result.y = value.y * num;
-            result.z = value.z * num;
+            result.X = value.X * num;
+            result.Y = value.Y * num;
+            result.Z = value.Z * num;
         }
 
         #endregion
@@ -807,17 +807,17 @@ namespace Start
         {
             FP temp;
 
-            temp = vector1.x;
-            vector1.x = vector2.x;
-            vector2.x = temp;
+            temp = vector1.X;
+            vector1.X = vector2.X;
+            vector2.X = temp;
 
-            temp = vector1.y;
-            vector1.y = vector2.y;
-            vector2.y = temp;
+            temp = vector1.Y;
+            vector1.Y = vector2.Y;
+            vector2.Y = temp;
 
-            temp = vector1.z;
-            vector1.z = vector2.z;
-            vector2.z = temp;
+            temp = vector1.Z;
+            vector1.Z = vector2.Z;
+            vector2.Z = temp;
         }
 
         #region 向量乘法（与标量）
@@ -844,9 +844,9 @@ namespace Start
         /// <param name="result">缩放后的向量</param>
         public static void Multiply(ref TSVector value1, FP scaleFactor, out TSVector result)
         {
-            result.x = value1.x * scaleFactor;
-            result.y = value1.y * scaleFactor;
-            result.z = value1.z * scaleFactor;
+            result.X = value1.X * scaleFactor;
+            result.Y = value1.Y * scaleFactor;
+            result.Z = value1.Z * scaleFactor;
         }
 
         #endregion
@@ -951,7 +951,7 @@ namespace Start
         /// <returns>转换后的二维向量</returns>
         public TSVector2 ToTSVector2()
         {
-            return new TSVector2(this.x, this.y);
+            return new TSVector2(this.X, this.Y);
         }
 
         /// <summary>
@@ -961,7 +961,7 @@ namespace Start
         /// <returns>转换后的四维向量</returns>
         public TSVector4 ToTSVector4()
         {
-            return new TSVector4(this.x, this.y, this.z, FP.One);
+            return new TSVector4(this.X, this.Y, this.Z, FP.One);
         }
     }
 }

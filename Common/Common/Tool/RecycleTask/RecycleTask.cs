@@ -23,10 +23,12 @@ namespace Start
         /// 失败
         /// </summary>
         Faulted = 2,
+        
+        Canceled = 3,
     }
 
     /// <summary>
-    /// 可回收的Task RecycleTaskCompletionSource
+    /// 可回收的Task Recycle TaskCompletionSource
     /// </summary>
     public partial class RecycleTask : IRecycleTask
     {
@@ -35,6 +37,11 @@ namespace Start
         /// </summary>
         public bool IsCompleted => _awaiterStatus != EAwaiterStatus.Pending;
 
+        /// <summary>
+        /// 是否回收
+        /// </summary>
+        public bool IsRecycle { get; private set; }
+        
         /// <summary>
         /// 状态
         /// </summary>
@@ -67,7 +74,9 @@ namespace Start
 
         public static RecycleTask Create(bool continueOnCapturedContext = true)
         {
-            RecycleTask instance = RecyclableObjectPool.Acquire<RecycleTask>();
+            RecycleTask instance = RecyclablePool.Acquire<RecycleTask>();
+            instance.IsRecycle = false;
+            instance._awaiterStatus = EAwaiterStatus.Pending;
             instance._synchronizationContext = continueOnCapturedContext ? SynchronizationContext.Current : null;
             return instance;
         }
@@ -77,13 +86,15 @@ namespace Start
             _delayTimer = new Timer(DelayTimerCallback, this, Timeout.Infinite, Timeout.Infinite);
         }
 
-        public void Reset()
+        public void Recycle()
         {
+            IsRecycle = true;
             _awaiterStatus = EAwaiterStatus.Pending;
-            _synchronizationContext = default;
-            _exception = default;
-            _callback = default;
-            _hasDelay = default;
+            _synchronizationContext = null;
+            _exception = null;
+            _callback = null;
+            _hasDelay = false;
+            _delayTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         public void OnCompleted(Action action)
@@ -100,6 +111,11 @@ namespace Start
         /// <param name="action"></param>
         public void UnsafeOnCompleted(Action action)
         {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 ExecuteContinuation(action);
@@ -117,23 +133,33 @@ namespace Start
 
         public void GetResult()
         {
+            if (IsRecycle)
+            {
+                throw new ObjectDisposedException(nameof(RecycleTask), "Task has been recycled");
+            }
+                
             switch (_awaiterStatus)
             {
                 case EAwaiterStatus.Succeeded:
-                    RecyclableObjectPool.Recycle(this);
+                    RecyclablePool.Recycle(this);
                     break;
                 case EAwaiterStatus.Faulted:
                     ExceptionDispatchInfo c = _callback as ExceptionDispatchInfo;
-                    RecyclableObjectPool.Recycle(this);
+                    RecyclablePool.Recycle(this);
                     c?.Throw();
                     break;
                 default:
-                    throw new Exception("RecycleTask not completed");
+                    throw new InvalidOperationException("RecycleTask not completed");
             }
         }
 
         public void SetResult()
         {
+            if (IsRecycle)
+            {
+                throw new ObjectDisposedException(nameof(RecycleTask), "Task has been recycled");
+            }
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -144,6 +170,11 @@ namespace Start
 
         public void SetException(Exception exception)
         {
+            if (IsRecycle)
+            {
+                throw new ObjectDisposedException(nameof(RecycleTask), "Task has been recycled");
+            }
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -154,6 +185,11 @@ namespace Start
 
         public void SetResultAfter(TimeSpan delay)
         {
+            if (IsRecycle)
+            {
+                throw new ObjectDisposedException(nameof(RecycleTask), "Task has been recycled");
+            }
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -171,6 +207,11 @@ namespace Start
 
         public void SetExceptionAfter(Exception exception, TimeSpan delay)
         {
+            if (IsRecycle)
+            {
+                throw new ObjectDisposedException(nameof(RecycleTask), "Task has been recycled");
+            }
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -233,6 +274,11 @@ namespace Start
         private static void DelayTimerCallback(object state)
         {
             RecycleTask recycleTask = (RecycleTask)state;
+            
+            // 检查对象是否已被回收
+            if (recycleTask.IsRecycle)
+                return;
+            
             if (recycleTask._awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -250,6 +296,11 @@ namespace Start
         /// </summary>
         public bool IsCompleted => _awaiterStatus != EAwaiterStatus.Pending;
 
+        /// <summary>
+        /// 是否回收
+        /// </summary>
+        public bool IsRecycle { get; private set; }
+        
         /// <summary>
         /// 状态
         /// </summary>
@@ -287,7 +338,9 @@ namespace Start
 
         public static RecycleTask<TResult> Create(bool continueOnCapturedContext = true)
         {
-            RecycleTask<TResult> instance = RecyclableObjectPool.Acquire<RecycleTask<TResult>>();
+            RecycleTask<TResult> instance = RecyclablePool.Acquire<RecycleTask<TResult>>();
+            instance.IsRecycle = false;
+            instance._awaiterStatus = EAwaiterStatus.Pending;
             instance._synchronizationContext = continueOnCapturedContext ? SynchronizationContext.Current : null;
             return instance;
         }
@@ -297,14 +350,16 @@ namespace Start
             _delayTimer = new Timer(DelayTimerCallback, this, Timeout.Infinite, Timeout.Infinite);
         }
 
-        public void Reset()
+        public void Recycle()
         {
+            IsRecycle = true;
             _awaiterStatus = EAwaiterStatus.Pending;
-            _synchronizationContext = default;
-            _exception = default;
-            _callback = default;
-            _hasDelay = default;
+            _synchronizationContext = null;
+            _exception = null;
+            _callback = null;
+            _hasDelay = false;
             _result = default;
+            _delayTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         public void OnCompleted(Action action)
@@ -321,6 +376,9 @@ namespace Start
         /// <param name="action"></param>
         public void UnsafeOnCompleted(Action action)
         {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 ExecuteContinuation(action);
@@ -338,23 +396,29 @@ namespace Start
 
         public TResult GetResult()
         {
+            if (IsRecycle)
+                throw new ObjectDisposedException(nameof(RecycleTask<TResult>), "Task has been recycled");
+
             switch (_awaiterStatus)
             {
                 case EAwaiterStatus.Succeeded:
-                    RecyclableObjectPool.Recycle(this);
+                    RecyclablePool.Recycle(this);
                     return _result;
                 case EAwaiterStatus.Faulted:
                     ExceptionDispatchInfo c = _callback as ExceptionDispatchInfo;
-                    RecyclableObjectPool.Recycle(this);
+                    RecyclablePool.Recycle(this);
                     c?.Throw();
                     return default;
                 default:
-                    throw new Exception("RecycleTask not completed");
+                    throw new InvalidOperationException("RecycleTask not completed");
             }
         }
 
         public void SetResult(TResult result)
         {
+            if (IsRecycle)
+                throw new ObjectDisposedException(nameof(RecycleTask<TResult>), "Task has been recycled");
+            
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -365,6 +429,9 @@ namespace Start
 
         public void SetException(Exception exception)
         {
+            if (IsRecycle)
+                throw new ObjectDisposedException(nameof(RecycleTask<TResult>), "Task has been recycled");
+
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -375,6 +442,9 @@ namespace Start
 
         public void SetResultAfter(TResult result, TimeSpan delay)
         {
+            if (IsRecycle)
+                throw new ObjectDisposedException(nameof(RecycleTask<TResult>), "Task has been recycled");
+
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -393,6 +463,9 @@ namespace Start
 
         public void SetExceptionAfter(Exception exception, TimeSpan delay)
         {
+            if (IsRecycle)
+                throw new ObjectDisposedException(nameof(RecycleTask<TResult>), "Task has been recycled");
+
             if (_awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -458,6 +531,9 @@ namespace Start
         private static void DelayTimerCallback(object state)
         {
             RecycleTask<TResult> recycleTask = (RecycleTask<TResult>)state;
+            if (recycleTask.IsRecycle)
+                return;
+            
             if (recycleTask._awaiterStatus != EAwaiterStatus.Pending)
             {
                 throw new InvalidOperationException("TaskT_TransitionToFinal_AlreadyCompleted");
@@ -470,241 +546,234 @@ namespace Start
     
     public partial class RecycleTask
     {
-        public static async Task WaitAny(RecycleTask[] tasks)
+        public static async Task WaitAny(params RecycleTask[] tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Length == 0)
+                throw new ArgumentException("tasks array is empty", nameof(tasks));
+            
+            RecycleTask completionTask = Create();
+            int completedCount = 0;
+            
+            Action callback = () =>
             {
-                return;
-            }
-            RecycleTask recycleTask = Create();
-            try
+                if (Interlocked.Increment(ref completedCount) == 1)
+                {
+                    completionTask.SetResult();
+                }
+            };
+            
+            foreach (var task in tasks)
             {
-                await tasks[0];
+                if (task != null)
+                    task.OnCompleted(callback);
             }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
+            
+            await completionTask;
         }
 
-        public static async Task WaitAny(List<RecycleTask> tasks)
+        public static async Task WaitAny(IList<RecycleTask> tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Count == 0)
+                throw new ArgumentException("tasks list is empty", nameof(tasks));
+            
+            RecycleTask completionTask = Create();
+            int completedCount = 0;
+            
+            Action callback = () =>
             {
-                return;
-            }
-            RecycleTask recycleTask = Create();
-            try
+                if (Interlocked.Increment(ref completedCount) == 1)
+                {
+                    completionTask.SetResult();
+                }
+            };
+            
+            foreach (var task in tasks)
             {
-                await tasks[0];
+                if (task != null)
+                    task.OnCompleted(callback);
             }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
+            
+            await completionTask;
         }
+        
 
-        public static async Task WaitAny(HashSet<RecycleTask> tasks)
+        public static async Task WaitAll(params RecycleTask[] tasks)
         {
-            if (tasks.Count == 0)
-            {
-                return;
-            }
-            RecycleTask recycleTask = Create();
-            try
-            {
-                await tasks.First();
-            }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
-        }
-
-        public static async Task WaitAll(RecycleTask[] tasks)
-        {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Length == 0)
-            {
                 return;
-            }
-            RecycleTask recycleTask = Create();
-            try
+            
+            RecycleTask completionTask = Create();
+            int remainingCount = tasks.Length;
+            
+            Action callback = () =>
             {
-                foreach (RecycleTask t in tasks)
+                if (Interlocked.Decrement(ref remainingCount) == 0)
                 {
-                    await t;
+                    completionTask.SetResult();
                 }
-            }
-            finally
+            };
+            
+            foreach (var task in tasks)
             {
-                recycleTask.SetResult();
+                if (task != null)
+                    task.OnCompleted(callback);
+                else
+                    callback(); // null 任务视为已完成
             }
-            await recycleTask;
+            
+            await completionTask;
         }
 
-        public static async Task WaitAll(List<RecycleTask> tasks)
+        public static async Task WaitAll(IList<RecycleTask> tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Count == 0)
+                return ;
+            
+            RecycleTask completionTask = Create();
+            int remainingCount = tasks.Count;
+            
+            Action callback = () =>
             {
-                return;
-            }
-            RecycleTask recycleTask = Create();
-            try
-            {
-                foreach (RecycleTask t in tasks)
+                if (Interlocked.Decrement(ref remainingCount) == 0)
                 {
-                    await t;
+                    completionTask.SetResult();
                 }
-            }
-            finally
+            };
+            
+            foreach (var task in tasks)
             {
-                recycleTask.SetResult();
+                if (task != null)
+                    task.OnCompleted(callback);
+                else
+                    callback();
             }
-            await recycleTask;
+            
+            await completionTask;
         }
-
-        public static async Task WaitAll(HashSet<RecycleTask> tasks)
-        {
-            if (tasks.Count == 0)
-            {
-                return;
-            }
-            RecycleTask recycleTask = Create();
-            try
-            {
-                foreach (RecycleTask t in tasks)
-                {
-                    await t;
-                }
-            }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
-        }
+        
     }
 
     public partial class RecycleTask<TResult>
     {
-        public static async Task WaitAny(RecycleTask<TResult>[] tasks)
+        public static async Task WaitAny(params RecycleTask<TResult>[] tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Length == 0)
+                throw new ArgumentException("tasks array is empty", nameof(tasks));
+            
+            RecycleTask completionTask = RecycleTask.Create();
+            int completedCount = 0;
+            
+            Action callback = () =>
             {
-                return;
-            }
-            RecycleTask recycleTask = RecycleTask.Create();
-            try
+                if (Interlocked.Increment(ref completedCount) == 1)
+                {
+                    completionTask.SetResult();
+                }
+            };
+            
+            foreach (var task in tasks)
             {
-                await tasks[0];
+                if (task != null)
+                    task.OnCompleted(callback);
             }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
+            
+            await completionTask;
         }
         
-        public static async Task WaitAny(List<RecycleTask<TResult>> tasks)
+        public static async Task WaitAny(IList<RecycleTask<TResult>> tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Count == 0)
+                throw new ArgumentException("tasks list is empty", nameof(tasks));
+            
+            RecycleTask completionTask = RecycleTask.Create();
+            int completedCount = 0;
+            
+            Action callback = () =>
             {
-                return;
-            }
-            RecycleTask recycleTask = RecycleTask.Create();
-            try
+                if (Interlocked.Increment(ref completedCount) == 1)
+                {
+                    completionTask.SetResult();
+                }
+            };
+            
+            foreach (var task in tasks)
             {
-                await tasks[0];
+                if (task != null)
+                    task.OnCompleted(callback);
             }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
+            
+            await completionTask;
         }
         
-        public static async Task WaitAny(HashSet<RecycleTask<TResult>> tasks)
-        {
-            if (tasks.Count == 0)
-            {
-                return;
-            }
-            RecycleTask recycleTask = RecycleTask.Create();
-            try
-            {
-                await tasks.First();
-            }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
-        }
 
-        public static async Task WaitAll(RecycleTask<TResult>[] tasks)
+        public static async Task WaitAll(params RecycleTask<TResult>[] tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Length == 0)
-            {
                 return;
-            }
-            RecycleTask recycleTask = RecycleTask.Create();
-            try
+            
+            RecycleTask completionTask = RecycleTask.Create();
+            int remainingCount = tasks.Length;
+            
+            Action callback = () =>
             {
-                foreach (RecycleTask<TResult> t in tasks)
+                if (Interlocked.Decrement(ref remainingCount) == 0)
                 {
-                    await t;
+                    completionTask.SetResult();
                 }
-            }
-            finally
+            };
+            
+            foreach (var task in tasks)
             {
-                recycleTask.SetResult();
+                if (task != null)
+                    task.OnCompleted(callback);
+                else
+                    callback();
             }
-            await recycleTask;
+            
+            await completionTask;
         }
         
-        public static async Task WaitAll(List<RecycleTask<TResult>> tasks)
+        public static async Task WaitAll(IList<RecycleTask<TResult>> tasks)
         {
+            if (tasks == null)
+                throw new ArgumentNullException(nameof(tasks));
             if (tasks.Count == 0)
-            {
                 return;
-            }
-            RecycleTask recycleTask = RecycleTask.Create();
-            try
+            
+            RecycleTask completionTask = RecycleTask.Create();
+            int remainingCount = tasks.Count;
+            
+            Action callback = () =>
             {
-                foreach (RecycleTask<TResult> t in tasks)
+                if (Interlocked.Decrement(ref remainingCount) == 0)
                 {
-                    await t;
+                    completionTask.SetResult();
                 }
-            }
-            finally
+            };
+            
+            foreach (var task in tasks)
             {
-                recycleTask.SetResult();
+                if (task != null)
+                    task.OnCompleted(callback);
+                else
+                    callback();
             }
-            await recycleTask;
-        }
-        
-        public static async Task WaitAll(HashSet<RecycleTask<TResult>> tasks)
-        {
-            if (tasks.Count == 0)
-            {
-                return;
-            }
-            RecycleTask recycleTask = RecycleTask.Create();
-            try
-            {
-                foreach (RecycleTask<TResult> t in tasks)
-                {
-                    await t;
-                }
-            }
-            finally
-            {
-                recycleTask.SetResult();
-            }
-            await recycleTask;
+            
+            await completionTask;
         }
     }
 }

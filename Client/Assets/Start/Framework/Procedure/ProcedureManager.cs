@@ -20,7 +20,7 @@ namespace Start
                 ProcedureBase procedure = Activator.CreateInstance(type) as ProcedureBase;
                 procedures.Add(procedure);
             }
-            _asyncFsm = await FsmManager.Instance.CreateFsm("ProcedureManager", this, procedures.ToArray());
+            _asyncFsm = await FsmManager.Instance.CreateFsm(nameof(ProcedureManager), this, procedures.ToArray());
         }
 
         public async Task StartProcedure<T>() where T : ProcedureBase

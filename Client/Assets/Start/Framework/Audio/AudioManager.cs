@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Start
 {
-    public class AudioManager : ManagerBase<AudioManager>, IUpdateManger
+    public class AudioManager : ManagerBase<AudioManager>, IUpdateManager
     {
         public override int Priority => 7;
 

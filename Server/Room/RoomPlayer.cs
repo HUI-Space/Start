@@ -2,7 +2,7 @@
 
 namespace Start.Server
 {
-    public class RoomPlayer : IReusable
+    public class RoomPlayer : IRecycle
     {
         public int SessionId { get; private set; }
         
@@ -14,7 +14,7 @@ namespace Start.Server
         
         public static RoomPlayer Create(int sessionId, int playerId)
         {
-            RoomPlayer roomPlayer = RecyclableObjectPool.Acquire<RoomPlayer>();
+            RoomPlayer roomPlayer = RecyclablePool.Acquire<RoomPlayer>();
             roomPlayer.SessionId = sessionId;
             roomPlayer.PlayerId = playerId;
             return roomPlayer;
@@ -30,7 +30,7 @@ namespace Start.Server
             Progress = progress;
         }
         
-        public void Reset()
+        public void Recycle()
         {
             Progress = default;
             IsOnline = default;

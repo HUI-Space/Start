@@ -1,14 +1,13 @@
 ﻿using System.Net;
 
-
-
 namespace Start.Server
 {
-    public class KcpManager : ManagerBase<KcpManager>, IUpdateManger
+    public class KcpManager : ManagerBase<KcpManager>, IUpdateManager
     {
         public override int Priority => 2;
 
         private KcpServer _kcpServer;
+        
         public override Task Initialize()
         {
             int id = 1;

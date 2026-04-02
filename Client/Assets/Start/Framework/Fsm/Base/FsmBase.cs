@@ -5,7 +5,7 @@
         /// <summary>
         /// 获取有限状态机是否被销毁。
         /// </summary>
-        public virtual bool IsDestroyed { get; private set; }
+        public abstract bool IsDestroyed { get; }
         
         /// <summary>
         /// 有限状态机轮询。

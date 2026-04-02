@@ -24,7 +24,7 @@ namespace Start
         /// <returns></returns>
         public static DownloadTask Create(string downloadSavePath, string downloadUri, string tag, int priority, int flushSize, float timeout, object userData)
         {
-            DownloadTask downloadTask = RecyclableObjectPool.Acquire<DownloadTask>();
+            DownloadTask downloadTask = RecyclablePool.Acquire<DownloadTask>();
             downloadTask.Initialize(++s_Serial, priority,tag, userData);
             downloadTask.DownloadPath = downloadSavePath;
             downloadTask.DownloadUri = downloadUri;
@@ -33,9 +33,8 @@ namespace Start
             return downloadTask;
         }
 
-        public override void Reset()
+        public override void Recycle()
         {
-            base.Reset();
             Status = EDownloadStatusType.Todo;
             DownloadPath = null;
             DownloadUri = null;

@@ -135,7 +135,7 @@ namespace Start.Editor
                 opt |= BuildAssetBundleOptions.IgnoreTypeTreeChanges; //Ignore the type tree changes when doing the incremental build check. 在执行增量构建检查时忽略类型树更改。
 
 
-            opt |= BuildAssetBundleOptions.DeterministicAssetBundle;//DeterministicAssetBundle 选项的作用是确保每次构建 AssetBundle 时，相同的输入资源会生成相同的二进制输出。也就是说，只要输入的资源和构建设置保持不变，那么多次构建得到的 AssetBundle 文件的二进制内容是完全相同的。
+            //opt |= BuildAssetBundleOptions.DeterministicAssetBundle;// 过时了自动启用了 DeterministicAssetBundle 选项的作用是确保每次构建 AssetBundle 时，相同的输入资源会生成相同的二进制输出。也就是说，只要输入的资源和构建设置保持不变，那么多次构建得到的 AssetBundle 文件的二进制内容是完全相同的。
             //opt |= BuildAssetBundleOptions.DisableLoadAssetByFileName; //Disables Asset Bundle LoadAsset by file name.
             //opt |= BuildAssetBundleOptions.DisableLoadAssetByFileNameWithExtension; //Disables Asset Bundle LoadAsset by file name with extension.	
             

@@ -18,7 +18,7 @@ namespace Start.Editor
         
         public static void OpenEditorWindow()
         {
-            _window = (RecyclableObjectPoolEditor)GetWindow(typeof(RecyclableObjectPoolEditor), false, "RecyclableObjectPool");
+            _window = (RecyclableObjectPoolEditor)GetWindow(typeof(RecyclableObjectPoolEditor), false, "RecyclablePool");
             _window.minSize = new Vector2(1400f, 800f);
             _window.Show();
         }
@@ -27,10 +27,10 @@ namespace Start.Editor
         {
             
 
-            EditorGUILayout.LabelField("Reference Pool Count", RecyclableObjectPool.Count.ToString());
+            EditorGUILayout.LabelField("Reference Pool Count", RecyclablePool.Count.ToString());
             m_ShowFullClassName = EditorGUILayout.Toggle("Show Full Class Name", m_ShowFullClassName);
             m_RecyclableObjectPoolInfos.Clear();
-            RecyclablePoolStats[] RecyclableObjectPoolInfos = RecyclableObjectPool.GetAllPoolInfos();
+            RecyclablePoolStats[] RecyclableObjectPoolInfos = RecyclablePool.GetAllPoolInfos();
             foreach (RecyclablePoolStats RecyclablePoolStats in RecyclableObjectPoolInfos)
             {
                 string assemblyName = RecyclablePoolStats.Type.Assembly.GetName().Name;

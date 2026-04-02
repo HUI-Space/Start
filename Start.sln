@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Framework", "Client\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common\Common.csproj", "{840C3037-317A-4282-A366-6983BD228A95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Protocol", "Common\Common.Protocol\Common.Protocol.csproj", "{726204D6-19D4-4B1C-8E8B-347E5A737B9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protocol", "Common\Protocol\Protocol.csproj", "{726204D6-19D4-4B1C-8E8B-347E5A737B9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.Runtime", "Client\Client.Runtime.csproj", "{76B40D62-AC62-20DA-2EFB-C263C3985DAF}"
 EndProject

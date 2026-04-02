@@ -109,9 +109,9 @@ namespace Start
 
                 // 通过矩阵元素计算欧拉角（X、Y、Z轴）
                 // 使用反正切函数从矩阵元素中提取旋转角度，并转换为度
-                result.x = TSMath.Atan2(M32, M33) * FP.Rad2Deg;
-                result.y = TSMath.Atan2(-M31, TSMath.Sqrt(M32 * M32 + M33 * M33)) * FP.Rad2Deg;
-                result.z = TSMath.Atan2(M21, M11) * FP.Rad2Deg;
+                result.X = TSMath.Atan2(M32, M33) * FP.Rad2Deg;
+                result.Y = TSMath.Atan2(-M31, TSMath.Sqrt(M32 * M32 + M33 * M33)) * FP.Rad2Deg;
+                result.Z = TSMath.Atan2(M21, M11) * FP.Rad2Deg;
 
                 // 返回取反后的欧拉角
                 return result * -1;
@@ -561,7 +561,7 @@ namespace Start
         {
             TSMatrix result;
             // 计算前向向量（目标减位置），并使用上方向向量创建观察矩阵
-            LookAt(target - position, TSVector.up, out result);
+            LookAt(target - position, TSVector.Up, out result);
             return result;
         }
 
@@ -596,15 +596,15 @@ namespace Start
             TSVector yaxis = TSVector.Cross(zaxis, xaxis);
 
             // 填充观察矩阵（行优先存储的旋转矩阵）
-            result.M11 = xaxis.x;
-            result.M21 = yaxis.x;
-            result.M31 = zaxis.x;
-            result.M12 = xaxis.y;
-            result.M22 = yaxis.y;
-            result.M32 = zaxis.y;
-            result.M13 = xaxis.z;
-            result.M23 = yaxis.z;
-            result.M33 = zaxis.z;
+            result.M11 = xaxis.X;
+            result.M21 = yaxis.X;
+            result.M31 = zaxis.X;
+            result.M12 = xaxis.Y;
+            result.M22 = yaxis.Y;
+            result.M32 = zaxis.Y;
+            result.M13 = xaxis.Z;
+            result.M23 = yaxis.Z;
+            result.M33 = zaxis.Z;
         }
 
         /// <summary>
@@ -630,16 +630,16 @@ namespace Start
         public static void CreateFromQuaternion(ref TSQuaternion quaternion, out TSMatrix result)
         {
             // 计算四元数各分量的平方
-            FP x2 = quaternion.x * quaternion.x;
-            FP y2 = quaternion.y * quaternion.y;
-            FP z2 = quaternion.z * quaternion.z;
+            FP x2 = quaternion.X * quaternion.X;
+            FP y2 = quaternion.Y * quaternion.Y;
+            FP z2 = quaternion.Z * quaternion.Z;
             // 计算四元数分量间的乘积
-            FP xy = quaternion.x * quaternion.y;
-            FP zw = quaternion.z * quaternion.w;
-            FP zx = quaternion.z * quaternion.x;
-            FP yw = quaternion.y * quaternion.w;
-            FP yz = quaternion.y * quaternion.z;
-            FP xw = quaternion.x * quaternion.w;
+            FP xy = quaternion.X * quaternion.Y;
+            FP zw = quaternion.Z * quaternion.W;
+            FP zx = quaternion.Z * quaternion.X;
+            FP yw = quaternion.Y * quaternion.W;
+            FP yz = quaternion.Y * quaternion.Z;
+            FP xw = quaternion.X * quaternion.W;
 
             // 根据四元数到矩阵的转换公式计算各元素
             result.M11 = FP.One - (2 * (y2 + z2));
@@ -846,9 +846,9 @@ namespace Start
         public static void CreateFromAxisAngle(ref TSVector axis, FP angle, out TSMatrix result)
         {
             // 获取旋转轴的分量
-            FP x = axis.x;
-            FP y = axis.y;
-            FP z = axis.z;
+            FP x = axis.X;
+            FP y = axis.Y;
+            FP z = axis.Z;
             // 计算角度的正弦和余弦值
             FP sinAngle = FP.Sin(angle);
             FP cosAngle = FP.Cos(angle);

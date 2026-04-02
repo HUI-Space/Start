@@ -46,32 +46,32 @@ namespace Start
         /// <summary>
         /// 私有静态零向量实例 (0, 0)
         /// </summary>
-        private static TSVector2 zeroVector = new TSVector2(0, 0);
+        private static TSVector2 _zero = new TSVector2(0, 0);
 
         /// <summary>
         /// 私有静态单位向量实例 (1, 1)
         /// </summary>
-        private static TSVector2 oneVector = new TSVector2(1, 1);
+        private static TSVector2 _one = new TSVector2(1, 1);
 
         /// <summary>
         /// 私有静态右方向向量实例 (1, 0)
         /// </summary>
-        private static TSVector2 rightVector = new TSVector2(1, 0);
+        private static TSVector2 _right = new TSVector2(1, 0);
 
         /// <summary>
         /// 私有静态左方向向量实例 (-1, 0)
         /// </summary>
-        private static TSVector2 leftVector = new TSVector2(-1, 0);
+        private static TSVector2 _left = new TSVector2(-1, 0);
 
         /// <summary>
         /// 私有静态上方向向量实例 (0, 1)
         /// </summary>
-        private static TSVector2 upVector = new TSVector2(0, 1);
+        private static TSVector2 _up = new TSVector2(0, 1);
 
         /// <summary>
         /// 私有静态下方向向量实例 (0, -1)
         /// </summary>
-        private static TSVector2 downVector = new TSVector2(0, -1);
+        private static TSVector2 _down = new TSVector2(0, -1);
 
         #endregion Private Fields
 
@@ -94,42 +94,42 @@ namespace Start
         /// <summary>
         /// 获取零向量 (0, 0)
         /// </summary>
-        public static TSVector2 zero => zeroVector;
+        public static TSVector2 Zero => _zero;
 
         /// <summary>
         /// 获取单位向量 (1, 1)
         /// </summary>
-        public static TSVector2 one => oneVector;
+        public static TSVector2 One => _one;
 
         /// <summary>
         /// 获取右方向向量 (1, 0)
         /// </summary>
-        public static TSVector2 right => rightVector;
+        public static TSVector2 Right => _right;
 
         /// <summary>
         /// 获取左方向向量 (-1, 0)
         /// </summary>
-        public static TSVector2 left => leftVector;
+        public static TSVector2 Left => _left;
 
         /// <summary>
         /// 获取上方向向量 (0, 1)
         /// </summary>
-        public static TSVector2 up => upVector;
+        public static TSVector2 Up => _up;
 
         /// <summary>
         /// 获取下方向向量 (0, -1)
         /// </summary>
-        public static TSVector2 down => downVector;
+        public static TSVector2 Down => _down;
 
         /// <summary>
         /// 获取向量的模长（长度）
         /// 计算方式：sqrt(x² + y²)
         /// </summary>
-        public FP magnitude
+        public FP Magnitude
         {
             get
             {
-                DistanceSquared(ref this, ref zeroVector, out var result);
+                DistanceSquared(ref this, ref _zero, out var result);
                 return FP.Sqrt(result);
             }
         }
@@ -137,7 +137,7 @@ namespace Start
         /// <summary>
         /// 获取当前向量的单位向量（方向相同，模长为1）
         /// </summary>
-        public TSVector2 normalized
+        public TSVector2 Normalized
         {
             get
             {
@@ -548,7 +548,7 @@ namespace Start
         public FP LengthSquared()
         {
             FP result;
-            DistanceSquared(ref this, ref zeroVector, out result);
+            DistanceSquared(ref this, ref _zero, out result);
             return result;
         }
 
@@ -774,7 +774,7 @@ namespace Start
         public static void Normalize(ref TSVector2 value, out TSVector2 result)
         {
             FP factor;
-            DistanceSquared(ref value, ref zeroVector, out factor);
+            DistanceSquared(ref value, ref _zero, out factor);
             factor = 1f / (FP)FP.Sqrt(factor);
             result.x = value.x * factor;
             result.y = value.y * factor;
@@ -843,7 +843,7 @@ namespace Start
         /// <returns>两个向量之间的夹角（度）</returns>
         public static FP Angle(TSVector2 a, TSVector2 b)
         {
-            return FP.Acos(a.normalized * b.normalized) * FP.Rad2Deg;
+            return FP.Acos(a.Normalized * b.Normalized) * FP.Rad2Deg;
         }
 
         /// <summary>

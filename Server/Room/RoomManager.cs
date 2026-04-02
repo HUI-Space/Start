@@ -1,6 +1,6 @@
 ﻿namespace Start.Server
 {
-    public class RoomManager : ManagerBase<RoomManager>, IUpdateManger
+    public class RoomManager : ManagerBase<RoomManager>, IUpdateManager
     {
         public override int Priority => 4;
         

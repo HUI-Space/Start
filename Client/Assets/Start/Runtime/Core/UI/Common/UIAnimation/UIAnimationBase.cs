@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Start
     {
         protected UIAnimationClip[] UIAnimationClip;
         
-        private RecycleTask _task;
+        private StructTask _task;
         private string _parentUIName;
         private UIAnimationPlayableGraph _graph;
         private readonly List<UIAnimationClipData> _list = new List<UIAnimationClipData>();
@@ -59,7 +59,7 @@ namespace Start
                     {
                         await Task.Delay((int)data.Delay * 1000);
                     }
-                    if (_task != null)
+                    if (_task.IsValid)
                     {
                         _task.SetResult();
                         _task = default;
@@ -67,7 +67,7 @@ namespace Start
                     _graph.Play(i, data.Loop,data.Speed,data.AnimationClip.length);
                     if (data.Await)
                     {
-                        _task = RecycleTask.Create();
+                        _task = StructTask.Create();
                         await _task;
                     }
                 }
@@ -76,7 +76,7 @@ namespace Start
         
         private void AnimationEnd(int index)
         {
-            if (_task != null)
+            if (_task.IsValid)
             {
                 _task.SetResult();
                 _task = default;
@@ -101,14 +101,14 @@ namespace Start
                 UIWindow.Instance.AfterReceive -= After;
                 foreach (UIAnimationClipData data in _list)
                 {
-                    RecyclableObjectPool.Recycle(data);
+                    RecyclablePool.Recycle(data);
                 }
                 _list.Clear();
                 _graph.OnAnimationEnd -= AnimationEnd;
                 _graph.DeInitialize();
                 _graph = default;
                 _parentUIName = default;
-                if (_task != null)
+                if (_task.IsValid)
                 {
                     _task.SetResult();
                     _task = default;

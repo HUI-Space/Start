@@ -51,7 +51,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            RecyclableObjectPool.Recycle(response);
+            RecyclablePool.Recycle(response);
             if (isSuccess)
             {
                 Manifest manifest = SerializerUtility.DeserializeObject<Manifest>(result);
@@ -66,7 +66,7 @@ namespace Start
                 Logger.Error("获取嵌入资源配置信息错误:" + response.Error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetBuiltInManifestFailure, genericData);
-                RecyclableObjectPool.Recycle(genericData);
+                RecyclablePool.Recycle(genericData);
             }
         }
     }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Http 响应
     /// </summary>
-    public class HttpResponse : IReusable
+    public class HttpResponse : IRecycle
     {
         /// <summary>
         /// 是否完成
@@ -42,14 +42,14 @@
 
         public static HttpResponse Create(string url)
         {
-            HttpResponse httpResponse = RecyclableObjectPool.Acquire<HttpResponse>();
+            HttpResponse httpResponse = RecyclablePool.Acquire<HttpResponse>();
             httpResponse.Url = url;
             return httpResponse;
         }
         
         public static HttpResponse Create(string url , byte[] postData)
         {
-            HttpResponse httpResponse = RecyclableObjectPool.Acquire<HttpResponse>();
+            HttpResponse httpResponse = RecyclablePool.Acquire<HttpResponse>();
             httpResponse.Url = url;
             httpResponse.PostData = postData;
             return httpResponse;
@@ -71,7 +71,7 @@
             IsDone = true;
         }
         
-        public void Reset()
+        public void Recycle()
         {
             Url = default;
             Error = default;

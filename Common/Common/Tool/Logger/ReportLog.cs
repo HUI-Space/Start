@@ -3,13 +3,13 @@ using System.Text;
 
 namespace Start
 {
-    public class ReportLog : ILogHelper, IReusable
+    public class ReportLog : ILogHelper, IRecycle
     {
         private StringBuilder _stringBuilder;
 
         public static ReportLog Create()
         {
-            ReportLog reportLog = RecyclableObjectPool.Acquire<ReportLog>();
+            ReportLog reportLog = RecyclablePool.Acquire<ReportLog>();
             reportLog._stringBuilder = new StringBuilder();
             return reportLog;
         }
@@ -62,7 +62,7 @@ namespace Start
             LogInternal(logType, message, args);
         }
 
-        public void Reset()
+        public void Recycle()
         {
             _stringBuilder.Clear();
             _stringBuilder = default;

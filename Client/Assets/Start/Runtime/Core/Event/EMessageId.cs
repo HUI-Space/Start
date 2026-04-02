@@ -86,6 +86,16 @@
         /// 音频结束
         /// </summary>
         AudioEnd = 200001,
-        
+
+
+
+        #region FrameSync
+
+        /// <summary>
+        /// 帧同步结束
+        /// </summary>
+        FrameSyncEnd = 1000000,
+
+        #endregion
     }
 }

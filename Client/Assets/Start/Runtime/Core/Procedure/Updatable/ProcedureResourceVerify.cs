@@ -98,7 +98,7 @@ namespace Start
             byte[] result = response.Result;
             bool isSuccess = response.IsSuccess;
             long responseCode = response.ResponseCode;
-            RecyclableObjectPool.Recycle(response);
+            RecyclablePool.Recycle(response);
             if (isSuccess)
             {
                 Manifest localManifest = Fsm.GetData<Manifest>(ProcedureConst.LocalManifest);
@@ -109,7 +109,7 @@ namespace Start
                 Logger.Error("获取内嵌资源失败:{0}", response.Error);
                 IGenericData genericData = GenericData<long, string>.Create(responseCode, error);
                 RuntimeEvent.SendMessage((int)EMessageId.GetBuiltInResourceFailure, genericData);
-                RecyclableObjectPool.Recycle(genericData);
+                RecyclablePool.Recycle(genericData);
             }
         }
     }

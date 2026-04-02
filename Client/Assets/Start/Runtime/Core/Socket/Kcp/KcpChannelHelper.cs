@@ -7,17 +7,17 @@ namespace Start
         public uint ErrCode => 1;
         public uint GetMessageId(Type type)
         {
-            throw new NotImplementedException();
+            return (uint)MessageBinding.GetMessageIDByType(type);
         }
 
         public byte[] Serialize<T>(T t)
         {
-            throw new NotImplementedException();
+            return MessageHelper.Serialize(t);
         }
 
         public T Deserialize<T>(byte[] data)
         {
-            throw new NotImplementedException();
+            return MessageHelper.Deserialize<T>(data);
         }
 
         public byte[] EncodePacket(uint messageId, byte[] message, uint serialNumber)

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Start
 {
-    public class DownloadManager : ManagerBase<DownloadManager>, IUpdateManger
+    public class DownloadManager : ManagerBase<DownloadManager>, IUpdateManager
     {
         private const int OneMegaBytes = 1024 * 1024;
         public override int Priority => 5;
@@ -178,7 +178,7 @@ namespace Start
                 downloadAgent.StartLength, downloadAgent.Task.DownloadPath, downloadAgent.Task.DownloadUri, null,
                 downloadAgent.Task.UserData);
             DownloadEventHandler?.Invoke(downloadEvent);
-            RecyclableObjectPool.Recycle(downloadEvent);
+            RecyclablePool.Recycle(downloadEvent);
         }
 
         private void OnDownloadAgentUpdate(DownloadAgent downloadAgent, int deltaLength)
@@ -188,7 +188,7 @@ namespace Start
                 downloadAgent.StartLength, downloadAgent.Task.DownloadPath, downloadAgent.Task.DownloadUri, null,
                 downloadAgent.Task.UserData);
             DownloadEventHandler?.Invoke(downloadEvent);
-            RecyclableObjectPool.Recycle(downloadEvent);
+            RecyclablePool.Recycle(downloadEvent);
         }
 
         private void OnDownloadAgentSuccess(DownloadAgent downloadAgent, long length)
@@ -197,7 +197,7 @@ namespace Start
                 downloadAgent.StartLength, downloadAgent.Task.DownloadPath, downloadAgent.Task.DownloadUri, null,
                 downloadAgent.Task.UserData);
             DownloadEventHandler?.Invoke(downloadEvent);
-            RecyclableObjectPool.Recycle(downloadEvent);
+            RecyclablePool.Recycle(downloadEvent);
         }
 
         private void OnDownloadAgentFailure(DownloadAgent downloadAgent, string errorMessage)
@@ -206,7 +206,7 @@ namespace Start
                 downloadAgent.StartLength, downloadAgent.Task.DownloadPath, downloadAgent.Task.DownloadUri, errorMessage, 
                 downloadAgent.Task.UserData);
             DownloadEventHandler?.Invoke(downloadEvent);
-            RecyclableObjectPool.Recycle(downloadEvent);
+            RecyclablePool.Recycle(downloadEvent);
         }
         
         #endregion

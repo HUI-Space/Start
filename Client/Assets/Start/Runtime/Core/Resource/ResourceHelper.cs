@@ -18,6 +18,11 @@
             }
             ResourceLoader.Initialize();
         }
+        
+        public void Update(float elapseSeconds, float realElapseSeconds)
+        {
+            ResourceLoader?.Update(elapseSeconds,realElapseSeconds);
+        }
 
         public void DeInitialize()
         {

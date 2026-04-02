@@ -1,6 +1,6 @@
 ﻿namespace Start
 {
-    public abstract class TaskBase : IReusable
+    public abstract class TaskBase : IRecycle
     {
         /// <summary>
         /// 任务的序列编号
@@ -41,7 +41,7 @@
             Done = false;
         }
 
-        public virtual void Reset()
+        public virtual void Recycle()
         {
             SerialId = default;
             Tag = default;

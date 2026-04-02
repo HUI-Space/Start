@@ -1490,10 +1490,7 @@ namespace Start
         /// <summary>
         /// 获取底层整数表示（原始值）
         /// </summary>
-        public long RawValue
-        {
-            get { return _serializedValue; }
-        }
+        public long RawValue => _serializedValue;
 
         /// <summary>
         /// 从原始值构造FP实例（内部使用）

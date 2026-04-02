@@ -25,19 +25,19 @@ namespace Start
     public struct TSQuaternion
     {
         /// <summary>四元数的X分量（向量部分）</summary>
-        public FP x;
+        public FP X;
 
         /// <summary>四元数的Y分量（向量部分）</summary>
-        public FP y;
+        public FP Y;
 
         /// <summary>四元数的Z分量（向量部分）</summary>
-        public FP z;
+        public FP Z;
 
         /// <summary>四元数的W分量（标量部分）</summary>
-        public FP w;
+        public FP W;
 
         /// <summary>单位四元数（表示无旋转）</summary>
-        public static readonly TSQuaternion identity;
+        public static readonly TSQuaternion Identity;
 
         /// <summary>
         /// 静态构造函数，初始化单位四元数
@@ -45,7 +45,7 @@ namespace Start
         /// </summary>
         static TSQuaternion()
         {
-            identity = new TSQuaternion(0, 0, 0, 1);
+            Identity = new TSQuaternion(0, 0, 0, 1);
         }
 
         /// <summary>
@@ -57,10 +57,10 @@ namespace Start
         /// <param name="w">W分量值</param>
         public TSQuaternion(FP x, FP y, FP z, FP w)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+            this.W = w;
         }
 
         /// <summary>
@@ -72,10 +72,10 @@ namespace Start
         /// <param name="new_w">新的W分量</param>
         public void Set(FP new_x, FP new_y, FP new_z, FP new_w)
         {
-            this.x = new_x;
-            this.y = new_y;
-            this.z = new_z;
-            this.w = new_w;
+            this.X = new_x;
+            this.Y = new_y;
+            this.Z = new_z;
+            this.W = new_w;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Start
             // 计算从起始方向到目标方向的旋转四元数
             TSQuaternion targetRotation = TSQuaternion.FromToRotation(fromDirection, toDirection);
             // 应用计算出的旋转分量
-            this.Set(targetRotation.x, targetRotation.y, targetRotation.z, targetRotation.w);
+            this.Set(targetRotation.X, targetRotation.Y, targetRotation.Z, targetRotation.W);
         }
 
         /// <summary>
@@ -102,21 +102,21 @@ namespace Start
                 TSVector result = new TSVector();
 
                 // 计算中间变量，用于推导欧拉角
-                FP ysqr = y * y;
-                FP t0 = -2.0f * (ysqr + z * z) + 1.0f;
-                FP t1 = +2.0f * (x * y - w * z);
-                FP t2 = -2.0f * (x * z + w * y);
-                FP t3 = +2.0f * (y * z - w * x);
-                FP t4 = -2.0f * (x * x + ysqr) + 1.0f;
+                FP ysqr = Y * Y;
+                FP t0 = -2.0f * (ysqr + Z * Z) + 1.0f;
+                FP t1 = +2.0f * (X * Y - W * Z);
+                FP t2 = -2.0f * (X * Z + W * Y);
+                FP t3 = +2.0f * (Y * Z - W * X);
+                FP t4 = -2.0f * (X * X + ysqr) + 1.0f;
 
                 // 确保值在有效范围内（避免反三角函数计算错误）
                 t2 = t2 > 1.0f ? 1.0f : t2;
                 t2 = t2 < -1.0f ? -1.0f : t2;
 
                 // 计算各轴旋转角度（弧度转角度）
-                result.x = FP.Atan2(t3, t4) * FP.Rad2Deg; // 绕X轴旋转（俯仰角）
-                result.y = FP.Asin(t2) * FP.Rad2Deg; // 绕Y轴旋转（偏航角）
-                result.z = FP.Atan2(t1, t0) * FP.Rad2Deg; // 绕Z轴旋转（翻滚角）
+                result.X = FP.Atan2(t3, t4) * FP.Rad2Deg; // 绕X轴旋转（俯仰角）
+                result.Y = FP.Asin(t2) * FP.Rad2Deg; // 绕Y轴旋转（偏航角）
+                result.Z = FP.Atan2(t1, t0) * FP.Rad2Deg; // 绕Z轴旋转（翻滚角）
 
                 // 反转结果以匹配标准欧拉角定义
                 return result * -1;
@@ -137,7 +137,7 @@ namespace Start
             TSQuaternion f = b * aInv;
 
             // 计算角度（四元数的w分量与旋转角度相关）
-            FP angle = FP.Acos(f.w) * 2 * FP.Rad2Deg;
+            FP angle = FP.Acos(f.W) * 2 * FP.Rad2Deg;
 
             // 确保返回最小角度（不超过180度）
             if (angle > 180)
@@ -175,7 +175,7 @@ namespace Start
         public static TSQuaternion LookRotation(TSVector forward)
         {
             // 使用默认上方向（Y轴）创建观察矩阵，再转换为四元数
-            return CreateFromMatrix(TSMatrix.LookAt(forward, TSVector.up));
+            return CreateFromMatrix(TSMatrix.LookAt(forward, TSVector.Up));
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Start
         /// <returns>对应的四元数</returns>
         public static TSQuaternion Euler(TSVector eulerAngles)
         {
-            return Euler(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+            return Euler(eulerAngles.X, eulerAngles.Y, eulerAngles.Z);
         }
 
         /// <summary>
@@ -318,10 +318,10 @@ namespace Start
             FP sin = FP.Sin(halfAngle);
 
             // 四元数轴角公式：(axis.x*sin(θ/2), axis.y*sin(θ/2), axis.z*sin(θ/2), cos(θ/2))
-            rotation.x = axis.x * sin;
-            rotation.y = axis.y * sin;
-            rotation.z = axis.z * sin;
-            rotation.w = FP.Cos(halfAngle);
+            rotation.X = axis.X * sin;
+            rotation.Y = axis.Y * sin;
+            rotation.Z = axis.Z * sin;
+            rotation.W = FP.Cos(halfAngle);
 
             return rotation;
         }
@@ -348,10 +348,10 @@ namespace Start
             FP num = FP.Cos(num7);
 
             // 应用Yaw-Pitch-Roll转四元数公式
-            result.x = ((num * num4) * num5) + ((num2 * num3) * num6);
-            result.y = ((num2 * num3) * num5) - ((num * num4) * num6);
-            result.z = ((num * num3) * num6) - ((num2 * num4) * num5);
-            result.w = ((num * num3) * num5) + ((num2 * num4) * num6);
+            result.X = ((num * num4) * num5) + ((num2 * num3) * num6);
+            result.Y = ((num2 * num3) * num5) - ((num * num4) * num6);
+            result.Z = ((num * num3) * num6) - ((num2 * num4) * num5);
+            result.W = ((num * num3) * num5) + ((num2 * num4) * num6);
         }
 
         /// <summary>
@@ -362,10 +362,10 @@ namespace Start
         /// <param name="result">输出的和四元数</param>
         public static void Add(ref TSQuaternion quaternion1, ref TSQuaternion quaternion2, out TSQuaternion result)
         {
-            result.x = quaternion1.x + quaternion2.x;
-            result.y = quaternion1.y + quaternion2.y;
-            result.z = quaternion1.z + quaternion2.z;
-            result.w = quaternion1.w + quaternion2.w;
+            result.X = quaternion1.X + quaternion2.X;
+            result.Y = quaternion1.Y + quaternion2.Y;
+            result.Z = quaternion1.Z + quaternion2.Z;
+            result.W = quaternion1.W + quaternion2.W;
         }
 
         /// <summary>
@@ -378,10 +378,10 @@ namespace Start
         public static TSQuaternion Conjugate(TSQuaternion value)
         {
             TSQuaternion quaternion;
-            quaternion.x = -value.x;
-            quaternion.y = -value.y;
-            quaternion.z = -value.z;
-            quaternion.w = value.w;
+            quaternion.X = -value.X;
+            quaternion.Y = -value.Y;
+            quaternion.Z = -value.Z;
+            quaternion.W = value.W;
             return quaternion;
         }
 
@@ -395,7 +395,7 @@ namespace Start
         /// <returns>点积结果</returns>
         public static FP Dot(TSQuaternion a, TSQuaternion b)
         {
-            return a.w * b.w + a.x * b.x + a.y * b.y + a.z * b.z;
+            return a.W * b.W + a.X * b.X + a.Y * b.Y + a.Z * b.Z;
         }
 
         /// <summary>
@@ -408,8 +408,8 @@ namespace Start
         public static TSQuaternion Inverse(TSQuaternion rotation)
         {
             // 计算模的平方的倒数
-            FP invNorm = FP.One / ((rotation.x * rotation.x) + (rotation.y * rotation.y) + (rotation.z * rotation.z) +
-                                   (rotation.w * rotation.w));
+            FP invNorm = FP.One / ((rotation.X * rotation.X) + (rotation.Y * rotation.Y) + (rotation.Z * rotation.Z) +
+                                   (rotation.W * rotation.W));
             // 共轭乘以模平方的倒数得到逆
             return TSQuaternion.Multiply(TSQuaternion.Conjugate(rotation), invNorm);
         }
@@ -425,9 +425,9 @@ namespace Start
             // 计算两个向量的叉积（得到旋转轴）
             TSVector w = TSVector.Cross(fromVector, toVector);
             // 初始四元数：(叉积分量, 点积)
-            TSQuaternion q = new TSQuaternion(w.x, w.y, w.z, TSVector.Dot(fromVector, toVector));
+            TSQuaternion q = new TSQuaternion(w.X, w.Y, w.Z, TSVector.Dot(fromVector, toVector));
             // 调整标量部分，确保四元数有效
-            q.w += FP.Sqrt(fromVector.sqrMagnitude * toVector.sqrMagnitude);
+            q.W += FP.Sqrt(fromVector.sqrMagnitude * toVector.sqrMagnitude);
             // 标准化四元数
             q.Normalize();
 
@@ -495,10 +495,10 @@ namespace Start
         /// <param name="result">输出的差四元数</param>
         public static void Subtract(ref TSQuaternion quaternion1, ref TSQuaternion quaternion2, out TSQuaternion result)
         {
-            result.x = quaternion1.x - quaternion2.x;
-            result.y = quaternion1.y - quaternion2.y;
-            result.z = quaternion1.z - quaternion2.z;
-            result.w = quaternion1.w - quaternion2.w;
+            result.X = quaternion1.X - quaternion2.X;
+            result.Y = quaternion1.Y - quaternion2.Y;
+            result.Z = quaternion1.Z - quaternion2.Z;
+            result.W = quaternion1.W - quaternion2.W;
         }
 
         /// <summary>
@@ -529,14 +529,14 @@ namespace Start
         public static void Multiply(ref TSQuaternion quaternion1, ref TSQuaternion quaternion2, out TSQuaternion result)
         {
             // 提取四元数分量
-            FP x = quaternion1.x;
-            FP y = quaternion1.y;
-            FP z = quaternion1.z;
-            FP w = quaternion1.w;
-            FP num4 = quaternion2.x;
-            FP num3 = quaternion2.y;
-            FP num2 = quaternion2.z;
-            FP num = quaternion2.w;
+            FP x = quaternion1.X;
+            FP y = quaternion1.Y;
+            FP z = quaternion1.Z;
+            FP w = quaternion1.W;
+            FP num4 = quaternion2.X;
+            FP num3 = quaternion2.Y;
+            FP num2 = quaternion2.Z;
+            FP num = quaternion2.W;
 
             // 计算中间变量（四元数乘法公式展开）
             FP num12 = (y * num2) - (z * num3);
@@ -545,10 +545,10 @@ namespace Start
             FP num9 = ((x * num4) + (y * num3)) + (z * num2);
 
             // 计算结果分量
-            result.x = ((x * num) + (num4 * w)) + num12;
-            result.y = ((y * num) + (num3 * w)) + num11;
-            result.z = ((z * num) + (num2 * w)) + num10;
-            result.w = (w * num) - num9;
+            result.X = ((x * num) + (num4 * w)) + num12;
+            result.Y = ((y * num) + (num3 * w)) + num11;
+            result.Z = ((z * num) + (num2 * w)) + num10;
+            result.W = (w * num) - num9;
         }
 
 
@@ -578,10 +578,10 @@ namespace Start
         /// <param name="result">输出的缩放后四元数</param>
         public static void Multiply(ref TSQuaternion quaternion1, FP scaleFactor, out TSQuaternion result)
         {
-            result.x = quaternion1.x * scaleFactor;
-            result.y = quaternion1.y * scaleFactor;
-            result.z = quaternion1.z * scaleFactor;
-            result.w = quaternion1.w * scaleFactor;
+            result.X = quaternion1.X * scaleFactor;
+            result.Y = quaternion1.Y * scaleFactor;
+            result.Z = quaternion1.Z * scaleFactor;
+            result.W = quaternion1.W * scaleFactor;
         }
 
 
@@ -595,14 +595,14 @@ namespace Start
         public void Normalize()
         {
             // 计算模的平方
-            FP num2 = (((this.x * this.x) + (this.y * this.y)) + (this.z * this.z)) + (this.w * this.w);
+            FP num2 = (((this.X * this.X) + (this.Y * this.Y)) + (this.Z * this.Z)) + (this.W * this.W);
             // 计算模的倒数（避免开方后再倒数，提高性能）
             FP num = 1 / (FP.Sqrt(num2));
             // 各分量乘以模的倒数，得到单位四元数
-            this.x *= num;
-            this.y *= num;
-            this.z *= num;
-            this.w *= num;
+            this.X *= num;
+            this.Y *= num;
+            this.Z *= num;
+            this.W *= num;
         }
 
         #endregion
@@ -639,41 +639,41 @@ namespace Start
             {
                 // 迹为正的情况，使用迹计算四元数
                 FP num = FP.Sqrt((num8 + FP.One));
-                result.w = num * FP.Half;
+                result.W = num * FP.Half;
                 num = FP.Half / num;
-                result.x = (matrix.M23 - matrix.M32) * num;
-                result.y = (matrix.M31 - matrix.M13) * num;
-                result.z = (matrix.M12 - matrix.M21) * num;
+                result.X = (matrix.M23 - matrix.M32) * num;
+                result.Y = (matrix.M31 - matrix.M13) * num;
+                result.Z = (matrix.M12 - matrix.M21) * num;
             }
             else if ((matrix.M11 >= matrix.M22) && (matrix.M11 >= matrix.M33))
             {
                 // 最大对角线元素为M11的情况
                 FP num7 = FP.Sqrt((((FP.One + matrix.M11) - matrix.M22) - matrix.M33));
                 FP num4 = FP.Half / num7;
-                result.x = FP.Half * num7;
-                result.y = (matrix.M12 + matrix.M21) * num4;
-                result.z = (matrix.M13 + matrix.M31) * num4;
-                result.w = (matrix.M23 - matrix.M32) * num4;
+                result.X = FP.Half * num7;
+                result.Y = (matrix.M12 + matrix.M21) * num4;
+                result.Z = (matrix.M13 + matrix.M31) * num4;
+                result.W = (matrix.M23 - matrix.M32) * num4;
             }
             else if (matrix.M22 > matrix.M33)
             {
                 // 最大对角线元素为M22的情况
                 FP num6 = FP.Sqrt((((FP.One + matrix.M22) - matrix.M11) - matrix.M33));
                 FP num3 = FP.Half / num6;
-                result.x = (matrix.M21 + matrix.M12) * num3;
-                result.y = FP.Half * num6;
-                result.z = (matrix.M32 + matrix.M23) * num3;
-                result.w = (matrix.M31 - matrix.M13) * num3;
+                result.X = (matrix.M21 + matrix.M12) * num3;
+                result.Y = FP.Half * num6;
+                result.Z = (matrix.M32 + matrix.M23) * num3;
+                result.W = (matrix.M31 - matrix.M13) * num3;
             }
             else
             {
                 // 最大对角线元素为M33的情况
                 FP num5 = FP.Sqrt((((FP.One + matrix.M33) - matrix.M11) - matrix.M22));
                 FP num2 = FP.Half / num5;
-                result.x = (matrix.M31 + matrix.M13) * num2;
-                result.y = (matrix.M32 + matrix.M23) * num2;
-                result.z = FP.Half * num5;
-                result.w = (matrix.M12 - matrix.M21) * num2;
+                result.X = (matrix.M31 + matrix.M13) * num2;
+                result.Y = (matrix.M32 + matrix.M23) * num2;
+                result.Z = FP.Half * num5;
+                result.W = (matrix.M12 - matrix.M21) * num2;
             }
         }
 
@@ -739,24 +739,24 @@ namespace Start
         public static TSVector operator *(TSQuaternion quat, TSVector vec)
         {
             // 预计算中间变量，减少重复计算
-            FP num = quat.x * 2f;
-            FP num2 = quat.y * 2f;
-            FP num3 = quat.z * 2f;
-            FP num4 = quat.x * num;
-            FP num5 = quat.y * num2;
-            FP num6 = quat.z * num3;
-            FP num7 = quat.x * num2;
-            FP num8 = quat.x * num3;
-            FP num9 = quat.y * num3;
-            FP num10 = quat.w * num;
-            FP num11 = quat.w * num2;
-            FP num12 = quat.w * num3;
+            FP num = quat.X * 2f;
+            FP num2 = quat.Y * 2f;
+            FP num3 = quat.Z * 2f;
+            FP num4 = quat.X * num;
+            FP num5 = quat.Y * num2;
+            FP num6 = quat.Z * num3;
+            FP num7 = quat.X * num2;
+            FP num8 = quat.X * num3;
+            FP num9 = quat.Y * num3;
+            FP num10 = quat.W * num;
+            FP num11 = quat.W * num2;
+            FP num12 = quat.W * num3;
 
             // 应用旋转公式计算结果向量
             TSVector result;
-            result.x = (1f - (num5 + num6)) * vec.x + (num7 - num12) * vec.y + (num8 + num11) * vec.z;
-            result.y = (num7 + num12) * vec.x + (1f - (num4 + num6)) * vec.y + (num9 - num10) * vec.z;
-            result.z = (num8 - num11) * vec.x + (num9 + num10) * vec.y + (1f - (num4 + num5)) * vec.z;
+            result.X = (1f - (num5 + num6)) * vec.X + (num7 - num12) * vec.Y + (num8 + num11) * vec.Z;
+            result.Y = (num7 + num12) * vec.X + (1f - (num4 + num6)) * vec.Y + (num9 - num10) * vec.Z;
+            result.Z = (num8 - num11) * vec.X + (num9 + num10) * vec.Y + (1f - (num4 + num5)) * vec.Z;
 
             return result;
         }
@@ -767,8 +767,8 @@ namespace Start
         /// <returns>包含四元数分量的字符串</returns>
         public override string ToString()
         {
-            return string.Format("({0:f1}, {1:f1}, {2:f1}, {3:f1})", x.AsFloat(), y.AsFloat(), z.AsFloat(),
-                w.AsFloat());
+            return string.Format("({0:f1}, {1:f1}, {2:f1}, {3:f1})", X.AsFloat(), Y.AsFloat(), Z.AsFloat(),
+                W.AsFloat());
         }
     }
 }

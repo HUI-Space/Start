@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -124,17 +124,17 @@ namespace Start
     
     public partial class UIController
     {
-        private readonly Dictionary<string, Dictionary<string, RecycleTask>> _beforeDynamicEffects = new Dictionary<string, Dictionary<string, RecycleTask>>();
+        private readonly Dictionary<string, Dictionary<string, StructTask>> _beforeDynamicEffects = new Dictionary<string, Dictionary<string, StructTask>>();
 
-        private readonly Dictionary<string, Dictionary<string, RecycleTask>> _afterDynamicEffects = new Dictionary<string, Dictionary<string, RecycleTask>>();
+        private readonly Dictionary<string, Dictionary<string, StructTask>> _afterDynamicEffects = new Dictionary<string, Dictionary<string, StructTask>>();
         
         
-        public void RegisterDynamicEffect(string uiName, string actionType, RecycleTask task , bool isBefore)
+        public void RegisterDynamicEffect(string uiName, string actionType, StructTask task , bool isBefore)
         {
-            var dynamicEffects = isBefore?_beforeDynamicEffects : _afterDynamicEffects;
-            if (!dynamicEffects.TryGetValue(uiName,out Dictionary<string,RecycleTask> dictionary))
+            Dictionary<string, Dictionary<string, StructTask>> dynamicEffects = isBefore?_beforeDynamicEffects : _afterDynamicEffects;
+            if (!dynamicEffects.TryGetValue(uiName,out Dictionary<string,StructTask> dictionary))
             {
-                dictionary = new Dictionary<string, RecycleTask>();
+                dictionary = new Dictionary<string, StructTask>();
                 dynamicEffects[uiName] = dictionary;
             }
             dictionary[actionType] = task;
@@ -142,9 +142,9 @@ namespace Start
         
         public async Task Before(UIAction action)
         {
-            if (_afterDynamicEffects.TryGetValue(action.UIName, out Dictionary<string, RecycleTask> dictionary))
+            if (_afterDynamicEffects.TryGetValue(action.UIName, out Dictionary<string, StructTask> dictionary))
             {
-                if (dictionary.TryGetValue(action.ActionType,out RecycleTask task))
+                if (dictionary.TryGetValue(action.ActionType,out StructTask task))
                 {
                     await task;
                     dictionary.Remove(action.ActionType);
@@ -158,9 +158,9 @@ namespace Start
         
         public async Task After(UIAction action)
         {
-            if (_afterDynamicEffects.TryGetValue(action.UIName, out Dictionary<string, RecycleTask> dictionary))
+            if (_afterDynamicEffects.TryGetValue(action.UIName, out Dictionary<string, StructTask> dictionary))
             {
-                if (dictionary.TryGetValue(action.ActionType,out RecycleTask task))
+                if (dictionary.TryGetValue(action.ActionType,out StructTask task))
                 {
                     await task;
                     dictionary.Remove(action.ActionType);

@@ -11,9 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common\Common\Common.csproj" />
-      <ProjectReference Include="..\Common\Common.Protocol\Common.Protocol.csproj" />
-      <ProjectReference Include="..\Common\Common.Tool\Common.Tool.csproj" />
-      <ProjectReference Include="..\FrameSync\FrameSync.csproj" />
+      <ProjectReference Include="..\Common\Protocol\Protocol.csproj" />
     </ItemGroup>
 
     <ItemGroup>

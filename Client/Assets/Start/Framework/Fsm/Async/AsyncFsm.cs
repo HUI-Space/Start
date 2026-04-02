@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Start
 {
-    public class AsyncFsm<T> : FsmBase, IReusable, IAsyncFsm<T> where T : class
+    public class AsyncFsm<T> : FsmBase, IRecycle, IAsyncFsm<T> where T : class
     {
         private readonly Dictionary<Type, AsyncFsmState<T>> _states = new Dictionary<Type, AsyncFsmState<T>>();
         private Dictionary<string, IGenericData> _data = new Dictionary<string, IGenericData>();
@@ -36,10 +36,10 @@ namespace Start
 
             if (states == null || states.Length < 1)
             {
-                throw new Exception("FSM 的状态为空.");
+                throw new ArgumentException("FSM 状态数组不能为空或空数组.", nameof(states));
             }
 
-            AsyncFsm<T> asyncFsm = RecyclableObjectPool.Acquire<AsyncFsm<T>>();
+            AsyncFsm<T> asyncFsm = RecyclablePool.Acquire<AsyncFsm<T>>();
             asyncFsm.Name = name;
             asyncFsm.Owner = owner;
             asyncFsm._isDestroyed = false;
@@ -47,7 +47,7 @@ namespace Start
             {
                 if (state == null)
                 {
-                    throw new Exception("FSM 的状态为空.");
+                    throw new ArgumentNullException(nameof(state), "FSM 状态数组中包含空状态.");
                 }
 
                 Type stateType = state.GetType();
@@ -84,9 +84,9 @@ namespace Start
                 throw new Exception($"状态类型不是继承自 AsyncFsmState<T> 状态全称：'{stateType.FullName}'.");
             }
 
-            AsyncFsmState<T> state = GetState(stateType);
+            IFsmState state = GetState(stateType);
             CurrentStateTime = 0f;
-            CurrentState = state ??
+            CurrentState = (AsyncFsmState<T>)state ??
                            throw new Exception(
                                $"AsyncFsm '{Name}' 不能切换到状态： '{stateType}' 因为它不存在.");
             await CurrentState.OnEnter();
@@ -112,7 +112,7 @@ namespace Start
             return null;
         }
 
-        public AsyncFsmState<T> GetState(Type stateType)
+        public IFsmState GetState(Type stateType)
         {
             if (stateType == null)
             {
@@ -132,10 +132,10 @@ namespace Start
             return null;
         }
 
-        public AsyncFsmState<T>[] GetAllStates()
+        public IFsmState[] GetAllStates()
         {
             int index = 0;
-            AsyncFsmState<T>[] results = new AsyncFsmState<T>[_states.Count];
+            IFsmState[] results = new IFsmState[_states.Count];
             foreach (KeyValuePair<Type, AsyncFsmState<T>> state in _states)
             {
                 results[index++] = state.Value;
@@ -211,7 +211,7 @@ namespace Start
             _data.Remove(name);
             if (oldData != null)
             {
-                RecyclableObjectPool.Recycle(oldData);
+                RecyclablePool.Recycle(oldData);
             }
 
             return true;
@@ -238,10 +238,10 @@ namespace Start
         
         internal override void DeInitialize()
         {
-            RecyclableObjectPool.Recycle(this);
+            RecyclablePool.Recycle(this);
         }
         
-        public async void Reset()
+        public async void Recycle()
         {
             foreach (KeyValuePair<Type, AsyncFsmState<T>> state in _states)
             {
@@ -251,24 +251,19 @@ namespace Start
             Name = null;
             Owner = null;
             _states.Clear();
-            if (_data != null)
+            foreach (KeyValuePair<string, IGenericData> data in _data)
             {
-                foreach (KeyValuePair<string, IGenericData> data in _data)
+                if (data.Value == null)
                 {
-                    if (data.Value == null)
-                    {
-                        continue;
-                    }
-
-                    RecyclableObjectPool.Recycle(data.Value);
+                    continue;
                 }
-
-                _data.Clear();
+                RecyclablePool.Recycle(data.Value);
             }
+            _data.Clear();
 
             CurrentState = null;
             CurrentStateTime = 0f;
-            _isDestroyed = true;
+            _isDestroyed = false;
         }
 
 
@@ -289,15 +284,15 @@ namespace Start
         {
             if (InTransition)
             {
-                throw new Exception("当前状态机正在切换状态.");
+                throw new InvalidOperationException("当前状态机正在切换状态.");
             }
             
             InTransition = true;
             if (CurrentState == null)
             {
-                throw new Exception("当前状态为空.");
+                throw new InvalidOperationException("当前状态为空.");
             }
-            AsyncFsmState<T> state = GetState(stateType);
+            IFsmState state = GetState(stateType);
             if (state == null)
             {
                 throw new Exception(
@@ -306,7 +301,7 @@ namespace Start
 
             await CurrentState.OnExit();
             CurrentStateTime = 0f;
-            CurrentState = state;
+            CurrentState = (AsyncFsmState<T>)state;
             await CurrentState.OnEnter();
             InTransition = false;
         }

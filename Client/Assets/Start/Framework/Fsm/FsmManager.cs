@@ -5,20 +5,21 @@ using System.Threading.Tasks;
 
 namespace Start
 {
-    public class FsmManager:ManagerBase<FsmManager>,IUpdateManger
+    public class FsmManager : ManagerBase<FsmManager>, IUpdateManager
     {
         public override int Priority => 1;
         public int Count => _allFsm.Count;
-        
+
         private Dictionary<Type, FsmBase> _allFsm;
         private List<FsmBase> _tempFsm;
+
         public override Task Initialize()
         {
             _allFsm = new Dictionary<Type, FsmBase>();
             _tempFsm = new List<FsmBase>();
             return Task.CompletedTask;
         }
-        
+
         public void Update(float elapseSeconds, float realElapseSeconds)
         {
             _tempFsm.Clear();
@@ -42,17 +43,17 @@ namespace Start
                 fsm.Update(elapseSeconds, realElapseSeconds);
             }
         }
-        
+
         public bool HasFsm<T>() where T : class
         {
             return _allFsm.ContainsKey(typeof(T));
         }
-        
+
         public IFsm<T> GetFsm<T>() where T : class
         {
             return (IFsm<T>)InternalGetFsm(typeof(T));
         }
-        
+
         /// <summary>
         /// 创建同步状态机
         /// </summary>
@@ -73,7 +74,7 @@ namespace Start
             _allFsm.Add(typeof(T), syncFsm);
             return syncFsm;
         }
-        
+
         /// <summary>
         /// 创建异步状态机
         /// </summary>
@@ -83,7 +84,8 @@ namespace Start
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<AsyncFsm<T>> CreateFsm<T>(string name, T owner, params AsyncFsmState<T>[] states) where T : class
+        public async Task<AsyncFsm<T>> CreateFsm<T>(string name, T owner, params AsyncFsmState<T>[] states)
+            where T : class
         {
             if (HasFsm<T>())
             {
@@ -94,12 +96,12 @@ namespace Start
             _allFsm.Add(typeof(T), asyncFsm);
             return asyncFsm;
         }
-        
+
         public bool DestroyFsm<T>() where T : class
         {
             return InternalDestroyFsm(typeof(T));
         }
-        
+
         public FsmBase[] GetAllFsm()
         {
             int index = 0;
@@ -111,19 +113,22 @@ namespace Start
 
             return results;
         }
-        
+
         private FsmBase InternalGetFsm(Type type)
         {
-            if (_allFsm.TryGetValue(type, out FsmBase fsm))
+            if (type == null)
             {
-                return fsm;
+                return null;
             }
-
-            return null;
+            return _allFsm.GetValueOrDefault(type);
         }
 
         private bool InternalDestroyFsm(Type type)
         {
+            if (type == null)
+            {
+                return false;
+            }
             if (_allFsm.TryGetValue(type, out FsmBase fsm))
             {
                 fsm.DeInitialize();
@@ -132,6 +137,7 @@ namespace Start
 
             return false;
         }
+
         public override Task DeInitialize()
         {
             foreach (KeyValuePair<Type, FsmBase> fsm in _allFsm)
@@ -141,8 +147,8 @@ namespace Start
 
             _allFsm.Clear();
             _tempFsm.Clear();
-            _allFsm = default;
-            _tempFsm = default;
+            _allFsm = null;
+            _tempFsm = null;
             return base.DeInitialize();
         }
     }

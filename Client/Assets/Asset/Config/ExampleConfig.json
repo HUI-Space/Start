@@ -65,6 +65,11 @@
       "Id": 13,
       "UIName": "ScenePanel",
       "LocalizationId": 1300
+    },
+    {
+      "Id": 14,
+      "UIName": "GamePanel",
+      "LocalizationId": 1400
     }
   ]
 }

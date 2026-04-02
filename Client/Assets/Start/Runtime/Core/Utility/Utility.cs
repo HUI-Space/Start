@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Core;
@@ -20,27 +20,23 @@ namespace Start
                 asyncOperation.completed += operation => { tcs.SetResult(true); };
             return tcs.Task;
         }*/
-
-        /*public static RecycleTask<AssetBundle> ToRecycleTask(this AssetBundleCreateRequest asyncOperation)
-        {
-            
-        }*/
         
-        public static RecycleTask GetAwaiter(this AsyncOperation asyncOperation)
+        
+        public static StructTask GetAwaiter(this AsyncOperation asyncOperation)
         {
-            var tcs = RecycleTask.Create();
+            StructTask task = StructTask.Create();
             if (asyncOperation.isDone)
             {
-                tcs.SetResult();
+                task.SetResult();
             }
             else
             {
                 asyncOperation.completed += operation =>
                 {
-                    tcs.SetResult();
+                    task.SetResult();
                 };
             }
-            return tcs.GetAwaiter();
+            return task;
         }
         
         public static async void Await(this Task task)

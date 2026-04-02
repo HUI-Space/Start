@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 
 namespace Start
 {
-    public class CallTask : IReusable, IComparable<CallTask>
+    public class CallTask : IRecycle, IComparable<CallTask>
     {
         /// <summary>
         /// 序列号
@@ -33,7 +33,7 @@ namespace Start
         /// <summary>
         /// 任务
         /// </summary>
-        public RecycleTask Task { get; private set; }
+        public StructTask Task { get; private set; }
 
         public int CompareTo(CallTask other)
         {
@@ -42,7 +42,7 @@ namespace Start
             return other.SerialNumber.CompareTo(SerialNumber);
         }
 
-        public void Reset()
+        public void Recycle()
         {
             SerialNumber = default;
             Request = default;
@@ -54,11 +54,11 @@ namespace Start
 
         public static CallTask Create(uint serialNumber, uint messageId, byte[] request)
         {
-            var callTask = RecyclableObjectPool.Acquire<CallTask>();
+            CallTask callTask = RecyclablePool.Acquire<CallTask>();
             callTask.SerialNumber = serialNumber;
             callTask.MessageId = messageId;
             callTask.Request = request;
-            callTask.Task = RecycleTask.Create();
+            callTask.Task = StructTask.Create();
             return callTask;
         }
 

@@ -45,6 +45,32 @@ namespace Start
         Type NextState { get; }
         
         /// <summary>
+        /// 切换状态
+        /// </summary>
+        /// <param name="stateType">状态类型</param>
+        void ChangeState(Type stateType);
+        
+        /// <summary>
+        /// 是否拥有状态
+        /// </summary>
+        /// <param name="stateType">状态类型</param>
+        /// <returns></returns>
+        bool HasState(Type stateType);
+        
+        /// <summary>
+        /// 获取状态
+        /// </summary>
+        /// <param name="stateType">状态类型</param>
+        /// <returns></returns>
+        IFsmState GetState(Type stateType);
+        
+        /// <summary>
+        /// 获取有限状态机的所有状态
+        /// </summary>
+        /// <returns></returns>
+        IFsmState[] GetAllStates();
+        
+        /// <summary>
         /// 是否存在有限状态机数据。
         /// </summary>
         /// <param name="name">有限状态机数据名称。</param>

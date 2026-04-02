@@ -212,40 +212,28 @@ namespace Start
             }
 
             // 2. 处理零向量（无有效方向）
-            if (direction.sqrMagnitude > 0)
+            if (direction.sqrMagnitude <= Mathf.Epsilon) // 用Epsilon避免浮点精度问题
             {
-                // 3. 归一化向量（消除长度影响，确保角度计算准确）
-                Vector2 normalizedDir = direction.normalized;
-                // 4. 计算向量与Y正轴的夹角（0°~360°）
-                // 原理：点积求与Y轴的夹角（0~180°），X<0时补全为180~360°
-                float angleRad = Mathf.Acos(Vector2.Dot(normalizedDir, Vector2.up));
-                float angle = Mathf.Rad2Deg * angleRad;
-
-                if (normalizedDir.x < 0)
-                {
-                    angle = 360f - angle;
-                }
-
-                int regionIndexZeroBased = 0;
-                // 5. 核心优化：用“取模运算”统一计算区域，避免首末区域漏洞
-                float stepAngle = 360f / divisions; // 每份角度宽度（24份时为15°）
-                float HalfDivAngle = stepAngle / 2;
-                if (angle <= HalfDivAngle || angle >= 360f - HalfDivAngle)
-                {
-                    regionIndexZeroBased = 0;
-                }
-                else
-                {
-                    float val = (angle - HalfDivAngle) / stepAngle;
-                    val += 1;
-                    regionIndexZeroBased = Mathf.FloorToInt(val);
-                }
-                // 6. 转为1开始的区域索引
-                return regionIndexZeroBased + 1;
+                return 0;
             }
-            
-            Debug.LogWarning("传入向量为零向量，无法计算方向区域");
-            return 0;
+
+            // 3. 归一化向量（消除长度影响，确保角度计算准确）
+            Vector2 normalizedDir = direction.normalized;
+
+            // 4. 计算向量与Y正轴的夹角（0°~360°）【修正核心】
+            // 使用Mathf.Atan2直接计算从Y轴正方向的顺时针角度（更简洁、无错误）
+            float angle = Mathf.Atan2(normalizedDir.x, normalizedDir.y) * Mathf.Rad2Deg;
+            if (angle < 0) // 负数角度转为0~360°
+            {
+                angle += 360f;
+            }
+
+            // 5. 计算区域索引（1开始）【简化逻辑，消除冗余】
+            float stepAngle = 360f / divisions; // 每份角度宽度（24份时为15°）
+            // 计算零基索引：将角度偏移半个步长，再取整（避免边界值错误）
+            int regionIndexZeroBased = Mathf.FloorToInt((angle + stepAngle / 2) / stepAngle) % divisions;
+            // 转为1开始的索引
+            return regionIndexZeroBased + 1;
         }
     }
 }

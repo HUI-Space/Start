@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Start
 {
@@ -22,22 +22,22 @@ namespace Start
         
         public EAsyncOperationStatus EAsyncOperationStatus { get; private set; }
         
-        public RecycleTask<T> Task
+        public StructTask<T> Task
         {
             get
             {
-                if (_recycleTask == null)
+                if (!_structTask.IsValid)
                 {
-                    _recycleTask = RecycleTask<T>.Create();
+                    _structTask = StructTask<T>.Create();
                     if (IsDone)
-                        _recycleTask.SetResult(Result);
+                        _structTask.SetResult(Result);
                 }
 
-                return _recycleTask;
+                return _structTask;
             }
         }
         
-        private RecycleTask<T> _recycleTask;
+        private StructTask<T> _structTask;
         
         public event Action<AsyncOperationHandle<T>> OnComplete;
         
@@ -45,7 +45,7 @@ namespace Start
         
         public static AsyncOperationHandle<T> Create()
         {
-            var asyncOperationHandle = RecyclableObjectPool.Acquire<AsyncOperationHandle<T>>();
+            AsyncOperationHandle<T> asyncOperationHandle = RecyclablePool.Acquire<AsyncOperationHandle<T>>();
             return asyncOperationHandle;
         }
         
@@ -80,10 +80,13 @@ namespace Start
             IsDone = true;
             Progress = 1f;
             OnComplete?.Invoke(this);
-            _recycleTask?.SetResult(Result);
+            if (_structTask.IsValid)
+            {
+                _structTask.SetResult(Result);
+            }
         }
         
-        public void Reset()
+        public void Recycle()
         {
             IsDone = false;
             Progress = 0;
@@ -91,7 +94,9 @@ namespace Start
             AssetName = null;
             ResourceName = null;
             EAsyncOperationStatus = default;
-            _recycleTask = null;
+            _structTask = default;
+            OnComplete = null;
+            OnProgress = null;
         }
     }
 }

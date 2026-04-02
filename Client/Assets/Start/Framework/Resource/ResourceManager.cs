@@ -2,7 +2,7 @@
 
 namespace Start
 {
-    public class ResourceManager : ManagerBase<ResourceManager>
+    public class ResourceManager : ManagerBase<ResourceManager> , IUpdateManager
     {
         public override int Priority => 3;
         
@@ -13,6 +13,11 @@ namespace Start
             _resourceHelper = Helper.CreateHelper<IResourceHelper>();
             _resourceHelper.Initialize();
             return base.Initialize();
+        }
+        
+        public void Update(float elapseSeconds, float realElapseSeconds)
+        {
+            _resourceHelper.Update(elapseSeconds,realElapseSeconds);
         }
         
         public override Task DeInitialize()

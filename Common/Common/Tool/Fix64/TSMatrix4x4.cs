@@ -550,18 +550,18 @@ namespace Start
         public static void Rotate(ref TSQuaternion quaternion, out TSMatrix4x4 result)
         {
             // 预计算四元数分量的乘积，减少重复计算
-            FP x = quaternion.x * 2;
-            FP y = quaternion.y * 2;
-            FP z = quaternion.z * 2;
-            FP xx = quaternion.x * x;
-            FP yy = quaternion.y * y;
-            FP zz = quaternion.z * z;
-            FP xy = quaternion.x * y;
-            FP xz = quaternion.x * z;
-            FP yz = quaternion.y * z;
-            FP wx = quaternion.w * x;
-            FP wy = quaternion.w * y;
-            FP wz = quaternion.w * z;
+            FP x = quaternion.X * 2;
+            FP y = quaternion.Y * 2;
+            FP z = quaternion.Z * 2;
+            FP xx = quaternion.X * x;
+            FP yy = quaternion.Y * y;
+            FP zz = quaternion.Z * z;
+            FP xy = quaternion.X * y;
+            FP xz = quaternion.X * z;
+            FP yz = quaternion.Y * z;
+            FP wx = quaternion.W * x;
+            FP wy = quaternion.W * y;
+            FP wz = quaternion.W * z;
 
             // 根据四元数到旋转矩阵的转换公式计算3x3旋转部分
             result.M11 = FP.One - (yy + zz);
@@ -849,7 +849,7 @@ namespace Start
         /// <returns>平移矩阵</returns>
         public static TSMatrix4x4 Translate(TSVector translation)
         {
-            return Translate(translation.x, translation.y, translation.z);
+            return Translate(translation.X, translation.Y, translation.Z);
         }
 
         /// <summary>
@@ -901,9 +901,9 @@ namespace Start
             TSMatrix4x4 result;
 
             // 计算补偿平移量（使缩放围绕中心点进行）
-            FP tx = centerPoint.x * (FP.One - xScale);
-            FP ty = centerPoint.y * (FP.One - yScale);
-            FP tz = centerPoint.z * (FP.One - zScale);
+            FP tx = centerPoint.X * (FP.One - xScale);
+            FP ty = centerPoint.Y * (FP.One - yScale);
+            FP tz = centerPoint.Z * (FP.One - zScale);
 
             // 带中心的缩放矩阵结构（融合了平移和缩放）
             result.M11 = xScale;
@@ -933,7 +933,7 @@ namespace Start
         /// <returns>缩放矩阵</returns>
         public static TSMatrix4x4 Scale(TSVector scales)
         {
-            return Scale(scales.x, scales.y, scales.z);
+            return Scale(scales.X, scales.Y, scales.Z);
         }
 
         /// <summary>
@@ -944,7 +944,7 @@ namespace Start
         /// <returns>以指定点为中心的缩放矩阵</returns>
         public static TSMatrix4x4 Scale(TSVector scales, TSVector centerPoint)
         {
-            return Scale(scales.x, scales.y, scales.z, centerPoint);
+            return Scale(scales.X, scales.Y, scales.Z, centerPoint);
         }
 
         /// <summary>
@@ -1019,8 +1019,8 @@ namespace Start
             FP c = TSMath.Cos(radians);
             FP s = TSMath.Sin(radians);
 
-            FP y = centerPoint.y * (FP.One - c) + centerPoint.z * s;
-            FP z = centerPoint.z * (FP.One - c) - centerPoint.y * s;
+            FP y = centerPoint.Y * (FP.One - c) + centerPoint.Z * s;
+            FP z = centerPoint.Z * (FP.One - c) - centerPoint.Y * s;
 
             // [  1  0  0  0 ]
             // [  0  c  s  0 ]
@@ -1099,9 +1099,9 @@ namespace Start
 
             // 计算旋转后中心点偏移量（用于补偿旋转中心的平移）
             // 公式推导基于：先将点平移至原点旋转，再平移回原中心点
-            FP x = centerPoint.x * (FP.One - c) - centerPoint.z * s;
-            FP z = centerPoint.x * (FP.One - c) +
-                   centerPoint.x * s; // 注：此处可能存在笔误，推测应为centerPoint.z*(FP.One - c) + centerPoint.x*s
+            FP x = centerPoint.X * (FP.One - c) - centerPoint.Z * s;
+            FP z = centerPoint.X * (FP.One - c) +
+                   centerPoint.X * s; // 注：此处可能存在笔误，推测应为centerPoint.z*(FP.One - c) + centerPoint.x*s
 
             // 带中心点的绕Y轴旋转矩阵形式：
             // [  c   0  -s   0 ]
@@ -1182,8 +1182,8 @@ namespace Start
 
             // 计算旋转后中心点偏移量（用于补偿旋转中心的平移）
             // 公式推导基于：先将点平移至原点旋转，再平移回原中心点
-            FP x = centerPoint.x * (1 - c) + centerPoint.y * s; // 注：1应改为FP.One以保持类型一致性
-            FP y = centerPoint.y * (1 - c) - centerPoint.x * s; // 注：1应改为FP.One以保持类型一致性
+            FP x = centerPoint.X * (1 - c) + centerPoint.Y * s; // 注：1应改为FP.One以保持类型一致性
+            FP y = centerPoint.Y * (1 - c) - centerPoint.X * s; // 注：1应改为FP.One以保持类型一致性
 
             // 带中心点的绕Z轴旋转矩阵形式：
             // [  c   s   0   0 ]
@@ -1246,7 +1246,7 @@ namespace Start
             //     [  zx - cosa*zx - sina*y   zy - cosa*zy + sina*x   zz + cosa*(1-zz)  ]
             //
 
-            FP x = axis.x, y = axis.y, z = axis.z; // 提取旋转轴的分量
+            FP x = axis.X, y = axis.Y, z = axis.Z; // 提取旋转轴的分量
             FP sa = TSMath.Sin(angle), ca = TSMath.Cos(angle); // 计算角度的正弦和余弦值
             FP xx = x * x, yy = y * y, zz = z * z; // 计算轴分量的平方
             FP xy = x * y, xz = x * z, yz = y * z; // 计算轴分量的乘积

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Start
 {
@@ -14,7 +12,21 @@ namespace Start
         /// <summary>
         /// 获取当前管理器的实例。如果实例不存在，则通过Manager.GetManager<T>()方法创建一个。
         /// </summary>
-        public static T Instance => _instance ?? (_instance = Manager.GetManger<T>());
+        private static readonly object _lock = new object();
+        public static T Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (_lock)
+                    {
+                        _instance ??= Manager.GetManager<T>();
+                    }
+                }
+                return _instance;
+            }
+        }
     
         /// <summary>
         /// 获取管理器的优先级。这是一个抽象属性，必须在继承的类中实现。

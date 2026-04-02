@@ -33,7 +33,7 @@ namespace Start.Server ;
         
         public static KcpChannel Create(uint conv,int sessionId, EndPoint remoteAddress,KcpServer kcpServer)
         {
-            KcpChannel kcpChannel = RecyclableObjectPool.Acquire<KcpChannel>();
+            KcpChannel kcpChannel = RecyclablePool.Acquire<KcpChannel>();
             kcpChannel.SessionId = sessionId;
             kcpChannel.RemoteAddress = remoteAddress;
             kcpChannel._isStarted = true;
@@ -114,7 +114,7 @@ namespace Start.Server ;
         }
         
         
-        public void Reset()
+        public void Recycle()
         {
             SessionId = default;
             RemoteAddress = default;
@@ -135,7 +135,7 @@ namespace Start.Server ;
             Console.WriteLine($"KcpReceive SessionId:{SessionId} MessageId:{messageId} Message:{message}");
 
             EventManager.Instance.SendMessage((int)EMessageType.Kcp, (int)messageId, genericData);
-            RecyclableObjectPool.Recycle(genericData);
+            RecyclablePool.Recycle(genericData);
         }
     }
     

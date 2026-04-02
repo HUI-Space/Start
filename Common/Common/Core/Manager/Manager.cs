@@ -11,11 +11,11 @@ namespace Start
     public class Manager
     {
         // 存储所有管理者的链表，按优先级排序
-        private static readonly LinkedList<IManager> _mangerLinkedList = new LinkedList<IManager>();
+        private static readonly LinkedList<IManager> _managerLinkedList = new LinkedList<IManager>();
         // 存储管理者实例的字典，通过类型快速查找
-        private static readonly Dictionary<Type, IManager> _mangerDictionary = new Dictionary<Type, IManager>();
-        // 存储需要更新的管理者的链表，按优先级排序
-        private static readonly LinkedList<IUpdateManger> _updateMangerLinkedList = new LinkedList<IUpdateManger>();
+        private static readonly Dictionary<Type, IManager> _managerDictionary = new Dictionary<Type, IManager>();
+        // 存储需要更新的管理者的列表
+        private static readonly List<IUpdateManager> _updateManagerList = new List<IUpdateManager>();
         
         /// <summary>
         /// 初始化所有管理者
@@ -38,10 +38,17 @@ namespace Start
                 }
             }
             // 初始化所有管理者，并添加到更新管理者链表
-            foreach (IManager manager in _mangerLinkedList)
+            foreach (IManager manager in _managerLinkedList)
             {
                 await manager.Initialize();
-                AddUpdateManger(manager);
+            }
+            
+            foreach (IManager manager in _managerLinkedList)
+            {
+                if (manager is IUpdateManager updateManager)
+                {
+                    _updateManagerList.Add(updateManager);
+                }
             }
         }
         
@@ -52,10 +59,17 @@ namespace Start
         /// <param name="realElapseSeconds">实际经过的时间</param>
         public static void Update(float elapseSeconds, float realElapseSeconds)
         {
-            // 遍历更新管理者链表，调用每个管理者的Update方法
-            foreach (IUpdateManger manager in _updateMangerLinkedList)
+            // 使用 for 循环零 GC
+            for (int i = 0; i < _updateManagerList.Count; i++)
             {
-                manager.Update(elapseSeconds, realElapseSeconds);
+                try
+                {
+                    _updateManagerList[i].Update(elapseSeconds, realElapseSeconds);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"UpdateManager {_updateManagerList[i].GetType().Name} update failed.", ex);
+                }
             }
         }
     
@@ -65,14 +79,18 @@ namespace Start
         public static async Task DeInitialize()
         {
             // 清空更新管理者链表
-            _updateMangerLinkedList.Clear();
+            _updateManagerList.Clear();
             // 反初始化所有管理者
-            foreach (IManager manager in _mangerLinkedList)
+            // 按优先级从高到低反初始化（与初始化顺序相反）
+            var node = _managerLinkedList.Last;
+            while (node != null)
             {
-                await manager.DeInitialize();
+                await node.Value.DeInitialize();
+                node = node.Previous;
             }
             // 清空管理者链表
-            _mangerLinkedList.Clear();
+            _managerLinkedList.Clear();
+            _managerDictionary.Clear();
         }
     
         /// <summary>
@@ -80,9 +98,9 @@ namespace Start
         /// </summary>
         /// <typeparam name="T">管理者类型</typeparam>
         /// <returns>指定类型的管理者实例</returns>
-        public static T GetManger<T>()where T :IManager
+        public static T GetManager<T>()where T :IManager
         {
-            return (T)GetManger(typeof(T));
+            return (T)GetManager(typeof(T));
         }
         
         /// <summary>
@@ -90,14 +108,14 @@ namespace Start
         /// </summary>
         /// <param name="type">管理者类型</param>
         /// <returns>指定类型的管理者实例</returns>
-        private static IManager GetManger(Type type)
+        private static IManager GetManager(Type type)
         {
             // 从字典中尝试获取管理者实例
-            if (_mangerDictionary.TryGetValue(type, out IManager manager))
+            if (_managerDictionary.TryGetValue(type, out IManager manager))
             {
                 return manager;
             }
-            return null;
+            throw new InvalidOperationException($"Manager of type {type.Name} not found.");
         }
         
         /// <summary>
@@ -113,7 +131,7 @@ namespace Start
                 return;
             }
     
-            LinkedListNode<IManager> current = _mangerLinkedList.First;
+            LinkedListNode<IManager> current = _managerLinkedList.First;
             
             // 根据优先级插入管理者到链表中
             while (current != null)
@@ -128,46 +146,14 @@ namespace Start
     
             if (current != null)
             {
-                _mangerLinkedList.AddBefore(current, manager);
+                _managerLinkedList.AddBefore(current, manager);
             }
             else
             {
-                _mangerLinkedList.AddLast(manager);
+                _managerLinkedList.AddLast(manager);
             }
             // 添加管理者到字典
-            _mangerDictionary.Add(type,manager);
-        }
-    
-        /// <summary>
-        /// 将管理者添加到更新管理者链表
-        /// </summary>
-        /// <param name="manager">管理者实例</param>
-        private static void AddUpdateManger(IManager manager)
-        {
-            // 检查管理者是否需要更新
-            if (manager is IUpdateManger updateManger)
-            {
-                LinkedListNode<IUpdateManger> updateManagerNode = _updateMangerLinkedList.First;
-                // 根据优先级插入更新管理者到链表中
-                while (updateManagerNode != null && updateManagerNode.Value is IManager up)
-                {
-                    if (manager.Priority < up.Priority)
-                    {
-                        break;
-                    }
-    
-                    updateManagerNode = updateManagerNode.Next;
-                }
-    
-                if (updateManagerNode != null)
-                {
-                    _updateMangerLinkedList.AddBefore(updateManagerNode, updateManger);
-                }
-                else
-                {
-                    _updateMangerLinkedList.AddLast(updateManger);
-                }
-            }
+            _managerDictionary.Add(type,manager);
         }
     }
 }

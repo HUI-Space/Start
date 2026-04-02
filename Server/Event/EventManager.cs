@@ -4,7 +4,7 @@
     /// 事件管理器，继承自ManagerBase并实现IUpdateManger接口
     /// 负责游戏内事件的管理和调度
     /// </summary>
-    public partial class EventManager : ManagerBase<EventManager>, IUpdateManger
+    public partial class EventManager : ManagerBase<EventManager>, IUpdateManager
     {
         /// <summary>
         /// 优先级属性，用于确定事件处理的顺序
@@ -42,14 +42,14 @@
             {
                 foreach (PriorityDelegate<IGenericData> priorityDelegate in dic.Values)
                 {
-                    RecyclableObjectPool.Recycle(priorityDelegate);
+                    RecyclablePool.Recycle(priorityDelegate);
                 }
             }
             lock (_messageQueue)
             {
                 foreach (var Message in _messageQueue)
                 {
-                    RecyclableObjectPool.Recycle(Message);
+                    RecyclablePool.Recycle(Message);
                 }
                 _messageQueue.Clear();
                 _messageQueue = default;
@@ -70,7 +70,7 @@
                 {
                     Event e = _messageQueue.Dequeue();
                     SendMessage(e.MessageType, e.MessageId, e.Data);
-                    RecyclableObjectPool.Recycle(e);
+                    RecyclablePool.Recycle(e);
                 }
             }
         }
@@ -106,7 +106,7 @@
                     {
                         callBacks.Remove(messageId);
                     }
-                    RecyclableObjectPool.Recycle(callBack);
+                    RecyclablePool.Recycle(callBack);
                 }
             }
         }
@@ -161,7 +161,7 @@
     
     public partial class EventManager
     {
-        private class Event : IReusable
+        private class Event : IRecycle
         {
             public int MessageType { get; private set; }
             public int MessageId { get; private set; }
@@ -169,14 +169,14 @@
     
             public static Event Create(int MessageType, int messageId, IGenericData data)
             {
-                Event e = RecyclableObjectPool.Acquire<Event>();
+                Event e = RecyclablePool.Acquire<Event>();
                 e.MessageType = MessageType;
                 e.MessageId = messageId;
                 e.Data = data;
                 return e;
             }
     
-            public void Reset()
+            public void Recycle()
             {
                 MessageId = default;
                 Data = default;

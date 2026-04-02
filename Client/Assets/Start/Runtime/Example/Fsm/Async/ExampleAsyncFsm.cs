@@ -62,7 +62,7 @@ namespace Start
             {
                 throw new Exception("You must initialize exampleSyncFsm first.");
             }
-            AsyncFsmState<ExampleAsyncFsm>[] asyncFsmStates = _asyncFsm.GetAllStates();
+            AsyncFsmState<ExampleAsyncFsm>[] asyncFsmStates = (AsyncFsmState<ExampleAsyncFsm>[])_asyncFsm.GetAllStates();
             ExampleAsyncFsmState[] states = new ExampleAsyncFsmState[asyncFsmStates.Length];
             for (int i = 0; i < asyncFsmStates.Length; i++)
             {

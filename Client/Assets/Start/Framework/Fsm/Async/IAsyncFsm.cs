@@ -29,12 +29,7 @@ namespace Start
         /// <typeparam name="TState"></typeparam>
         /// <returns></returns>
         void ChangeState<TState>() where TState : AsyncFsmState<T>;
-
-        /// <summary>
-        /// 切换状态
-        /// </summary>
-        void ChangeState(Type stateType);
-
+        
         /// <summary>
         /// 是否拥有状态
         /// </summary>
@@ -43,30 +38,10 @@ namespace Start
         bool HasState<TState>() where TState : AsyncFsmState<T>;
 
         /// <summary>
-        /// 是否拥有状态
-        /// </summary>
-        /// <param name="stateType">状态类型</param>
-        /// <returns></returns>
-        bool HasState(Type stateType);
-
-        /// <summary>
         /// 获取状态
         /// </summary>
         /// <typeparam name="TState"></typeparam>
         /// <returns></returns>
         TState GetState<TState>() where TState : AsyncFsmState<T>;
-
-        /// <summary>
-        /// 获取状态
-        /// </summary>
-        /// <param name="stateType">状态类型</param>
-        /// <returns></returns>
-        AsyncFsmState<T> GetState(Type stateType);
-
-        /// <summary>
-        /// 获取有限状态机的所有状态
-        /// </summary>
-        /// <returns></returns>
-        AsyncFsmState<T>[] GetAllStates();
     }
 }

@@ -8,6 +8,13 @@
         void Initialize();
     
         /// <summary>
+        /// 更新资源管理助手。
+        /// </summary>
+        /// <param name="elapseSeconds"></param>
+        /// <param name="realElapseSeconds"></param>
+        void Update(float elapseSeconds, float realElapseSeconds);
+        
+        /// <summary>
         /// 反初始化资源管理助手。
         /// </summary>
         void DeInitialize();

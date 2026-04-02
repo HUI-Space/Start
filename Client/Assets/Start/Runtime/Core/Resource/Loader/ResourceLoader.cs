@@ -14,7 +14,7 @@ namespace Start
     public partial class ResourceLoader : IResourceLoader
     {
         // 对象池
-        private IObjectPool<ResourceObject, AssetBundle> _resourcePool;
+        private IResourceObjectPool<ResourceResourceObject, AssetBundle> _resourcePool;
 
         // 缓存AssetBundle
         private readonly Dictionary<string, AssetBundle> _cachedResources = new Dictionary<string, AssetBundle>();
@@ -23,16 +23,23 @@ namespace Start
         private readonly Dictionary<string, IAsyncOperationHandle> _asyncOperationHandles = new Dictionary<string, IAsyncOperationHandle>();
         
         // 异步正在加载的Resource
-        private readonly ConcurrentDictionary<string, KeyValuePair<Task<ResourceObject>, int>> _asyncLoadingResource = new ConcurrentDictionary<string, KeyValuePair<Task<ResourceObject>, int>>();
+        private readonly ConcurrentDictionary<string, KeyValuePair<Task<ResourceResourceObject>, int>> _asyncLoadingResource = new ConcurrentDictionary<string, KeyValuePair<Task<ResourceResourceObject>, int>>();
         
         
         public void Initialize()
         {
-            _resourcePool = ObjectPoolManager.Instance.CreateObjectPool<ResourceObject, AssetBundle>(allowMultiSpawn: true);
+            _resourcePool = RecyclablePool.Acquire<ResourceObjectPool<ResourceResourceObject, AssetBundle>>();
+            _resourcePool.Initialize(allowMultiSpawn: true);
+        }
+        
+        public void Update(float elapseSeconds, float realElapseSeconds)
+        { 
+            _resourcePool.Update(elapseSeconds, realElapseSeconds);
         }
 
         public void DeInitialize()
         {
+            RecyclablePool.Recycle(_resourcePool);
             _resourcePool = null;
         }
 
@@ -52,8 +59,8 @@ namespace Start
             handle.SetStatus(EAsyncOperationStatus.Processing);
             LoadResourceDepend(resourceInfo.Depends);
             //加载主资源
-            ResourceObject resourceObject = LoadResource(resourceInfo);
-            UnityEngine.Object asset = resourceObject.Target.LoadAsset(assetName);
+            ResourceResourceObject resourceResourceObject = LoadResource(resourceInfo);
+            UnityEngine.Object asset = resourceResourceObject.Target.LoadAsset(assetName);
             if (asset is T t)
             {
                 handle.SetResult(t);
@@ -81,16 +88,16 @@ namespace Start
             handle.SetStatus(EAsyncOperationStatus.Processing);
 
             //先加载依赖资源
-            List<Task<ResourceObject>> tasks = new List<Task<ResourceObject>>();
+            List<Task<ResourceResourceObject>> tasks = new List<Task<ResourceResourceObject>>();
             foreach (string depend in resourceInfo.Depends)
             {
                 ResourceInfo dependResourceInfo = GetResourceInfo(depend);
-                Task<ResourceObject> dependTask = LoadResourceAsync(dependResourceInfo);
+                Task<ResourceResourceObject> dependTask = LoadResourceAsync(dependResourceInfo);
                 tasks.Add(dependTask);
             }
 
             //加载主资源
-            Task<ResourceObject> task = LoadResourceAsync(resourceInfo);
+            Task<ResourceResourceObject> task = LoadResourceAsync(resourceInfo);
             tasks.Add(task);
 
             //加载游戏资源
@@ -143,16 +150,16 @@ namespace Start
             handle.SetResourceName(resourceInfo.Name);
             handle.SetStatus(EAsyncOperationStatus.Processing);
             //先加载依赖资源
-            List<Task<ResourceObject>> tasks = new List<Task<ResourceObject>>();
+            List<Task<ResourceResourceObject>> tasks = new List<Task<ResourceResourceObject>>();
             foreach (string depend in resourceInfo.Depends)
             {
                 ResourceInfo dependResourceInfo = GetResourceInfo(depend);
-                Task<ResourceObject> dependTask = LoadResourceAsync(dependResourceInfo);
+                Task<ResourceResourceObject> dependTask = LoadResourceAsync(dependResourceInfo);
                 tasks.Add(dependTask);
             }
 
             //加载主资源
-            Task<ResourceObject> task = LoadResourceAsync(resourceInfo);
+            Task<ResourceResourceObject> task = LoadResourceAsync(resourceInfo);
             tasks.Add(task);
 
             LoadSceneAsync(tasks, handle, sceneName);
@@ -223,7 +230,7 @@ namespace Start
                     {
                         _cachedResources.Remove(info.Name);
                         _asyncOperationHandles.Remove(handle.ResourceName);
-                        RecyclableObjectPool.Recycle(handle);
+                        RecyclablePool.Recycle(handle);
                     }
                 }
                 _resourcePool.ReleaseAllUnused();
@@ -266,54 +273,54 @@ namespace Start
         /// </summary>
         /// <param name="resourceInfo"></param>
         /// <returns></returns>
-        private ResourceObject LoadResource(ResourceInfo resourceInfo)
+        private ResourceResourceObject LoadResource(ResourceInfo resourceInfo)
         {
-            ResourceObject resourceObject = _resourcePool.Spawn(resourceInfo.Name);
-            if (resourceObject == null)
+            ResourceResourceObject resourceResourceObject = _resourcePool.Spawn(resourceInfo.Name);
+            if (resourceResourceObject == null)
             {
                 string resourcePath = ResourceConfig.GetResourcePath(resourceInfo.ResourceType, resourceInfo.Name);
                 AssetBundle assetBundle = AssetBundle.LoadFromFile(resourcePath, resourceInfo.CRC, resourceInfo.Offset);
-                resourceObject = ResourceObject.Create(resourceInfo.Name, assetBundle);
-                _resourcePool.Register(resourceObject, true);
+                resourceResourceObject = ResourceResourceObject.Create(resourceInfo.Name, assetBundle);
+                _resourcePool.Register(resourceResourceObject, true);
                 _cachedResources[resourceInfo.Name] = assetBundle;
             }
 
-            return resourceObject;
+            return resourceResourceObject;
         }
 
         #endregion
 
         #region 异步
 
-        private Task<ResourceObject> LoadResourceAsync(ResourceInfo resourceInfo)
+        private Task<ResourceResourceObject> LoadResourceAsync(ResourceInfo resourceInfo)
         {
-            ResourceObject resourceObject = _resourcePool.Spawn(resourceInfo.Name);
-            if (resourceObject == null)
+            ResourceResourceObject resourceResourceObject = _resourcePool.Spawn(resourceInfo.Name);
+            if (resourceResourceObject == null)
             {
-                if (_asyncLoadingResource.TryGetValue(resourceInfo.Name, out KeyValuePair<Task<ResourceObject>, int> keyValuePair))
+                if (_asyncLoadingResource.TryGetValue(resourceInfo.Name, out KeyValuePair<Task<ResourceResourceObject>, int> keyValuePair))
                 {
-                    KeyValuePair<Task<ResourceObject>, int> newValue = new KeyValuePair<Task<ResourceObject>, int>(keyValuePair.Key, keyValuePair.Value + 1);
+                    KeyValuePair<Task<ResourceResourceObject>, int> newValue = new KeyValuePair<Task<ResourceResourceObject>, int>(keyValuePair.Key, keyValuePair.Value + 1);
                     _asyncLoadingResource[resourceInfo.Name] = newValue;
                     return keyValuePair.Key;
                 }
                 else
                 {
-                    Task<ResourceObject> task = LoadResourceObjectAsync(resourceInfo);
-                    _asyncLoadingResource.TryAdd(resourceInfo.Name, new KeyValuePair<Task<ResourceObject>, int>(task, 0));
+                    Task<ResourceResourceObject> task = LoadResourceObjectAsync(resourceInfo);
+                    _asyncLoadingResource.TryAdd(resourceInfo.Name, new KeyValuePair<Task<ResourceResourceObject>, int>(task, 0));
                     return task;
                 }
             }
 
-            return Task.FromResult(resourceObject);
+            return Task.FromResult(resourceResourceObject);
         }
 
-        private async Task<ResourceObject> LoadResourceObjectAsync(ResourceInfo resourceInfo)
+        private async Task<ResourceResourceObject> LoadResourceObjectAsync(ResourceInfo resourceInfo)
         {
             string resourcePath = ResourceConfig.GetResourcePath(resourceInfo.ResourceType, resourceInfo.Name);
             AssetBundleCreateRequest assetBundleCreateRequest = AssetBundle.LoadFromFileAsync(resourcePath, resourceInfo.CRC, resourceInfo.Offset);
             await assetBundleCreateRequest;
-            ResourceObject resourceObject = ResourceObject.Create(resourceInfo.Name, assetBundleCreateRequest.assetBundle);
-            _resourcePool.Register(resourceObject, true);
+            ResourceResourceObject resourceResourceObject = ResourceResourceObject.Create(resourceInfo.Name, assetBundleCreateRequest.assetBundle);
+            _resourcePool.Register(resourceResourceObject, true);
             if (_asyncLoadingResource.Remove(resourceInfo.Name, out var keyValuePair))
             {
                 for (int i = 0; i < keyValuePair.Value; i++)
@@ -323,10 +330,10 @@ namespace Start
             }
 
             _cachedResources[resourceInfo.Name] = assetBundleCreateRequest.assetBundle;
-            return resourceObject;
+            return resourceResourceObject;
         }
 
-        private async void LoadAssetAsync<T>(List<Task<ResourceObject>> tasks, AsyncOperationHandle<T> handle, string assetName)
+        private async void LoadAssetAsync<T>(List<Task<ResourceResourceObject>> tasks, AsyncOperationHandle<T> handle, string assetName)
         {
             try
             {
@@ -336,7 +343,7 @@ namespace Start
                     handle.SetProgress((1f + i) / tasks.Count);
                 }
 
-                ResourceObject main = await tasks[^1];
+                ResourceResourceObject main = await tasks[^1];
 
                 if (main == null || main.Target == null)
                 {
@@ -365,7 +372,7 @@ namespace Start
             }
         }
 
-        private async void LoadSceneAsync<T>(List<Task<ResourceObject>> tasks, AsyncOperationHandle<T> handle, string sceneName, bool isAdditive = true)
+        private async void LoadSceneAsync<T>(List<Task<ResourceResourceObject>> tasks, AsyncOperationHandle<T> handle, string sceneName, bool isAdditive = true)
         {
             try
             {
@@ -375,7 +382,7 @@ namespace Start
                     handle.SetProgress((1f + i) / tasks.Count);
                 }
 
-                ResourceObject main = await tasks[^1];
+                ResourceResourceObject main = await tasks[^1];
                 if (main == null || main.Target == null)
                 {
                     handle.SetStatus(EAsyncOperationStatus.Failed);

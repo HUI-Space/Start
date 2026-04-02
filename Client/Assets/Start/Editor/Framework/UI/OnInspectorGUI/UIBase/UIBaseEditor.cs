@@ -14,7 +14,6 @@ namespace Start.Editor
             if (GUILayout.Button("快捷绑定（脚本内序列化名称与游戏物体名称相同）"))
             {
                 var go = target as UIBase;
-                
                 Type type = target.GetType();
                 FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 foreach (FieldInfo field in fields)
@@ -26,10 +25,10 @@ namespace Start.Editor
                         {
                             var serialized = serializedObject.FindProperty(field.Name);
                             serialized.objectReferenceValue = component;
+                            serialized.serializedObject.ApplyModifiedProperties();
                         }
                     }
                 }
-                serializedObject.ApplyModifiedProperties();
             }
         }
     }

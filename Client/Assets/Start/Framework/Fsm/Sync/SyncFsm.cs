@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Start
 {
-    public class SyncFsm<T> : FsmBase, IReusable, ISyncFsm<T> where T : class
+    public class SyncFsm<T> : FsmBase, IRecycle, ISyncFsm<T> where T : class
     {
         private readonly Dictionary<Type, SyncFsmState<T>> _states = new Dictionary<Type, SyncFsmState<T>>();
         private Dictionary<string, IGenericData> _data = new Dictionary<string, IGenericData>();
@@ -39,7 +39,7 @@ namespace Start
                 throw new Exception("FSM 的状态为空.");
             }
 
-            SyncFsm<T> syncFsm = RecyclableObjectPool.Acquire<SyncFsm<T>>();
+            SyncFsm<T> syncFsm = RecyclablePool.Acquire<SyncFsm<T>>();
             syncFsm.Name = name;
             syncFsm.Owner = owner;
             syncFsm._isDestroyed = false;
@@ -85,9 +85,9 @@ namespace Start
                 throw new Exception($"状态类型不是继承自 SyncFsmState<T> 状态全称： '{stateType.FullName}'.");
             }
 
-            SyncFsmState<T> state = GetState(stateType);
+            IFsmState state = GetState(stateType);
             CurrentStateTime = 0f;
-            CurrentState = state ??
+            CurrentState = (SyncFsmState<T>)state ??
                            throw new Exception(
                                $"Fsm '{Name}' 不能切换到状态 '{stateType}' 因为它不存在.");
             CurrentState.OnEnter();
@@ -113,7 +113,7 @@ namespace Start
             return null;
         }
 
-        public SyncFsmState<T> GetState(Type stateType)
+        public IFsmState GetState(Type stateType)
         {
             if (stateType == null)
             {
@@ -134,10 +134,10 @@ namespace Start
             return null;
         }
 
-        public SyncFsmState<T>[] GetAllStates()
+        public IFsmState[] GetAllStates()
         {
             int index = 0;
-            SyncFsmState<T>[] results = new SyncFsmState<T>[_states.Count];
+            IFsmState[] results = new IFsmState[_states.Count];
             foreach (KeyValuePair<Type, SyncFsmState<T>> state in _states)
             {
                 results[index++] = state.Value;
@@ -215,7 +215,7 @@ namespace Start
             _data.Remove(name);
             if (oldData != null)
             {
-                RecyclableObjectPool.Recycle(oldData);
+                RecyclablePool.Recycle(oldData);
             }
 
             return true;
@@ -242,7 +242,7 @@ namespace Start
 
         internal override void DeInitialize()
         {
-            RecyclableObjectPool.Recycle(this);
+            RecyclablePool.Recycle(this);
         }
 
         public void ChangeState<TState>() where TState : SyncFsmState<T>
@@ -258,7 +258,7 @@ namespace Start
             }
         }
 
-        public void Reset()
+        public void Recycle()
         {
             foreach (KeyValuePair<Type, SyncFsmState<T>> state in _states)
             {
@@ -278,7 +278,7 @@ namespace Start
                         continue;
                     }
 
-                    RecyclableObjectPool.Recycle(data.Value);
+                    RecyclablePool.Recycle(data.Value);
                 }
 
                 _data.Clear();
@@ -286,7 +286,7 @@ namespace Start
 
             CurrentState = null;
             CurrentStateTime = 0f;
-            _isDestroyed = true;
+            _isDestroyed = false;
         }
 
         private void ReallyChangeState(Type stateType)
@@ -294,10 +294,10 @@ namespace Start
             InTransition = true;
             if (CurrentState == null)
             {
-                throw new Exception("当前状态机正在切换状态.");
+                throw new InvalidOperationException("当前状态为空，无法切换状态.");
             }
 
-            SyncFsmState<T> state = GetState(stateType);
+            IFsmState state = GetState(stateType);
             if (state == null)
             {
                 throw new Exception($"Fsm '{Name}' 不能切换到状态 '{stateType}' 因为它不存在.");
@@ -305,7 +305,7 @@ namespace Start
 
             CurrentState.OnExit();
             CurrentStateTime = 0f;
-            CurrentState = state;
+            CurrentState = (SyncFsmState<T>)state;
             CurrentState.OnEnter();
             InTransition = false;
         }

@@ -2,69 +2,69 @@
     "DataList": [
         {
             "Id": 1,
-            "UIName": "BattlePanel",
+            "UIName": "HttpPanel",
             "UIType": 0,
-            "UIDataName": "Start.BattlePanelData"
+            "UIDataName": "Start.HttpPanelData"
         },
         {
             "Id": 2,
-            "UIName": "TALGamePanel",
-            "UIType": 0,
-            "UIDataName": "Start.TALGamePanelData"
-        },
-        {
-            "Id": 3,
-            "UIName": "TALMenuPanel",
-            "UIType": 0,
-            "UIDataName": "Start.TALMenuPanelData"
-        },
-        {
-            "Id": 4,
-            "UIName": "AudioPanel",
-            "UIType": 0,
-            "UIDataName": "Start.AudioPanelData"
-        },
-        {
-            "Id": 5,
-            "UIName": "ConfigPanel",
-            "UIType": 0,
-            "UIDataName": "Start.ConfigPanelData"
-        },
-        {
-            "Id": 6,
-            "UIName": "CoroutinePanel",
-            "UIType": 0,
-            "UIDataName": "Start.CoroutinePanelData"
-        },
-        {
-            "Id": 7,
-            "UIName": "DataEntityPanel",
-            "UIType": 0,
-            "UIDataName": "Start.DataEntityPanelData"
-        },
-        {
-            "Id": 8,
             "UIName": "DataSetPanel",
             "UIType": 0,
             "UIDataName": "Start.DataSetPanelData"
         },
         {
-            "Id": 9,
-            "UIName": "EventPanel",
-            "UIType": 0,
-            "UIDataName": "Start.EventPanelData"
-        },
-        {
-            "Id": 10,
+            "Id": 3,
             "UIName": "FsmPanel",
             "UIType": 0,
             "UIDataName": "Start.FsmPanelData"
         },
         {
-            "Id": 11,
-            "UIName": "HttpPanel",
+            "Id": 4,
+            "UIName": "ConfigPanel",
             "UIType": 0,
-            "UIDataName": "Start.HttpPanelData"
+            "UIDataName": "Start.ConfigPanelData"
+        },
+        {
+            "Id": 5,
+            "UIName": "BattlePanel",
+            "UIType": 0,
+            "UIDataName": "Start.BattlePanelData"
+        },
+        {
+            "Id": 6,
+            "UIName": "TALMenuPanel",
+            "UIType": 0,
+            "UIDataName": "Start.TALMenuPanelData"
+        },
+        {
+            "Id": 7,
+            "UIName": "MainPanel",
+            "UIType": 0,
+            "UIDataName": "Start.MainPanelData"
+        },
+        {
+            "Id": 8,
+            "UIName": "LogPanel",
+            "UIType": 0,
+            "UIDataName": "Start.LogPanelData"
+        },
+        {
+            "Id": 9,
+            "UIName": "DataEntityPanel",
+            "UIType": 0,
+            "UIDataName": "Start.DataEntityPanelData"
+        },
+        {
+            "Id": 10,
+            "UIName": "GamePanel",
+            "UIType": 0,
+            "UIDataName": "Start.GamePanelData"
+        },
+        {
+            "Id": 11,
+            "UIName": "TALGamePanel",
+            "UIType": 0,
+            "UIDataName": "Start.TALGamePanelData"
         },
         {
             "Id": 12,
@@ -74,36 +74,42 @@
         },
         {
             "Id": 13,
-            "UIName": "LogPanel",
-            "UIType": 0,
-            "UIDataName": "Start.LogPanelData"
-        },
-        {
-            "Id": 14,
-            "UIName": "MainPanel",
-            "UIType": 0,
-            "UIDataName": "Start.MainPanelData"
-        },
-        {
-            "Id": 15,
-            "UIName": "ScenePanel",
-            "UIType": 0,
-            "UIDataName": "Start.ScenePanelData"
-        },
-        {
-            "Id": 16,
             "UIName": "ScrollerPanel",
             "UIType": 0,
             "UIDataName": "Start.ScrollerPanelData"
         },
         {
-            "Id": 17,
+            "Id": 14,
             "UIName": "SettingPanel",
             "UIType": 0,
             "UIDataName": "Start.SettingPanelData"
         },
         {
+            "Id": 15,
+            "UIName": "AudioPanel",
+            "UIType": 0,
+            "UIDataName": "Start.AudioPanelData"
+        },
+        {
+            "Id": 16,
+            "UIName": "EventPanel",
+            "UIType": 0,
+            "UIDataName": "Start.EventPanelData"
+        },
+        {
+            "Id": 17,
+            "UIName": "CoroutinePanel",
+            "UIType": 0,
+            "UIDataName": "Start.CoroutinePanelData"
+        },
+        {
             "Id": 18,
+            "UIName": "ScenePanel",
+            "UIType": 0,
+            "UIDataName": "Start.ScenePanelData"
+        },
+        {
+            "Id": 19,
             "UIName": "RulePopup",
             "UIType": 1,
             "UIDataName": "Start.RulePopupData"

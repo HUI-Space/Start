@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Start
 {
-    public partial class SocketManager : ManagerBase<SocketManager>, IUpdateManger
+    public partial class SocketManager : ManagerBase<SocketManager>, IUpdateManager
     {
         public override int Priority => 16;
         
@@ -111,7 +111,6 @@ namespace Start
             }
             channel.Connect();
         }
-        
     }
 
     #endregion
@@ -183,7 +182,7 @@ namespace Start
                             {
                                 callbacks.Remove(messageId);
                                 callbackTool.Remove(handle.GetHashCode());
-                                RecyclableObjectPool.Recycle(priorityDelegate);
+                                RecyclablePool.Recycle(priorityDelegate);
                                 if (callbacks.Count == 0)
                                 {
                                     _callbacks.Remove(channelId);

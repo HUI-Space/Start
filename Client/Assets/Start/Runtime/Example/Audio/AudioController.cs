@@ -39,6 +39,7 @@ namespace Start
 
         public override void DeInitialize()
         {
+            base.DeInitialize();
             RuntimeEvent.RemoveListener((int)EMessageId.AudioEnd,OnAudioEnd);
             _backgrounds.Clear();
             _backgrounds = default;

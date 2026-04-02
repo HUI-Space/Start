@@ -47,7 +47,7 @@ namespace Start.Editor
             GenerateUIConfig.Generate();
         }
         
-        [MenuItem("Start/框架/生成战斗组件", false, 1500)]
+        [MenuItem("Start/框架/生成战斗组件", false, 1700)]
         public static void ComponentsGenerate()
         {
             Components.Generate();
