@@ -308,7 +308,6 @@ namespace Start
         public static TSQuaternion AngleAxis(FP angle, TSVector axis)
         {
             // 标准化旋转轴（确保是单位向量）
-            axis = axis * FP.Deg2Rad; // 这里原代码可能有误，推测应为标准化操作
             axis.Normalize();
 
             // 计算半角（四元数使用半角计算）
