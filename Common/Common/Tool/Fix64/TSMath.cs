@@ -272,7 +272,7 @@ namespace Start
         /// <returns>返回不小于value的最小整数</returns>
         public static FP Ceiling(FP value)
         {
-            return value; // 注意：此处原实现可能存在问题，通常需要更复杂的计算
+            return FP.Ceiling(value);
         }
 
         /// <summary>
