@@ -16,7 +16,7 @@ namespace Start.Editor
             string content = resourceBuildConfig.ResourceVersion;
             content += $"|{optionalAssets != null && optionalAssets.Count > 0}";
             string remoteResourceVersionPath = Path.Combine(resourceBuildConfig.OutputPath,ResourceConfig.RemoteResourceVersion);
-            SerializerUtility.SerializeObject(remoteResourceVersionPath, content);
+            MessagePackUtility.SerializeObject(remoteResourceVersionPath, content);
             FileUtility.WriteAllBytes(resourceBuildConfig.RemoteResourceVersionLog,content);
             Logger.Info($"MandatoryVersion.b:   {content}");
         }

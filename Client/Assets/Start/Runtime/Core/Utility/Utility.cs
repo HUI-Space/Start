@@ -3,8 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
-
-
 using UnityEngine;
 
 namespace Start

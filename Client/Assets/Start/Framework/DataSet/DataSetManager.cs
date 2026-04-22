@@ -11,7 +11,7 @@ namespace Start
 
         public override Task Initialize()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(DataSetBase));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(DataSetBase));
             foreach (Type type in types)
             {
                 if (Activator.CreateInstance(type) is DataSetBase dataSet)

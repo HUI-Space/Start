@@ -93,7 +93,7 @@ namespace Start.Editor
             
             //创建配置文件
             string builtInManifestPath = Path.Combine(resourceBuildConfig.BuiltInPath, ResourceConfig.LocalBuiltInManifest);
-            SerializerUtility.SerializeObject(builtInManifestPath, builtInManifest);
+            MessagePackUtility.SerializeObject(builtInManifestPath, builtInManifest);
             
             //拷贝配置文件 到文件夹下 ：Application.streamingAssetsPath/AssetBundle
             FileUtility.CopyFile(builtInManifestPath, Path.Combine(builtInPath,ResourceConfig.LocalBuiltInManifest));

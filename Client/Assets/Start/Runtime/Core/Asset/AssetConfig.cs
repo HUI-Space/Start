@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using Common;
-
 namespace Start
 {
     public static class AssetConfig

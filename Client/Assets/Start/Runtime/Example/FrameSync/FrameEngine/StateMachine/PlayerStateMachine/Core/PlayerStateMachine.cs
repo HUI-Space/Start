@@ -7,7 +7,7 @@ namespace Start
     {
         public PlayerStateMachine()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(PlayerStateBase));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(PlayerStateBase));
             _states = new StateBase<PlayerEntity>[(int)EPlayerState.Count];
             for (int i = 0; i < types.Count; i++)
             {

@@ -147,7 +147,20 @@ namespace Start
             _version = version;
             _config = config;
         }
-        
+
+        /// <summary>
+        /// 构造函数，创建新的StructTask实例
+        /// </summary>
+        /// <param name="manualRelease">是否手动释放，默认false（自动释放）</param>
+        /// <param name="cancellationToken">可选的取消令牌</param>
+        /// <remarks>
+        /// <para>便捷构造函数，内部调用Create方法。</para>
+        /// <para>使用示例：</para>
+        /// <code>
+        /// StructTask task = new StructTask();
+        /// // 等同于 StructTask task = StructTask.Create();
+        /// </code>
+        /// </remarks>
         public StructTask(bool manualRelease = false,CancellationToken cancellationToken = default)
         {
             this = Create(manualRelease, cancellationToken);
@@ -1740,11 +1753,28 @@ namespace Start
             _config = config;
         }
 
+        /// <summary>
+        /// 构造函数，创建新的StructTask&lt;T&gt;实例
+        /// </summary>
+        /// <param name="manualRelease">是否手动释放，默认false（自动释放）</param>
+        /// <param name="cancellationToken">可选的取消令牌</param>
+        /// <remarks>
+        /// <para>便捷构造函数，内部调用Create方法。</para>
+        /// <para>使用示例：</para>
+        /// <code>
+        /// StructTask&lt;int&gt; task = new StructTask&lt;int&gt;();
+        /// // 等同于 StructTask&lt;int&gt; task = StructTask&lt;int&gt;.Create();
+        /// </code>
+        /// </remarks>
         public StructTask(bool manualRelease = false, CancellationToken cancellationToken = default)
         {
             this = Create(manualRelease, cancellationToken);
         }
 
+        /// <summary>
+        /// 创建已完成的任务单例
+        /// </summary>
+        /// <returns>已完成的StructTask&lt;T&gt;实例</returns>
         private static StructTask<T> CreateCompleted()
         {
             StructTask<T> task = Create();
@@ -1866,6 +1896,15 @@ namespace Start
         }
 
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        /// <summary>
+        /// 从ValueTask&lt;T&gt;创建StructTask&lt;T&gt;
+        /// </summary>
+        /// <param name="valueTask">源ValueTask实例</param>
+        /// <returns>对应的StructTask&lt;T&gt;实例</returns>
+        /// <remarks>
+        /// <para>将ValueTask转换为StructTask，实现与ValueTask的互操作。</para>
+        /// <para>如果ValueTask已完成，直接返回对应状态；否则将其转换为Task后处理。</para>
+        /// </remarks>
         public static StructTask<T> FromValueTask(ValueTask<T> valueTask)
         {
             if (valueTask.IsCompleted)
@@ -1901,6 +1940,18 @@ namespace Start
         }
 #endif
 
+        /// <summary>
+        /// 将StructTask&lt;T&gt;转换为Task&lt;T&gt;
+        /// </summary>
+        /// <returns>对应的Task&lt;T&gt;实例</returns>
+        /// <remarks>
+        /// <para>实现与Task的互操作。</para>
+        /// <para>转换逻辑：</para>
+        /// <list type="bullet">
+        ///   <item><description>已完成任务：直接返回对应状态的Task</description></item>
+        ///   <item><description>未完成任务：创建TaskCompletionSource，任务完成时设置结果</description></item>
+        /// </list>
+        /// </remarks>
         public Task<T> AsTask()
         {
             StructTask<T> self = this;
@@ -1953,17 +2004,41 @@ namespace Start
         }
 
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        /// <summary>
+        /// 将StructTask&lt;T&gt;转换为ValueTask&lt;T&gt;
+        /// </summary>
+        /// <returns>对应的ValueTask&lt;T&gt;实例</returns>
+        /// <remarks>
+        /// 仅适用于.NET Standard 2.1及以上版本。
+        /// 通过AsTask()转换后包装为ValueTask。
+        /// </remarks>
         public ValueTask<T> AsValueTask()
         {
             return new ValueTask<T>(AsTask());
         }
 #endif
 
+        /// <summary>
+        /// 配置await行为
+        /// </summary>
+        /// <param name="continueOnCapturedContext">
+        /// true：捕获当前同步上下文，回调在捕获的上下文执行；
+        /// false：不捕获上下文，回调在线程池执行
+        /// </param>
+        /// <returns>配置后的等待器</returns>
         public ConfiguredStructTask<T> ConfigureAwait(bool continueOnCapturedContext)
         {
             return new ConfiguredStructTask<T>(this, continueOnCapturedContext);
         }
 
+        /// <summary>
+        /// 获取等待器（支持await语法）
+        /// </summary>
+        /// <returns>当前StructTask&lt;T&gt;实例</returns>
+        /// <remarks>
+        /// 实现await模式必需的方法。
+        /// 编译器会将 await task 转换为 task.GetAwaiter()。
+        /// </remarks>
         public StructTask<T> GetAwaiter()
         {
             return this;
@@ -1994,6 +2069,16 @@ namespace Start
             return _callbackQueue.GetResult(_id, _version);
         }
 
+        /// <summary>
+        /// 注册完成回调
+        /// </summary>
+        /// <param name="continuation">任务完成时执行的回调</param>
+        /// <remarks>
+        /// <para>实现await模式必需的方法。</para>
+        /// <para>如果任务已完成，回调会被立即执行；否则回调会被存储，任务完成时执行。</para>
+        /// <para><b>注意：</b>默认情况下不允许重复注册回调，会抛出异常。</para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">任务未初始化或回调已注册</exception>
         public void OnCompleted(Action continuation)
         {
             if (_id == 0)
@@ -2005,6 +2090,16 @@ namespace Start
                 _config.ContinueOnCapturedContext);
         }
 
+        /// <summary>
+        /// 注册完成回调（内部方法，允许重复注册）
+        /// </summary>
+        /// <param name="continuation">任务完成时执行的回调</param>
+        /// <param name="allowDuplicate">是否允许重复注册回调</param>
+        /// <param name="continueOnCapturedContext">是否捕获同步上下文</param>
+        /// <remarks>
+        /// 内部使用的方法，支持更灵活的回调注册选项。
+        /// WhenAny/WhenAll等组合操作使用此方法。
+        /// </remarks>
         internal void OnCompleted(Action continuation, bool allowDuplicate, bool continueOnCapturedContext = true)
         {
             if (_id == 0)
@@ -2015,11 +2110,29 @@ namespace Start
             _callbackQueue.OnCompleted(_id, _version, continuation, allowDuplicate, continueOnCapturedContext);
         }
 
+        /// <summary>
+        /// 不安全注册完成回调
+        /// </summary>
+        /// <param name="continuation">任务完成时执行的回调</param>
+        /// <remarks>
+        /// <para>实现ICriticalNotifyCompletion接口的方法。</para>
+        /// <para>与OnCompleted的区别：不捕获执行上下文，性能更高但安全性更低。</para>
+        /// </remarks>
         public void UnsafeOnCompleted(Action continuation)
         {
             OnCompleted(continuation);
         }
 
+        /// <summary>
+        /// 设置任务成功完成
+        /// </summary>
+        /// <param name="result">任务结果</param>
+        /// <remarks>
+        /// <para>将任务状态从Pending转换为Succeeded。</para>
+        /// <para>调用此方法后，所有等待的回调会被调度执行。</para>
+        /// <para><b>注意：</b>每个任务只能调用一次SetResult/SetException/SetCanceled。</para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">任务未初始化或已完成</exception>
         public void SetResult(T result)
         {
             if (_id == 0)
@@ -2030,6 +2143,17 @@ namespace Start
             _callbackQueue.SetResult(_id, _version, result);
         }
 
+        /// <summary>
+        /// 设置任务失败
+        /// </summary>
+        /// <param name="exception">导致失败的异常</param>
+        /// <remarks>
+        /// <para>将任务状态从Pending转换为Faulted。</para>
+        /// <para>调用此方法后，所有等待的回调会被调度执行。</para>
+        /// <para>await此任务时，异常会被重新抛出，保留原始堆栈跟踪。</para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">任务未初始化或已完成</exception>
+        /// <exception cref="ArgumentNullException">exception为null</exception>
         public void SetException(Exception exception)
         {
             if (_id == 0)
@@ -2045,6 +2169,15 @@ namespace Start
             _callbackQueue.SetException(_id, _version, exception);
         }
 
+        /// <summary>
+        /// 设置任务取消
+        /// </summary>
+        /// <remarks>
+        /// <para>将任务状态从Pending转换为Canceled。</para>
+        /// <para>调用此方法后，所有等待的回调会被调度执行。</para>
+        /// <para>await此任务时，会抛出OperationCanceledException。</para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">任务未初始化或已完成</exception>
         public void SetCanceled()
         {
             if (_id == 0)
@@ -2073,6 +2206,16 @@ namespace Start
             _callbackQueue.Release(_id, _version);
         }
 
+        /// <summary>
+        /// 任务完成后执行延续操作
+        /// </summary>
+        /// <param name="continuation">延续操作，接收完成的任务作为参数</param>
+        /// <returns>代表延续操作的新任务</returns>
+        /// <remarks>
+        /// <para>类似于Task.ContinueWith的功能。</para>
+        /// <para>延续操作会在原任务完成后执行，无论成功、失败还是取消。</para>
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">continuation为null</exception>
         public StructTask ContinueWith(Action<StructTask<T>> continuation)
         {
             if (continuation == null)
@@ -2097,6 +2240,17 @@ namespace Start
             return result;
         }
 
+        /// <summary>
+        /// 任务完成后执行延续操作并返回结果
+        /// </summary>
+        /// <typeparam name="TResult">延续操作的返回类型</typeparam>
+        /// <param name="continuation">延续操作，接收完成的任务并返回结果</param>
+        /// <returns>代表延续操作结果的新任务</returns>
+        /// <remarks>
+        /// <para>类似于Task&lt;TResult&gt;.ContinueWith的功能。</para>
+        /// <para>延续操作的返回值会成为新任务的结果。</para>
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">continuation为null</exception>
         public StructTask<TResult> ContinueWith<TResult>(Func<StructTask<T>, TResult> continuation)
         {
             if (continuation == null)
@@ -2121,6 +2275,17 @@ namespace Start
             return result;
         }
 
+        /// <summary>
+        /// 等待任意一个任务完成
+        /// </summary>
+        /// <param name="tasks">要等待的任务数组</param>
+        /// <returns>第一个完成的任务</returns>
+        /// <remarks>
+        /// <para>类似于Task.WhenAny的功能。</para>
+        /// <para>快速路径：如果已有任务完成，立即返回该任务。</para>
+        /// <para>慢速路径：注册所有任务的回调，第一个完成的任务触发结果。</para>
+        /// </remarks>
+        /// <exception cref="ArgumentException">tasks为null或空数组</exception>
         public static StructTask<T> WhenAny(params StructTask<T>[] tasks)
         {
             if (tasks == null || tasks.Length == 0)
@@ -2149,6 +2314,22 @@ namespace Start
             return result;
         }
 
+        /// <summary>
+        /// 等待所有任务完成
+        /// </summary>
+        /// <param name="tasks">要等待的任务数组</param>
+        /// <returns>包含所有任务结果的数组</returns>
+        /// <remarks>
+        /// <para>类似于Task.WhenAll的功能。</para>
+        /// <para>快速路径：如果所有任务已完成，立即返回结果数组。</para>
+        /// <para>异常处理：</para>
+        /// <list type="bullet">
+        ///   <item><description>如果有任务失败，返回AggregateException包含所有异常</description></item>
+        ///   <item><description>如果有任务取消（无异常），返回取消状态</description></item>
+        ///   <item><description>如果全部成功，返回成功及结果数组</description></item>
+        /// </list>
+        /// </remarks>
+        /// <exception cref="ArgumentException">tasks为null</exception>
         public static StructTask<T[]> WhenAll(params StructTask<T>[] tasks)
         {
             if (tasks == null || tasks.Length == 0)

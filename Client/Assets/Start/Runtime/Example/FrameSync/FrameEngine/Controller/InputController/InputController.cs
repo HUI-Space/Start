@@ -18,7 +18,7 @@ namespace Start
         {
             if (BattleManager.Instance.BattleType == EBattleType.Observer)
             {
-                _frameData = SerializerUtility.DeserializeObject<List<FrameData>>(path);
+                _frameData = MessagePackUtility.DeserializeObject<List<FrameData>>(path);
             }
         }
 

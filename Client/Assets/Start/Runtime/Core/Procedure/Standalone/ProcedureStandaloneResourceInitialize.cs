@@ -32,9 +32,9 @@ namespace Start
             RecyclablePool.Recycle(response);
             if (isSuccess)
             {
-                Manifest manifest = SerializerUtility.DeserializeObject<Manifest>(result);
+                Manifest manifest = MessagePackUtility.DeserializeObject<Manifest>(result);
                 FileUtility.CreateFileDirectory(ResourceConfig.LocalManifestPath);
-                SerializerUtility.SerializeObject(ResourceConfig.LocalManifestPath, manifest);
+                MessagePackUtility.SerializeObject(ResourceConfig.LocalManifestPath, manifest);
                 Logger.Info("获取内嵌资源配置信息成功");
                 Logger.Info("创建LocalManifest.b");
                 //开始游戏

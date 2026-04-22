@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Start
@@ -9,7 +9,7 @@ namespace Start
 
         static Logger()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(ILogHelper));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(ILogHelper));
             Type attribute = typeof(LogAttribute);
             foreach (Type type in types)
             {

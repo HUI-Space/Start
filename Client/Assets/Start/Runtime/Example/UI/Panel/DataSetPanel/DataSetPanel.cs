@@ -37,7 +37,7 @@ namespace Start
             SNMSButton.onClick.AddListener(OnSNMSButtonClick);
             CloseButton.onClick.AddListener(OnCloseButtonClick);
             QuestionButton.onClick.AddListener(OnQuestionButtonClick);
-            List<Type> types = AssemblyUtility.GetChildType(typeof(DataSetBase));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(DataSetBase));
             foreach (Type type in types)
             {
                 if (type.IsAbstract && !type.Name.Contains("Simulation"))

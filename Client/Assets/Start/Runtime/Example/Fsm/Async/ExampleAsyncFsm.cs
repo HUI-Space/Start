@@ -11,7 +11,7 @@ namespace Start
         
         public async Task Initialize()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(ExampleAsyncFsmState));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(ExampleAsyncFsmState));
             List<ExampleAsyncFsmState> asyncFsmStates = new List<ExampleAsyncFsmState>();
             foreach (Type type in types)
             {

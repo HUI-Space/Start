@@ -10,7 +10,7 @@ namespace Start
         
         public void Initialize()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(ExampleSyncFsmState));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(ExampleSyncFsmState));
             List<ExampleSyncFsmState> syncFsmStates = new List<ExampleSyncFsmState>();
             foreach (Type type in types)
             {

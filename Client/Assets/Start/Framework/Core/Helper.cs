@@ -13,7 +13,7 @@ namespace Start
         internal static T1 CreateHelper<T1>()
         {
             // 获取所有子类型
-            List<Type> types = AssemblyUtility.GetChildType(typeof(T1));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(T1));
             Type temp = null;
             int childCount = 0;
             // 遍历所有子类型，寻找可以实例化的子类型

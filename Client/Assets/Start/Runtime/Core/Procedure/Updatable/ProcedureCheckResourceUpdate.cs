@@ -48,7 +48,7 @@ namespace Start
             RecyclablePool.Recycle(response);
             if (isSuccess)
             {
-                Manifest remoteMandatoryManifest = SerializerUtility.DeserializeObject<Manifest>(result);
+                Manifest remoteMandatoryManifest = MessagePackUtility.DeserializeObject<Manifest>(result);
                 Fsm.SetData(ProcedureConst.RemoteMandatoryManifest, remoteMandatoryManifest);
                 if (File.Exists(ResourceConfig.LocalOptionalResourceInfoPath) && GameConfig.ExistRemoteOptionalResource)
                 {
@@ -83,7 +83,7 @@ namespace Start
             if (isSuccess)
             {
                 Dictionary<string, Manifest> remoteOptionalResourceManifests =
-                    SerializerUtility.DeserializeObject<Dictionary<string, Manifest>>(result);
+                    MessagePackUtility.DeserializeObject<Dictionary<string, Manifest>>(result);
                 string localOptionalInfo = File.ReadAllText(ResourceConfig.LocalOptionalResourceInfoPath);
                 string[] localOptionalInfos = localOptionalInfo.Split('_');
                 Dictionary<string, Manifest> localOptionalManifests = new Dictionary<string, Manifest>();

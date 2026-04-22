@@ -41,6 +41,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="H:\Start\Client\Assets\Plugins\Start\Editor\ExcelDataReader.DataSet.dll" />
+    <Analyzer Include="H:\Start\Client\Assets\Plugins\Start\Editor\ExcelDataReader.dll" />
+    <Analyzer Include="H:\Start\Client\Assets\Plugins\Start\Runtime\ICSharpCode.SharpZipLib.dll" />
     <Analyzer Include="D:\Program Files\Unity 2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="D:\Program Files\Unity 2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -379,25 +382,25 @@
       <HintPath>D:\Program Files\Unity 2022.3.62f2\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Common">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\Common.dll</HintPath>
     </Reference>
     <Reference Include="DemiEditor">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DemiLib\Core\Editor\DemiEditor.dll</HintPath>
     </Reference>
     <Reference Include="ExcelDataReader.DataSet">
-      <HintPath>H:\Start\Client\Assets\Plugins\Dll\Editor\ExcelDataReader.DataSet.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Editor\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Reflection.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Reflection.Editor.dll</HintPath>
     </Reference>
     <Reference Include="ExcelDataReader">
-      <HintPath>H:\Start\Client\Assets\Plugins\Dll\Editor\ExcelDataReader.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Editor\ExcelDataReader.dll</HintPath>
     </Reference>
     <Reference Include="Protocol">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Protocol.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\Protocol.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
@@ -430,7 +433,7 @@
       <HintPath>H:\Start\Client\Library\PackageCache\com.unity.collab-proxy@2.7.1\Lib\Editor\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>H:\Start\Client\Assets\Plugins\Start\Newtonsoft.Json.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
@@ -442,7 +445,7 @@
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>H:\Start\Client\Assets\Plugins\Dll\Runtime\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Runtime\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>H:\Start\Client\Assets\Plugins\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
@@ -452,6 +455,21 @@
     </Reference>
     <Reference Include="Sirenix.OdinValidator.Editor">
       <HintPath>H:\Start\Client\Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinValidator.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagePack.Annotations">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\MessagePack.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagePack">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\MessagePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.NET.StringTools">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\Microsoft.NET.StringTools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Extended">
+      <HintPath>H:\Start\Client\Assets\Plugins\Start\Common\Common.Extended.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Program Files\Unity 2022.3.62f2\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

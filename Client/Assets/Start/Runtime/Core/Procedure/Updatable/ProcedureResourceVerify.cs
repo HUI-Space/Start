@@ -25,7 +25,7 @@ namespace Start
             else
             {
                 //读取本地依赖配置
-                Manifest localManifest = SerializerUtility.DeserializeObject<Manifest>(ResourceConfig.LocalManifestPath);
+                Manifest localManifest = MessagePackUtility.DeserializeObject<Manifest>(ResourceConfig.LocalManifestPath);
                 Fsm.SetData(ProcedureConst.LocalManifest, localManifest);
                 await GetBuiltInResource();
             }

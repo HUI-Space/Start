@@ -82,7 +82,7 @@ namespace Start.Editor
             
             //生成热更的日志文件到热更目录
             string mandatoryPath = Path.Combine(resourceBuildConfig.MandatoryPath, ResourceConfig.RemoteMandatoryManifest);
-            SerializerUtility.SerializeObject(mandatoryPath, mandatoryManifest);
+            MessagePackUtility.SerializeObject(mandatoryPath, mandatoryManifest);
         }
     }
 }

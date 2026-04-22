@@ -29,7 +29,7 @@ namespace Start
 
         public void SaveReplay(string path)
         {
-            SerializerUtility.SerializeObject(path, _frameData);
+            MessagePackUtility.SerializeObject(path, _frameData);
         }
     }
 }

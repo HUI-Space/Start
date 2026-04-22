@@ -77,7 +77,7 @@ namespace Start
         /// <returns></returns>
         private void CheckResourceVersion(string LocalResourceVersionPath,byte[] data)
         {
-            string remoteResourceVersion = SerializerUtility.DeserializeObject<string>(data);
+            string remoteResourceVersion = MessagePackUtility.DeserializeObject<string>(data);
             string[] strings = remoteResourceVersion.Split('|');
             GameConfig.RemoteResourceVersion = strings[0];
             GameConfig.ExistRemoteOptionalResource = strings[1] == "True";

@@ -99,7 +99,7 @@ namespace Start
             /// </summary>
             public CustomSafeArea(int w, int h, float x, float y, float width, float height)
             {
-                int minimumCommonDivisor = MathUtility.MinimumCommonDivisor(w, h);
+                int minimumCommonDivisor = MathUtility.GreatestCommonDivisor(w, h);
                 this.width = w / minimumCommonDivisor;
                 this.height = h / minimumCommonDivisor;
 
@@ -111,7 +111,7 @@ namespace Start
 
             public bool CheckResolution(Resolution resolution)
             {
-                int minimumCommonDivisor = MathUtility.MinimumCommonDivisor(resolution.width, resolution.height);
+                int minimumCommonDivisor = MathUtility.GreatestCommonDivisor(resolution.width, resolution.height);
                 return width == resolution.width / minimumCommonDivisor && height == resolution.height / minimumCommonDivisor;
             }
 

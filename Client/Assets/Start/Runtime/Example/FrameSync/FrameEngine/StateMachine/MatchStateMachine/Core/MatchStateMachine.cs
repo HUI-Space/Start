@@ -9,7 +9,7 @@ namespace Start
         
         public MatchStateMachine()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(MatchStateBase));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(MatchStateBase));
             _states = new MatchStateBase[(int)EMatchState.Count];
             for (int i = 0; i < types.Count; i++)
             {

@@ -438,7 +438,7 @@ namespace Start
 
             _assetInfos.Clear();
             _resourceInfos.Clear();
-            Manifest manifest = SerializerUtility.DeserializeObject<Manifest>(path);
+            Manifest manifest = MessagePackUtility.DeserializeObject<Manifest>(path);
             foreach (ResourceInfo resourceInfo in manifest.Resources)
             {
                 _resourceInfos[resourceInfo.Name] = resourceInfo;

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,7 +43,7 @@ namespace Start
             ConfirmButton.onClick.AddListener(OnConfirmButtonClick);
             CloseButton.onClick.AddListener(OnCloseButtonClick);
             QuestionButton.onClick.AddListener(OnQuestionButtonClick);
-            List<Type> types = AssemblyUtility.GetChildType(typeof(IConfig));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(IConfig));
             foreach (Type type in types)
             {
                 if (type.IsAbstract)

@@ -53,7 +53,7 @@ namespace Start
                     break;
             }
             
-            List<Type> types = AssemblyUtility.GetChildType(typeof(AsyncFsmState<BattleManager>));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(AsyncFsmState<BattleManager>));
             List<AsyncFsmState<BattleManager>> procedures = new List<AsyncFsmState<BattleManager>>();
             foreach (Type type in types)
             {

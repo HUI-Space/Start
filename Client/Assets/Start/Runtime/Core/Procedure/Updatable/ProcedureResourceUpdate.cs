@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Common;
 
 
 namespace Start
@@ -132,7 +131,7 @@ namespace Start
             localManifest.Assets.AddRange(assetInfos.Values);
             localManifest.Resources.AddRange(resourceInfos.Values);
             FileUtility.CreateFileDirectory(ResourceConfig.LocalManifestPath);
-            SerializerUtility.SerializeObject(ResourceConfig.LocalManifestPath,localManifest);
+            MessagePackUtility.SerializeObject(ResourceConfig.LocalManifestPath,localManifest);
             Logger.Info($"更新本地manifest成功");
         }
 

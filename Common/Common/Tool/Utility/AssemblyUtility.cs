@@ -1,30 +1,50 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Start
 {
     /// <summary>
     /// 程序集相关的实用函数。
+    /// 支持动态加载程序集，自动更新缓存。
     /// </summary>
     public static class AssemblyUtility
     {
-        private static readonly System.Reflection.Assembly[] _assemblies = null;
-
-        private static readonly Dictionary<string, Type> _cachedTypes =
-            new Dictionary<string, Type>(StringComparer.Ordinal);
+        private static readonly List<Assembly> _assemblies = new List<Assembly>();
+        private static readonly Dictionary<string, Type> _cachedTypes = new Dictionary<string, Type>(StringComparer.Ordinal);
 
         static AssemblyUtility()
         {
-            _assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            _assemblies.AddRange(AppDomain.CurrentDomain.GetAssemblies());
+            AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoaded;
+        }
+
+        private static void OnAssemblyLoaded(object sender, AssemblyLoadEventArgs args)
+        {
+            if (!_assemblies.Contains(args.LoadedAssembly))
+            {
+                _assemblies.Add(args.LoadedAssembly);
+                _cachedTypes.Clear();
+            }
+        }
+
+        /// <summary>
+        /// 手动刷新程序集列表
+        /// </summary>
+        public static void RefreshAssemblies()
+        {
+            _assemblies.Clear();
+            _assemblies.AddRange(AppDomain.CurrentDomain.GetAssemblies());
+            _cachedTypes.Clear();
         }
 
         /// <summary>
         /// 获取已加载的程序集。
         /// </summary>
         /// <returns>已加载的程序集。</returns>
-        public static System.Reflection.Assembly[] GetAssemblies()
+        public static Assembly[] GetAssemblies()
         {
-            return _assemblies;
+            return _assemblies.ToArray();
         }
 
         /// <summary>
@@ -34,11 +54,7 @@ namespace Start
         public static Type[] GetTypes()
         {
             List<Type> results = new List<Type>();
-            foreach (System.Reflection.Assembly assembly in _assemblies)
-            {
-                results.AddRange(assembly.GetTypes());
-            }
-
+            GetTypes(results);
             return results.ToArray();
         }
 
@@ -50,13 +66,26 @@ namespace Start
         {
             if (results == null)
             {
-                throw new Exception("Results is invalid.");
+                throw new ArgumentNullException(nameof(results), "Results is invalid.");
             }
 
             results.Clear();
-            foreach (System.Reflection.Assembly assembly in _assemblies)
+            foreach (Assembly assembly in _assemblies)
             {
-                results.AddRange(assembly.GetTypes());
+                try
+                {
+                    results.AddRange(assembly.GetTypes());
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    foreach (Type type in ex.Types)
+                    {
+                        if (type != null)
+                        {
+                            results.Add(type);
+                        }
+                    }
+                }
             }
         }
 
@@ -69,28 +98,27 @@ namespace Start
         {
             if (string.IsNullOrEmpty(typeName))
             {
-                throw new Exception("Type name is invalid.");
+                throw new ArgumentException("Type name is invalid.", nameof(typeName));
             }
 
-            Type type = null;
-            if (_cachedTypes.TryGetValue(typeName, out type))
+            if (_cachedTypes.TryGetValue(typeName, out Type cachedType))
             {
-                return type;
+                return cachedType;
             }
 
-            type = Type.GetType(typeName);
+            Type type = Type.GetType(typeName);
             if (type != null)
             {
-                _cachedTypes.Add(typeName, type);
+                _cachedTypes[typeName] = type;
                 return type;
             }
 
-            foreach (System.Reflection.Assembly assembly in _assemblies)
+            foreach (Assembly assembly in _assemblies)
             {
-                type = Type.GetType($"{typeName}, {assembly.FullName}");
+                type = assembly.GetType(typeName);
                 if (type != null)
                 {
-                    _cachedTypes.Add(typeName, type);
+                    _cachedTypes[typeName] = type;
                     return type;
                 }
             }
@@ -101,26 +129,21 @@ namespace Start
         /// <summary>
         /// 获取指定类型的子类型列表
         /// </summary>
-        /// <param name="type">要检查的类型</param>
+        /// <param name="baseType">要检查的类型</param>
         /// <returns>子类型列表</returns>
-        public static List<Type> GetChildType(Type type)
+        public static List<Type> GetChildTypes(Type baseType)
         {
-            // 初始化一个类型列表，用于存储找到的子类型
             List<Type> implementingTypes = new List<Type>();
-            // 获取所有类型
             Type[] types = GetTypes();
-            // 遍历所有类型，寻找继承自指定类型的子类型
-            foreach (Type t in types)
+
+            foreach (Type type in types)
             {
-                // 检查当前类型是否继承自指定类型，并且不是指定类型本身
-                if (type.IsAssignableFrom(t) && type != t)
+                if (baseType.IsAssignableFrom(type) && baseType != type && !type.IsAbstract)
                 {
-                    // 如果是，则添加到子类型列表中
-                    implementingTypes.Add(t);
+                    implementingTypes.Add(type);
                 }
             }
-        
-            // 返回子类型列表
+
             return implementingTypes;
         }
     }

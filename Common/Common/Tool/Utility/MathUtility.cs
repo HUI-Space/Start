@@ -1,18 +1,21 @@
-﻿using System;
+using System;
 
 namespace Start
 {
+    /// <summary>
+    /// 数学计算工具类
+    /// </summary>
     public static class MathUtility
     {
         /// <summary>
-        /// 计算两个整数的最大公约数 (GCD)。
+        /// 计算两个整数的最大公约数 (GCD)
+        /// 使用欧几里得算法
         /// </summary>
-        /// <param name="a">第一个整数。</param>
-        /// <param name="b">第二个整数。</param>
-        /// <returns>两个整数的最大公约数。</returns>
-        public static int MaximalCommonDivisor(int a, int b)
+        /// <param name="a">第一个整数</param>
+        /// <param name="b">第二个整数</param>
+        /// <returns>最大公约数</returns>
+        public static int GreatestCommonDivisor(int a, int b)
         {
-            // 确保 a 和 b 都是非负数
             a = Math.Abs(a);
             b = Math.Abs(b);
 
@@ -25,31 +28,22 @@ namespace Start
 
             return a;
         }
-        
+
         /// <summary>
-        /// 最小公约数
+        /// 计算两个整数的最小公倍数 (LCM)
         /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static int MinimumCommonDivisor(int a, int b)
+        /// <param name="a">第一个整数</param>
+        /// <param name="b">第二个整数</param>
+        /// <returns>最小公倍数</returns>
+        public static int LeastCommonMultiple(int a, int b)
         {
-            int temp, r;
-            if (a < b)
+            if (a == 0 || b == 0)
             {
-                temp = a;
-                a = b;
-                b = temp;
+                return 0;
             }
 
-            while (b != 0)
-            {
-                r = a % b;
-                a = b;
-                b = r;
-            }
-
-            return a;
+            int gcd = GreatestCommonDivisor(a, b);
+            return Math.Abs(a / gcd * b);
         }
     }
 }

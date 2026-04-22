@@ -13,7 +13,7 @@ namespace Start
 
         public override async Task Initialize()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(ProcedureBase));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(ProcedureBase));
             List<ProcedureBase> procedures = new List<ProcedureBase>();
             foreach (Type type in types)
             {

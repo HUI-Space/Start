@@ -13,7 +13,7 @@ namespace Start
 
         public override Task Initialize()
         {
-            List<Type> types = AssemblyUtility.GetChildType(typeof(IDataEntityCollection));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(IDataEntityCollection));
             foreach (Type type in types)
             {
                 if (!type.IsAbstract && type.BaseType is {IsGenericType: true } &&

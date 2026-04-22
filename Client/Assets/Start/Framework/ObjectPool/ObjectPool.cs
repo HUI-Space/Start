@@ -96,7 +96,6 @@ namespace Start
         /// <returns>对象实例</returns>
         public T Spawn()
         {
-            bool lockTaken = false;
             T t = null;
             // 1. 优先从空闲栈获取
             if (_freeStack.TryPop(out t))

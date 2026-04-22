@@ -21,7 +21,7 @@ namespace Start.Editor
                 return;
             }
 
-            List<Type> types = AssemblyUtility.GetChildType(typeof(IComponent));
+            List<Type> types = AssemblyUtility.GetChildTypes(typeof(IComponent));
             StringBuilder code = new StringBuilder();
             List<FieldInfo> valueFieldInfo = new List<FieldInfo>();
             List<FieldInfo> arrayFieldInfo = new List<FieldInfo>();

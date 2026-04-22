@@ -82,7 +82,7 @@ namespace Start.Editor
             }
             
             string optionalManifestPath = Path.Combine(resourceBuildConfig.MandatoryPath,ResourceConfig.RemoteOptionalManifest);
-            SerializerUtility.SerializeObject(optionalManifestPath, optionalResourceManifests);
+            MessagePackUtility.SerializeObject(optionalManifestPath, optionalResourceManifests);
             
             //输出模块资源包信息
             string content = JsonConvert.SerializeObject(optionalResourceManifests,Formatting.Indented);
