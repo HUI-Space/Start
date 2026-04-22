@@ -25,7 +25,7 @@ namespace Start
             
             foreach (AudioConfigItem item in ConfigManager.Instance.GetConfig<AudioConfig>().DataList)
             {
-                if (item.AudioType == EAudioType.BackGround)
+                if (item.AudioType == (uint)EAudioType.BackGround)
                 {
                     _backgrounds.Add(AssetConfig.GetAssetPath(EAssetType.Audio,item.AudioName));
                 }

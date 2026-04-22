@@ -2,38 +2,99 @@
   "DataList": [
     {
       "Id": 1,
-      "AudioName": "UI/UI_3.Ogg",
-      "AudioType": 2
+      "AudioType": 1,
+      "bool值": true,
+      "AudioName": "AudioName_1",
+      "Tfloat": 0.1,
+      "Tdouble": 0.33,
+      "Tsbyte": 1,
+      "TDateTime": "5/10/2023 14:30:45",
+      "Tlist": [
+        1,
+        2,
+        3
+      ],
+      "THashSet": [
+        1,
+        2,
+        3
+      ],
+      "Tdictionary": {
+        "1": "ASD",
+        "2": "QQQ"
+      }
     },
     {
       "Id": 2,
-      "AudioName": "BackGround/BackGround_1.mp3",
-      "AudioType": 1
+      "AudioType": 2,
+      "bool值": false,
+      "AudioName": "AudioName_2",
+      "Tfloat": 0.3,
+      "Tdouble": 0.44,
+      "Tsbyte": 2,
+      "TDateTime": "5/10/2023 19:30:45",
+      "Tlist": [
+        4,
+        5,
+        6
+      ],
+      "THashSet": [
+        4,
+        5,
+        6
+      ],
+      "Tdictionary": {
+        "1": "ASD",
+        "3": "QQQ"
+      }
     },
     {
       "Id": 3,
-      "AudioName": "BackGround/BackGround_2.mp3",
-      "AudioType": 1
+      "AudioType": 3,
+      "bool值": true,
+      "AudioName": "AudioName_3",
+      "Tfloat": 0.5,
+      "Tdouble": 0.55,
+      "Tsbyte": 3,
+      "TDateTime": "5/10/2023 15:30:45",
+      "Tlist": [
+        7,
+        8,
+        9
+      ],
+      "THashSet": [
+        7,
+        8,
+        9
+      ],
+      "Tdictionary": {
+        "1": "ASD",
+        "4": "QQQ"
+      }
     },
     {
       "Id": 4,
-      "AudioName": "BackGround/BackGround_3.mp3",
-      "AudioType": 1
-    },
-    {
-      "Id": 5,
-      "AudioName": "BackGround/BackGround_4.mp3",
-      "AudioType": 1
-    },
-    {
-      "Id": 6,
-      "AudioName": "UI/UI_1.Ogg",
-      "AudioType": 2
-    },
-    {
-      "Id": 7,
-      "AudioName": "UI/UI_2.Ogg",
-      "AudioType": 2
+      "AudioType": 3,
+      "bool值": true,
+      "AudioName": "AudioName_3",
+      "Tfloat": 0.5,
+      "Tdouble": 0.55,
+      "Tsbyte": 3,
+      "TDateTime": "5/10/2023 15:30:45",
+      "Tlist": [
+        7,
+        8,
+        9
+      ],
+      "THashSet": [
+        7,
+        8,
+        9
+      ],
+      "Tdictionary": {
+        "1": "ASD",
+        "4": "QQQ"
+      }
     }
   ]
 }

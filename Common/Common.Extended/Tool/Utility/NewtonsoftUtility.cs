@@ -7,7 +7,7 @@ namespace Start
     /// 序列化工具类
     /// 使用 Newtonsoft.Json 进行 JSON 序列化
     /// </summary>
-    public static class SerializerUtility
+    public static class NewtonsoftUtility
     {
         private static readonly JsonSerializerSettings? Settings = new JsonSerializerSettings
         {

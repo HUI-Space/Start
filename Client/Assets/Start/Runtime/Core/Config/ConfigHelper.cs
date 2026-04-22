@@ -14,7 +14,7 @@ namespace Start
             }
             string path = AssetConfig.GetAssetPath(EAssetType.Config, configName + AssetConfig.Json);
             AsyncOperationHandle<TextAsset> handle = ResourceManager.Instance.LoadAsset<TextAsset>(path);
-            IConfig data = (IConfig)JsonUtility.FromJson(handle.Result.text, type);
+            IConfig data = NewtonsoftUtility.DeserializeFromJson<IConfig>(handle.Result.text);
             ResourceManager.Instance.Unload(handle);
             return data;
         }

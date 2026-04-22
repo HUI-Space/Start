@@ -1,7 +1,7 @@
 {
-    "ExcelPath": "H:/_File/Unity/Start/Config",
-    "OutputScriptPath": "H:/_File/Unity/Start/Client/Assets/Start/Runtime/Core/Config",
-    "OutputConfigPath": "H:/_File/Unity/Start/Client/Assets/Asset/Config",
+    "ExcelPath": "H:/Start/Config",
+    "OutputScriptPath": "H:/Start/Client/Assets/Start/Runtime/Core/Config",
+    "OutputConfigPath": "H:/Start/Client/Assets/Asset/Config",
     "ExcelStartSheet": 0,
     "ConfigFieldType": 0,
     "ConfigFieldName": 1,

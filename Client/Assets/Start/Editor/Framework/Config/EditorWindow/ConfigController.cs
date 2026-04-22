@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -101,7 +101,7 @@ namespace Start.Editor
                             continue;
                         }
                         
-                        if (!string.IsNullOrEmpty(fieldType) || !string.IsNullOrEmpty(fieldName))
+                        if (!string.IsNullOrEmpty(fieldType) && !string.IsNullOrEmpty(fieldName))
                         {
                             ConfigFieldItem configFieldItem = new ConfigFieldItem{Type = fieldType, Name = fieldName, Description = fieldDescription};
                             configs.Add(i, configFieldItem);
@@ -110,6 +110,8 @@ namespace Start.Editor
                     
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.AppendLine("using System;");
+                    stringBuilder.AppendLine("using System.Collections.Generic;");
+                    stringBuilder.AppendLine();
                     stringBuilder.AppendLine("namespace Start");
                     stringBuilder.AppendLine("{");
                     stringBuilder.AppendLine("    [Serializable]");

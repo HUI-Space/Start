@@ -2,51 +2,51 @@
     "DataList": [
         {
             "Id": 1,
-            "UIName": "HttpPanel",
-            "UIType": 0,
-            "UIDataName": "Start.HttpPanelData"
-        },
-        {
-            "Id": 2,
             "UIName": "DataSetPanel",
             "UIType": 0,
             "UIDataName": "Start.DataSetPanelData"
         },
         {
-            "Id": 3,
-            "UIName": "FsmPanel",
+            "Id": 2,
+            "UIName": "LocalizationPanel",
             "UIType": 0,
-            "UIDataName": "Start.FsmPanelData"
+            "UIDataName": "Start.LocalizationPanelData"
         },
         {
-            "Id": 4,
+            "Id": 3,
             "UIName": "ConfigPanel",
             "UIType": 0,
             "UIDataName": "Start.ConfigPanelData"
         },
         {
-            "Id": 5,
-            "UIName": "BattlePanel",
+            "Id": 4,
+            "UIName": "SettingPanel",
             "UIType": 0,
-            "UIDataName": "Start.BattlePanelData"
+            "UIDataName": "Start.SettingPanelData"
+        },
+        {
+            "Id": 5,
+            "UIName": "TALGamePanel",
+            "UIType": 0,
+            "UIDataName": "Start.TALGamePanelData"
         },
         {
             "Id": 6,
-            "UIName": "TALMenuPanel",
+            "UIName": "EventPanel",
             "UIType": 0,
-            "UIDataName": "Start.TALMenuPanelData"
+            "UIDataName": "Start.EventPanelData"
         },
         {
             "Id": 7,
-            "UIName": "MainPanel",
+            "UIName": "GamePanel",
             "UIType": 0,
-            "UIDataName": "Start.MainPanelData"
+            "UIDataName": "Start.GamePanelData"
         },
         {
             "Id": 8,
-            "UIName": "LogPanel",
+            "UIName": "AudioPanel",
             "UIType": 0,
-            "UIDataName": "Start.LogPanelData"
+            "UIDataName": "Start.AudioPanelData"
         },
         {
             "Id": 9,
@@ -56,21 +56,21 @@
         },
         {
             "Id": 10,
-            "UIName": "GamePanel",
+            "UIName": "LogPanel",
             "UIType": 0,
-            "UIDataName": "Start.GamePanelData"
+            "UIDataName": "Start.LogPanelData"
         },
         {
             "Id": 11,
-            "UIName": "TALGamePanel",
+            "UIName": "FsmPanel",
             "UIType": 0,
-            "UIDataName": "Start.TALGamePanelData"
+            "UIDataName": "Start.FsmPanelData"
         },
         {
             "Id": 12,
-            "UIName": "LocalizationPanel",
+            "UIName": "BattlePanel",
             "UIType": 0,
-            "UIDataName": "Start.LocalizationPanelData"
+            "UIDataName": "Start.BattlePanelData"
         },
         {
             "Id": 13,
@@ -80,21 +80,21 @@
         },
         {
             "Id": 14,
-            "UIName": "SettingPanel",
+            "UIName": "HttpPanel",
             "UIType": 0,
-            "UIDataName": "Start.SettingPanelData"
+            "UIDataName": "Start.HttpPanelData"
         },
         {
             "Id": 15,
-            "UIName": "AudioPanel",
+            "UIName": "ScenePanel",
             "UIType": 0,
-            "UIDataName": "Start.AudioPanelData"
+            "UIDataName": "Start.ScenePanelData"
         },
         {
             "Id": 16,
-            "UIName": "EventPanel",
+            "UIName": "MainPanel",
             "UIType": 0,
-            "UIDataName": "Start.EventPanelData"
+            "UIDataName": "Start.MainPanelData"
         },
         {
             "Id": 17,
@@ -104,9 +104,9 @@
         },
         {
             "Id": 18,
-            "UIName": "ScenePanel",
+            "UIName": "TALMenuPanel",
             "UIType": 0,
-            "UIDataName": "Start.ScenePanelData"
+            "UIDataName": "Start.TALMenuPanelData"
         },
         {
             "Id": 19,
